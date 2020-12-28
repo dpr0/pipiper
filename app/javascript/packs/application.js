@@ -8,7 +8,6 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 Rails.start()
-Turbolinks.start()
 ActiveStorage.start()
 
 require("@rails/activestorage").start();
@@ -21,10 +20,10 @@ import 'bootstrap'
 import './stylesheets/application'
 import firebase from 'firebase/app';
 
-document.addEventListener("turbolinks:load", () => {
-    $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="popover"]').popover()
-});
+// document.addEventListener("turbolinks:load", () => {
+//     $('[data-toggle="tooltip"]').tooltip();
+//     $('[data-toggle="popover"]').popover()
+// });
 
 var config = {
     apiKey: "AIzaSyAN5ln4_DNOGYo6Py3qE0TdyLrAv18bnws",
