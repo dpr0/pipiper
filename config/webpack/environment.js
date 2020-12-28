@@ -1,6 +1,6 @@
 const { environment } = require('@rails/webpacker')
 
-const webpack = require('webpack')
+// const webpack = require('webpack')
 
 // environment.plugins.append('Provide',
 //     new webpack.ProvidePlugin({
@@ -10,10 +10,10 @@ const webpack = require('webpack')
 //     })
 // )
 
-const globImporter = require('node-sass-glob-importer');
+// const globImporter = require('node-sass-glob-importer');
 
-environment.loaders.get('sass').use
-    .find(item => item.loader === 'sass-loader')
-    .options = { sassOptions: { importer: globImporter() } };
+// environment.loaders.get('sass').use
+//     .find(item => item.loader === 'sass-loader')
+//     .options = { sassOptions: { importer: globImporter() } };
 
 module.exports = environment
