@@ -7,8 +7,8 @@ html
     link href="/public/favicon.ico" rel=('shortcut icon') type="image/x-icon"
     title pipiper.ru
 
-    = stylesheet_pack_tag 'application', media: 'all'
-    = javascript_pack_tag 'application'
+    = javascript_packs_with_chunks_tag 'application'
+    = stylesheet_packs_with_chunks_tag 'application', media: 'all'
   body style="background-color: rgba(22,22,22,1)"
     nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
       .container
