@@ -16,6 +16,7 @@
     "jquery": "^3.5.0",
     "jquery-ui": "^1.12.1",
     "mustache": "^4.1.0",
+    "node-sass-glob-importer": "^5.3.2",
     "popper.js": "^1.16.0"
   },
   "version": "0.1.0",
