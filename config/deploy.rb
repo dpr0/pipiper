@@ -5,8 +5,8 @@ lock '3.14.1'
 server 'krsz.ru', port: 2222, roles: %w(app db web), primary: true
 
 set :rbenv_ruby,      '2.7.2'
-set :application,     'home'
-set :repo_url,        'git@github.com:dpr0/home.git'
+set :application,     'pipiper'
+set :repo_url,        'git@github.com:dpr0/pipiper.git'
 set :deploy_user,     'deploy'
 set :linked_files,    fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/master.key', 'config/credentials.yml.enc', '.env')
 set :linked_dirs,     fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/session_store', 'vendor/bundle', 'public/system', 'public/uploads')
