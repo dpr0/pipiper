@@ -49,7 +49,7 @@ class Device < ApplicationRecord
     { id: 29, bg: 'success',   num: 5,   comment: '-'         }, { id: 30, bg: 'secondary', num: nil, comment: 'GND'       },
     { id: 31, bg: 'success',   num: 6,   comment: '-'         }, { id: 32, bg: 'success',   num: 12,  comment: 'PWM0'      },
     { id: 33, bg: 'success',   num: 13,  comment: 'PWM1'      }, { id: 34, bg: 'secondary', num: nil, comment: 'GND'       },
-    { id: 35, bg: 'info',      num: nil, comment: 'SPI1 MISO' }, { id: 36, bg: 'success',   num: 16,  comment: 'SPI1 CE2'  },
+    { id: 35, bg: 'info',      num: 19,  comment: 'SPI1 MISO' }, { id: 36, bg: 'success',   num: 16,  comment: 'SPI1 CE2'  },
     { id: 37, bg: 'success',   num: 26,  comment: '-'         }, { id: 38, bg: 'info',      num: 20,  comment: 'SPI1 MOSI' },
     { id: 39, bg: 'secondary', num: nil, comment: 'GND'       }, { id: 40, bg: 'info',      num: 21,  comment: 'SPI1 SCLK' }
   ].freeze
@@ -61,7 +61,7 @@ class Device < ApplicationRecord
   }.freeze
 
   def self.narod_mon
-    bme280 = JSON.parse RestClient.get('krsz.ru:3004/bme280')
+    bme280 = JSON.parse RestClient.get('krsz.ru:3005/bme280')
     data = [
       { id: 't', name: 'Температура', value: bme280['t'], unit: 'C'   },
       { id: 'p', name: 'Давление',    value: bme280['p'], unit: 'HPA' },
