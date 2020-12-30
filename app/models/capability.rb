@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Capability < ApplicationRecord
-  belongs_to :device
+  belongs_to :device, inverse_of: :capabilities
 
   TYPES = [
     ['devices.capabilities.on_off',        'Вкл/выкл.'],

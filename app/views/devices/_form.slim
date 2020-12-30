@@ -80,3 +80,11 @@
           = render 'capability_fields', f: capability
         .links
           = link_to_add_association 'Добавить навык', f, :capabilities, class: 'btn btn-primary'
+        p
+  .row
+    .col-12
+      .actions.row
+        .col-sm-6
+          = link_to 'Назад', devices_path, class: 'btn btn-secondary btn-block'
+        .col-sm-6
+          = f.submit 'Сохранить', class: 'btn btn-success btn-block'

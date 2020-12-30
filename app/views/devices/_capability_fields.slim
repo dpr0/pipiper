@@ -1,12 +1,10 @@
-.card.text-white.bg-dark.mb-3
-  .card-body
-    / h5.card-title Card title
-    / h6.card-subtitle.mb-1.text-muted Card subtitle
-    / p.card-text Some quick example text to build on the card title and make up the bulk of the card's content.
-    .card-link
-      = link_to_remove_association "Удалить", f
-    .nested-fields
+.nested-fields
+  .card.text-white.bg-dark.mb-3
+    .card-body
+      .card-link
+        = link_to_remove_association "Удалить", f
       .field
+        = f.hidden_field :id
         .row
           .col-sm-4
             .form-group.row

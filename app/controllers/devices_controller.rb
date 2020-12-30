@@ -51,6 +51,6 @@ class DevicesController < ApplicationController
   def device_params
     params.require(:device)
           .permit(:enabled, :name, :description, :room, :device_type, :manufacturer, :model, :hw_version, :sw_version, :host, :port,
-                  capabilities_attributes: %i[enabled retrievable capability_type state state_instance state_value path pin status _destroy])
+                  capabilities_attributes: %i[id enabled retrievable capability_type state state_instance state_value path pin status _destroy])
   end
 end
