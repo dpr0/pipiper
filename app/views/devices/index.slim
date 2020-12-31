@@ -16,7 +16,7 @@ section#devices_list_section.signup-section.bg-black.text-center
       p
     .row
       .col-12
-        table.table.table-dark
+        table.table.table-dark.hoverTable
           thead
             tr
               / td ID
@@ -33,9 +33,9 @@ section#devices_list_section.signup-section.bg-black.text-center
               td Порт
           tbody
             - @devices.each do |device|
-              tr.text-white-50
+              tr.text-white-50 data-link=edit_device_path(device)
                 / td= device.id
-                td= link_to device.name, edit_device_path(device)
+                td= device.name
                 td= device.enabled
                 / td= device.description
                 td= device.room
@@ -46,3 +46,8 @@ section#devices_list_section.signup-section.bg-black.text-center
                 / td= device.sw_version
                 td= device.host
                 td= device.port
+
+javascript:
+    $("tr[data-link]").click(function () {
+        window.location = $(this).data("link")
+    })

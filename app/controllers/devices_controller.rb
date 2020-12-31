@@ -23,7 +23,7 @@ class DevicesController < ApplicationController
     @device = current_user.devices.new(device_params)
 
     if @device.save
-      redirect_to @device, notice: 'Устройство создано!'
+      redirect_to devices_url, notice: 'Устройство создано!'
     else
       render :new
     end
@@ -31,7 +31,7 @@ class DevicesController < ApplicationController
 
   def update
     if @device.update(device_params)
-      redirect_to @device, notice: 'Устройство обновлено!'
+      redirect_to devices_url, notice: 'Устройство обновлено!'
     else
       render :edit
     end

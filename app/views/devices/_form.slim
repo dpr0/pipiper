@@ -60,6 +60,7 @@
       .card.bg-dark.mb-3
         .card-body
           .col-12
+            - pins = @device.capabilities.map(&:pin)
             - Device::PINS.each_slice(2) do |left, right|
               .row
                 .col-3.text-right class="bg-#{left[:bg]}"
@@ -67,9 +68,9 @@
                 .col-2.text-white-50
                   = left[:num]
                 .col-1.text-white-50 class="#{left[:bg] == 'success' ? "bg-#{left[:bg]}" : ''}"
-                  = check_box_tag "gpio_pins[]", true, left[:num].nil?, disabled: left[:bg] != 'success'
+                  = check_box_tag "gpio_pins[]", true, pins.include?(left[:num]), disabled: left[:num].nil?
                 .col-1.text-white-50 class="#{right[:bg] == 'success' ? "bg-#{right[:bg]}" : ''}"
-                  = check_box_tag "gpio_pins[]", true, right[:num].nil?, disabled: right[:bg] != 'success'
+                  = check_box_tag "gpio_pins[]", true, pins.include?(right[:num]), disabled: right[:num].nil?
                 .col-2.text-white-50
                   = right[:num]
                 .col-3.text-left class="bg-#{right[:bg]}"

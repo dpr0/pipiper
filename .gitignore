@@ -46,3 +46,4 @@ yarn-debug.log*
 .DS_Store
 ebash
 dump.rdb
+.idea/modules.xml
