@@ -18,9 +18,6 @@ html
           i.fas.fa-bars
         #navbarResponsive.collapse.navbar-collapse
           ul.navbar-nav.ml-auto
-            li.nav-item
-              .notice = notice
-              .alert = alert
             - if current_user
               li.nav-item
                 a.nav-link
@@ -29,8 +26,6 @@ html
                 = link_to 'Выйти', destroy_user_session_path, class: 'nav-link', method: :delete
             - else
               / = link_to 'Войти', new_user_session_path, class: 'nav-link'
-              = link_to "Войти через #{OmniAuth::Utils.camelize(:yandex)}", omniauth_authorize_path(resource_name, :yandex), class: 'nav-link'
-
     / - if (request.user_agent =~ /Mobile/) == nil
 
     = yield
@@ -48,7 +43,7 @@ html
         | Copyright &copy; krsz.ru 2015-#{Time.now.year}
         = image_tag "https://mc.yandex.ru/watch/69467584", style: "position:absolute; left:-9999px;"
 
-link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+/ link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
 
 javascript:
     if ("#{Rails.env}" == 'production') {

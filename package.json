@@ -1,5 +1,5 @@
 {
-  "name": "piedpiper",
+  "name": "pipiper",
   "private": true,
   "dependencies": {
     "@nathanvda/cocoon": "^1.2.14",

@@ -40,8 +40,8 @@
 yarn-debug.log*
 .yarn-integrity
 
-/.idea
-.idea
+/.idea/
+.idea/
 .env
 .DS_Store
 ebash

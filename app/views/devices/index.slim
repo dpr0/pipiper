@@ -3,10 +3,17 @@ section#devices_list_section.signup-section.bg-black.text-center
     .row
       .col-2
       .col-8
+        h5.text-white-50
+          .notice = notice
+          .alert = alert
+    .row
+      .col-2
+      .col-8
         h1.text-white-50 Список устройств
       .col-2
         = link_to 'Добавить', new_device_path, class: 'btn btn-xs btn-success'
-
+    .row
+      p
     .row
       .col-12
         table.table.table-dark

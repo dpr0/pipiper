@@ -19,3 +19,12 @@ section#section1.signup-section.bg-black.text-center
     /     = f.submit 'Войти'
     /
     / = render "devise/shared/links"
+    .row
+      .col-2
+      .col-8
+        h5.text-white-50
+          .notice = notice
+          .alert = alert
+    = link_to omniauth_authorize_path(resource_name, :yandex), class: "btn btn-#{provider_color(:yandex)}" do
+      span.firebaseui-idp-icon-wrapper= image_tag 'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/mail.svg'
+      span.firebaseui-idp-text= "Войти через #{OmniAuth::Utils.camelize(:yandex)}"
