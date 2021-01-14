@@ -18,7 +18,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-yandex'
 gem 'rest-client'
-gem 'doorkeeper'
+gem 'doorkeeper', '5.5.0.rc1'
 gem 'whenever', require: false
 gem 'cocoon'
 
