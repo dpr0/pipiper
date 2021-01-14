@@ -43,6 +43,8 @@ yarn-debug.log*
 /.idea/
 .idea/
 .env
+.env/
+/.env/
 .DS_Store
 ebash
 dump.rdb

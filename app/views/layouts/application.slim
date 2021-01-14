@@ -24,26 +24,20 @@ html
                   = current_user.email.present? ? current_user.email : current_user.phone
               li.nav-item
                 = link_to 'Выйти', destroy_user_session_path, class: 'nav-link', method: :delete
-            - else
-              / = link_to 'Войти', new_user_session_path, class: 'nav-link'
-    / - if (request.user_agent =~ /Mobile/) == nil
 
     = yield
 
-  footer.bg-black.small.text-center
-    - if (request.user_agent =~ /Mobile/) != nil
-      - Common.sites.each do |name|
-        = link_to name, "https://#{name}.KRSZ.RU", class: "btn btn-primary", style: 'bottom'
-    section.contact-section.bg-black
-      .container
-        .social.d-flex.justify-content-center
-          - Common.sites.each do |name|
-            = link_to "https://#{name}.krsz.ru", class: 'mx-2' do
-              i.fab.fa-github
-        div.text-white-50 Copyright &copy; krsz.ru 2015-#{Time.now.year}
-        = image_tag "https://mc.yandex.ru/watch/69467584", style: "position:absolute; left:-9999px;"
-
-/ link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"
+  footer.main-footer.bg-black
+    .container
+      .row.text-white-50
+        .col-12.text-center
+          .text-uppercase.m-0
+            | Copyright &copy;
+            = " 2015-#{Time.now.year}"
+          .small
+            a href='https://t.me/dvitvitskiy' Telegram
+            | &nbsp; / &nbsp;
+            a href="mailto:dvitvitskiy.pro@gmail.com" Email
 
 javascript:
     if ("#{Rails.env}" == 'production') {

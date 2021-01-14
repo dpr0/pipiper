@@ -1,30 +1,13 @@
 # frozen_string_literal: true
 
 class CallbacksController < Devise::OmniauthCallbacksController
-  def github
-    upsert_user('GITHUB')
-  end
 
   def yandex
-    upsert_user('YANDEX')
-  end
-
-  def telegram
-    upsert_user('TELEGRAM')
-  end
-
-  def firebase
-    upsert_user('FIREBASE')
-  end
-
-  private
-
-  def upsert_user(provider)
     @user = User.find_for_oauth(auth(request.env['omniauth.auth'] || params))
 
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
-      set_flash_message(:notice, :success, kind: provider) if is_navigational_format?
+      set_flash_message(:notice, :success, kind: 'YANDEX') if is_navigational_format?
     end
   end
 
