@@ -2,6 +2,7 @@
   "name": "pipiper",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.1",
     "@nathanvda/cocoon": "^1.2.14",
     "@rails/actioncable": "^6.1.1",
     "@rails/activestorage": "^6.1.1",
@@ -11,8 +12,6 @@
     "chart.js": "^2.9.4",
     "chartkick": "^3.2.1",
     "core-js": "^3.8.2",
-    "firebase": "^8.2.2",
-    "firebaseui-ru": "^3.4.2",
     "interact": "^0.0.3",
     "jquery": "^3.5.1",
     "jquery-ui": "^1.12.1",

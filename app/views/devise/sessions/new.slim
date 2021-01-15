@@ -7,5 +7,5 @@ section#section1.signup-section.bg-black.text-center
           .notice = notice
           .alert = alert
     = link_to omniauth_authorize_path(resource_name, :yandex), class: "btn btn-danger" do
-      span.firebaseui-idp-icon-wrapper= image_tag 'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/mail.svg'
-      span.firebaseui-idp-text= "Войти через #{OmniAuth::Utils.camelize(:yandex)}"
+      i.fab.fa-yandex-international
+      span = " Войти через #{OmniAuth::Utils.camelize(:yandex)}"
