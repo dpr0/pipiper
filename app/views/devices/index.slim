@@ -51,33 +51,36 @@ section
   .container
     .row
       .col-12.mx-auto
-        h5.text-white.mb-4.text-center
-          | Проброс портов
-        .text-center
-          | в настройках маршрутизатора необходимо открыть порт 9292 или сделать проброс порта на любой другой,
-          | который потом необходимо указать в настройках устройства
-          | При команде Алисе "включи свет на кухне" она отправит запрос в навык PiPiper, а он в свою очередь найдет устройство
-          | и отправит на него POST-запрос на указанный хост и порт, по пути "path" указанному в навыке устройства с json-ом
-          | { "pin": 17, "status": true } - пин указывается в навыке устройства "pin"
+        h5.mb-4
+          .text-center.text-white Проброс портов
+          .small.text-white-50
+            div в настройках маршрутизатора необходимо открыть порт 9292 или сделать проброс порта на любой другой,
+            div который потом необходимо указать в настройках устройства
+            div При команде Алисе "включи свет на кухне" она отправит запрос в навык PiPiper, а он в свою очередь найдет устройство
+            div и отправит на него POST-запрос на указанный хост и порт, по пути "path" указанному в навыке устройства с json-ом
+            div
+              | { "pin": 17, "status": true } - пин указывается в навыке устройства "pin"
     .row
       .col-6.mx-auto
-        h5.text-white.mb-4
-          .text-center RUBY
-          .small
-            div Команда запуска приложения как демона на стандартном порту 9292
+        h5.mb-4
+          .text-center.text-white RUBY
+          .small.text-white-50
+            div Команда запуска веб сервера puma как демона на стандартном порту 9292
             code rackup -s puma --host 0.0.0.0 config.ru -D
         div
-          div.text-white = " ./pin_enabler/Gemfile:"
+          div.text-white-50 = " ./pin_enabler/Gemfile:"
           code
             = "source 'https://rubygems.org'"
             div = "gem 'ya_gpio'"
-          div.text-white = " ./pin_enabler/config.ru:"
+        p
+          div.text-white-50 = " ./pin_enabler/config.ru:"
           code
             = "require 'ya_gpio'"
             div = "require_relative 'pin_enabler.rb'"
             div = "use Rack::Reloader"
             div = "run PinEnabler.new"
-          div.text-white = " ./pin_enabler/pin_enabler.rb:"
+        p
+          div.text-white-50 = " ./pin_enabler/pin_enabler.rb:"
           code
             = "class PinEnabler"
             .tab1 = "def call(env)"
@@ -96,13 +99,13 @@ section
             .tab1 = "end"
             div = "end"
       .col-6.mx-auto
-        h5.text-white.mb-4
-          .text-center PYTHON
-          .small
+        h5.mb-4
+          .text-center.text-white PYTHON
+          .small.text-white-50
             div Команда запуска python программы
             code python3 pin_enabler.py
         div
-          div.text-white = " ./pin_enabler/pin_enabler.py:\n"
+          div.text-white-50 = " ./pin_enabler/pin_enabler.py:\n"
           code
             = "from json import dumps"
             div = "from bottle import route, run, response, request"
