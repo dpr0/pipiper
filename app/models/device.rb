@@ -71,7 +71,7 @@ class Device < ApplicationRecord
   end
 
   def self.user_devices(user_id)
-    eager_load(:capabilities).where(user_id: user_id).map do |d|
+    eager_load(:capabilities).where(user_id: user_id, enabled: true).map do |d|
       {
         id: d.id.to_s,
         name: d.name,
