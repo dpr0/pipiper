@@ -6,29 +6,29 @@ class Device < ApplicationRecord
   belongs_to :user
 
   TYPES = [
-    ['Лампочка, светильник, люстра.',                                'devices.types.light'],
-    ['Розетка.',                                                     'devices.types.socket'],
-    ['Выключатель, реле.',                                           'devices.types.switch'],
-    ['Водонагреватель, теплый пол, обогреватель, электровентилятор.','devices.types.thermostat'],
-    ['Кондиционер.',                                                 'devices.types.thermostat.ac'],
-    ['Аудио, видео, мультимедиа техника.',                           'devices.types.media_device'],
-    ['Телевизор, ИК-пульт от телевизора',                            'devices.types.media_device.tv'],
-    ['ИК-пульт от тв-приставки, тв-приставка.',                      'devices.types.media_device.tv_box'],
+    ['Лампочка, светильник, люстра.',                                'devices.types.light'                ],
+    ['Розетка.',                                                     'devices.types.socket'               ],
+    ['Выключатель, реле.',                                           'devices.types.switch'               ],
+    ['Водонагреватель, теплый пол, обогреватель, электровентилятор.','devices.types.thermostat'           ],
+    ['Кондиционер.',                                                 'devices.types.thermostat.ac'        ],
+    ['Аудио, видео, мультимедиа техника.',                           'devices.types.media_device'         ],
+    ['Телевизор, ИК-пульт от телевизора',                            'devices.types.media_device.tv'      ],
+    ['ИК-пульт от тв-приставки, тв-приставка.',                      'devices.types.media_device.tv_box'  ],
     ['ИК-пульт от ресивера, ресивер.',                               'devices.types.media_device.receiver'],
-    ['Различная умная кухонная техника.',                            'devices.types.cooking'],
-    ['Кофеварка, кофемашина.',                                       'devices.types.cooking.coffee_maker'],
-    ['Чайник.',                                                      'devices.types.cooking.kettle'],
-    ['Мультиварка.',                                                 'devices.types.cooking.multicooker'],
-    ['Дверь, ворота, окно, ставни.',                                 'devices.types.openable'],
-    ['Шторы, жалюзи.',                                               'devices.types.openable.curtain'],
-    ['Увлажнитель воздуха.',                                         'devices.types.humidifier'],
-    ['Очиститель воздуха.',                                          'devices.types.purifier'],
-    ['Робот-пылесос.',                                               'devices.types.vacuum_cleaner'],
-    ['Стиральная машина.',                                           'devices.types.washing_machine'],
-    ['Посудомоечная машина.',                                        'devices.types.dishwasher'],
-    ['Утюг, парогенератор.',                                         'devices.types.iron'],
-    ['Датчик температуры, влажности, открытия двери, движения.',     'devices.types.sensor'],
-    ['Остальные устройства.',                                        'devices.types.other']
+    ['Различная умная кухонная техника.',                            'devices.types.cooking'              ],
+    ['Кофеварка, кофемашина.',                                       'devices.types.cooking.coffee_maker' ],
+    ['Чайник.',                                                      'devices.types.cooking.kettle'       ],
+    ['Мультиварка.',                                                 'devices.types.cooking.multicooker'  ],
+    ['Дверь, ворота, окно, ставни.',                                 'devices.types.openable'             ],
+    ['Шторы, жалюзи.',                                               'devices.types.openable.curtain'     ],
+    ['Увлажнитель воздуха.',                                         'devices.types.humidifier'           ],
+    ['Очиститель воздуха.',                                          'devices.types.purifier'             ],
+    ['Робот-пылесос.',                                               'devices.types.vacuum_cleaner'       ],
+    ['Стиральная машина.',                                           'devices.types.washing_machine'      ],
+    ['Посудомоечная машина.',                                        'devices.types.dishwasher'           ],
+    ['Утюг, парогенератор.',                                         'devices.types.iron'                 ],
+    ['Датчик температуры, влажности, открытия двери, движения.',     'devices.types.sensor'               ],
+    ['Остальные устройства.',                                        'devices.types.other'                ]
   ].freeze
 
   PINS = [
@@ -70,8 +70,12 @@ class Device < ApplicationRecord
     RestClient.post('http://narodmon.ru/post', { devices: [INFO.merge(sensors: data)] }.to_json)
   end
 
+  def self.enabled(user_id)
+    eager_load(:capabilities).where(user_id: user_id, enabled: true).where("capabilities.enabled = ?", true).all
+  end
+
   def self.user_devices(user_id)
-    eager_load(:capabilities).where(user_id: user_id, enabled: true).map do |d|
+    enabled(user_id).map do |d|
       {
         id: d.id.to_s,
         name: d.name,

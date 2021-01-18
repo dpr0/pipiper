@@ -57,7 +57,7 @@
       .card.bg-dark.mb-3
         .card-body
           .col-12
-            - pins = @device.capabilities.map(&:pin)
+            - pins = @device.capabilities.sort.map(&:pin)
             - Device::PINS.each_slice(2) do |left, right|
               .row
                 .col-3.text-right class="bg-#{left[:bg]}"

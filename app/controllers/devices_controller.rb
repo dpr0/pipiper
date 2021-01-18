@@ -8,7 +8,7 @@ class DevicesController < ApplicationController
     # @mhz19b = JSON.parse RestClient.get('krsz.ru:3004/mhz19b')
     # @bme280 = JSON.parse RestClient.get('krsz.ru:3004/bme280')
     # @gpio   = JSON.parse RestClient.get('krsz.ru:3004/pins')
-    @devices = current_user.devices.eager_load(:capabilities)
+    @devices = current_user.devices.eager_load(:capabilities).sort
   end
 
   def show; end
