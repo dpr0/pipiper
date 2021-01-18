@@ -23,7 +23,7 @@ class UsersController < ApplicationController
   end
 
   def action
-    user_devices = Device.enabled(user_id: current_user.id)
+    user_devices = Device.enabled(current_user.id).all
     devices_response = (params.dig(:payload, :devices) || []).map do |d|
       ud = user_devices.find(d[:id]) # user_device
       {
