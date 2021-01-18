@@ -1,4 +1,4 @@
-section#section1.signup-section.bg-black.text-center
+section.signup-section.bg-black.text-center
   .container
     .row
       .col-2
@@ -7,5 +7,6 @@ section#section1.signup-section.bg-black.text-center
           .notice = notice
           .alert = alert
     = link_to omniauth_authorize_path(resource_name, :yandex), class: "btn btn-danger" do
+      = "Войти через "
       i.fab.fa-yandex-international
-      span = " Войти через #{OmniAuth::Utils.camelize(:yandex)}"
+      = "andex"

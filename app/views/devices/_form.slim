@@ -25,6 +25,14 @@
           .col-sm-8
             = f.check_box :enabled, class: 'form-control'
         .form-group.row
+          = f.label :host, 'Хост', class: 'col-sm-4 col-form-label text-white-50'
+          .col-sm-8
+            = f.text_field :host, class: 'form-control'
+        .form-group.row
+          = f.label :port, 'Порт', class: 'col-sm-4 col-form-label text-white-50'
+          .col-sm-8
+            = f.text_field :port, class: 'form-control'
+        .form-group.row
           = f.label :name, 'Наименование', class: 'col-sm-4 col-form-label text-white-50'
           .col-sm-8
             = f.text_field :name, class: 'form-control'

@@ -1,12 +1,13 @@
-.krsz_items {
-  display: block;
-  width: 200px;
-  height: 55px;
-  position: fixed;
-  left: 10px;
-  z-index: 99999;
-}
-
 .hoverTable tbody tr:hover {
   background-color: #454d55;
 }
+
+.tab1 { padding-left: 2em; }
+.tab2 { padding-left: 4em; }
+.tab3 { padding-left: 6em; }
+.tab4 { padding-left: 8em; }
+.tab5 { padding-left: 10em; }
+.tab6 { padding-left: 12em; }
+.tab7 { padding-left: 14em; }
+.tab8 { padding-left: 16em; }
+.tab9 { padding-left: 18em; }
