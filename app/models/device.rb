@@ -71,7 +71,7 @@ class Device < ApplicationRecord
   end
 
   def self.enabled(user_id)
-    eager_load(:capabilities).where(user_id: user_id, enabled: true).where("capabilities.enabled = ?", true).all
+    eager_load(:capabilities).where("devices.user_id = ? and devices.enabled = ? and capabilities.enabled = ?", user_id, true, true).all
   end
 
   def self.user_devices(user_id)
