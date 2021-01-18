@@ -22,48 +22,37 @@
                 li = message
         .form-group.row
           = f.label :enabled, 'Активирован?', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.check_box :enabled, class: 'form-control'
+          .col-sm-8 = f.check_box :enabled, class: 'form-control'
         .form-group.row
           = f.label :host, 'Хост', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :host, class: 'form-control'
+          .col-sm-8 = f.text_field :host, class: 'form-control'
         .form-group.row
           = f.label :port, 'Порт', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :port, class: 'form-control'
+          .col-sm-8 = f.text_field :port, class: 'form-control'
         .form-group.row
           = f.label :name, 'Наименование', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :name, class: 'form-control'
+          .col-sm-8 = f.text_field :name, class: 'form-control'
         .form-group.row
           = f.label :description, 'Описание', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :description, class: 'form-control'
+          .col-sm-8 = f.text_field :description, class: 'form-control'
         .form-group.row
           = f.label :room, 'Помещение', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :room, class: 'form-control'
+          .col-sm-8 = f.text_field :room, class: 'form-control'
         .form-group.row
           = f.label :device_type, 'Тип', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.select :device_type, Device::TYPES, {}, class: 'form-control'
+          .col-sm-8 = f.select :device_type, Device::TYPES, {}, class: 'form-control'
         .form-group.row
           = f.label :manufacturer, 'Производитель', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :manufacturer, class: 'form-control'
+          .col-sm-8 = f.text_field :manufacturer, class: 'form-control'
         .form-group.row
           = f.label :model, 'Модель', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :model, class: 'form-control'
+          .col-sm-8 = f.text_field :model, class: 'form-control'
         .form-group.row
           = f.label :hw_version, 'Версия железа', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :hw_version, class: 'form-control'
+          .col-sm-8 = f.text_field :hw_version, class: 'form-control'
         .form-group.row
           = f.label :sw_version, 'Версия софта', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8
-            = f.text_field :sw_version, class: 'form-control'
+          .col-sm-8 = f.text_field :sw_version, class: 'form-control'
       p
       .card.bg-dark.mb-3
         .card-body

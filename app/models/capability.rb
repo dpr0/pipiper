@@ -4,11 +4,11 @@ class Capability < ApplicationRecord
   belongs_to :device, inverse_of: :capabilities
 
   TYPES = [
-    ['devices.capabilities.on_off',        'Вкл/выкл.'],
-    ['devices.capabilities.color_setting', 'Управление цветом.'],
-    ['devices.capabilities.mode',          'Переключение режимов работы устройства.'],
-    ['devices.capabilities.range',         'Яркость, громкость, температура.'],
-    ['devices.capabilities.toggle',        'Вкл/выкл доп. функций.']
+    ['Вкл/выкл.',                               'devices.capabilities.on_off'        ],
+    ['Управление цветом.',                      'devices.capabilities.color_setting' ],
+    ['Переключение режимов работы устройства.', 'devices.capabilities.mode'          ],
+    ['Яркость, громкость, температура.',        'devices.capabilities.range'         ],
+    ['Вкл/выкл доп. функций.',                  'devices.capabilities.toggle'        ]
   ].freeze
 
 end

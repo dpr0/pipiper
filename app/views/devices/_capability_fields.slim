@@ -19,27 +19,21 @@
               = f.label :status, 'status', class: 'col-form-label'
               = f.check_box :status, class: 'form-control'
         .form-group.row
-          = f.label :capability_type, 'capability_type', class: 'col-sm-4 col-form-label'
-          .col-sm-8
-            = f.text_field :capability_type, class: 'form-control'
+          = f.label :state, 'state', class: 'col-sm-4 col-form-label'
+          .col-sm-8 = f.text_field :state, class: 'form-control'
         .form-group.row
           = f.label :state_instance, 'state_instance', class: 'col-sm-4 col-form-label'
-          .col-sm-8
-            = f.text_field :state_instance, class: 'form-control'
+          .col-sm-8 = f.text_field :state_instance, class: 'form-control'
         .form-group.row
           = f.label :state_value, 'state_value', class: 'col-sm-4 col-form-label'
-          .col-sm-8
-            = f.number_field :state_value, class: 'form-control'
+          .col-sm-8 = f.number_field :state_value, class: 'form-control'
         .form-group.row
-          = f.label :state, 'state', class: 'col-sm-4 col-form-label'
-          .col-sm-8
-            = f.select :state, Capability::TYPES, {}, class: 'form-control'
+          = f.label :capability_type, 'capability_type', class: 'col-sm-4 col-form-label'
+          .col-sm-8 = f.select :capability_type, Capability::TYPES, {}, class: 'form-control'
         .form-group.row
           = f.label :path, 'path', class: 'col-sm-4 col-form-label'
-          .col-sm-8
-            = f.text_field :path, class: 'form-control'
+          .col-sm-8 = f.text_field :path, class: 'form-control'
         .form-group.row
           = f.label :pin, 'pin', class: 'col-sm-4 col-form-label'
-          .col-sm-8
-            = f.number_field :pin, class: 'form-control'
+          .col-sm-8 = f.number_field :pin, class: 'form-control'
 br
