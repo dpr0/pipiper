@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.0'
+ruby '3.0.1'
 
 gem 'activerecord-import'
 gem 'bootsnap'
@@ -18,7 +18,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-yandex'
 gem 'rest-client'
-gem 'doorkeeper', '5.5.0.rc1'
+gem 'doorkeeper'#, '5.5.0.rc1'
 gem 'whenever', require: false
 gem 'cocoon'
 

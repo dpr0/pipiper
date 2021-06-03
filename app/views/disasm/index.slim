@@ -1,0 +1,24 @@
+.row
+  .col-4.text-right
+    = number_field_tag :org, 25108
+  .col-4.text-center
+    = file_field_tag :file
+.xfile
+  = render partial: 'xfile'
+
+javascript:
+    $("input:file").change(function() {
+        let formData = new FormData();
+        formData.append('file', this.files[0]);
+        formData.append('org', $('#org').val());
+        $.ajax({
+            url: "#{xfile_disasm_index_path}",
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false
+        });
+    });
