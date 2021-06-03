@@ -7,7 +7,7 @@ class DisasmController < ApplicationController
   end
 
   def xfile
-    @result = Disasm.new(params[:file], params[:org]).start
+    @result = Z80Disassembler::Disassembler.new(params[:file], params[:org]).start
     render layout: false
   end
 end

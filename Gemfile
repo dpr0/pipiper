@@ -18,9 +18,10 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-yandex'
 gem 'rest-client'
-gem 'doorkeeper'#, '5.5.0.rc1'
+gem 'doorkeeper'
 gem 'whenever', require: false
 gem 'cocoon'
+gem 'z80_disassembler'#, path: '../z80_disassembler'
 
 group :development do
   gem 'byebug'
