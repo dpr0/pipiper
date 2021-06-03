@@ -169,7 +169,7 @@ class Disasm
       when 0 then "IN #{ "#{T_R[@y]}," if @y != 6}(C)"
       when 1 then "OUT (C),#{@y == 6 ? 0 : T_R[@y]}"
       when 2 then "#{@q ? 'ADC' : 'SBC'} HL,#{T_RP[@p]}"
-      when 3 then calc_bytes((@q ? ->(a, b){ "LD #{a},(#{b})" } : ->(a, b){ "LD #{b},(#{a})" }), T_RP[@p], 2)
+      when 3 then calc_bytes((@q ? ->(a, b){ "LD #{a},(#{b})" } : ->(a, b){ "LD (#{b}),#{a}" }), T_RP[@p], 2)
       when 4 then 'NEG'
       when 5 then @y == 1 ? 'RETI' : 'RETN'
       when 6 then "IM #{T_IM[@y]}"
