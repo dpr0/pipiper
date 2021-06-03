@@ -1,8 +1,12 @@
-.row
-  .col-4.text-right
-    = number_field_tag :org, 25108
-  .col-4.text-center
-    = file_field_tag :file
+section.signup-section
+  .container
+    .row.text-white
+      .col-2.text-right
+        = label_tag :org, 'ORG:'
+        = number_field_tag :org, 25108
+      .col-3.text-left
+        = label_tag :file, 'ФАЙЛ:'
+        = file_field_tag :file
 .xfile
   = render partial: 'xfile'
 
@@ -11,6 +15,7 @@ javascript:
         let formData = new FormData();
         formData.append('file', this.files[0]);
         formData.append('org', $('#org').val());
+        $('.signup-section').css('background', '');
         $.ajax({
             url: "#{xfile_disasm_index_path}",
             type: 'POST',

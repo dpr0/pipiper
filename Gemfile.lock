@@ -322,7 +322,7 @@ DEPENDENCIES
   omniauth
   omniauth-yandex
   pg
-  puma (= 4.3.6)
+  puma
   rack-mini-profiler
   rails
   rest-client
