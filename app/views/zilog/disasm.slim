@@ -17,7 +17,7 @@ javascript:
         formData.append('org', $('#org').val());
         $('.signup-section').css('background', '');
         $.ajax({
-            url: "#{xfile_disasm_index_path}",
+            url: "#{disasm_xfile_path}",
             type: 'POST',
             data: formData,
             async: false,

@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   end
 
   root 'devices#index'
-
-  resources :disasm, only: :index do
-    post :xfile, on: :collection
-  end
+  get  '/disasm',          to: 'zilog#disasm'
+  get  '/converter',       to: 'zilog#converter'
+  post '/disasm/xfile',    to: 'zilog#xfile'
+  post '/converter/yfile', to: 'zilog#yfile'
 end
