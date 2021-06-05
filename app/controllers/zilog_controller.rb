@@ -5,7 +5,8 @@ class ZilogController < ApplicationController
   SIZE      = 1..8
   PREFIX    = ['', '#', '$', '0x'].freeze
   SEPARATOR = ['_', ',', ',_'].freeze
-  SPLITTER  = 1..24
+  SPLITTER  = 1..32
+  DEFINE    = ['', 'db', 'defb'].freeze
 
   def disasm
     @result = {}
@@ -20,7 +21,7 @@ class ZilogController < ApplicationController
   end
 
   def yfile
-    @result = Converter.new(params).start
+    @result = params[:file] != 'undefined' ? Converter.new(params).start : ''
     render layout: false
   end
 end

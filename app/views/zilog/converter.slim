@@ -8,7 +8,6 @@ section.signup-section
             p = select_tag :size, options_for_select(ZilogController::SIZE, 1)
           li
             = 'Префикс:'
-            / (# $ 0x)
             p
               - ZilogController::PREFIX.each_with_index do |prefix, index|
                 .form-check.form-check-inline
@@ -16,15 +15,21 @@ section.signup-section
                   label.form-check-label for="prefix_#{index}" = prefix
           li
             = 'Разделитель:'
-            / (" " или "," или ", ")
             p
               - ZilogController::SEPARATOR.each_with_index do |separator, index|
                 .form-check.form-check-inline
-                  = radio_button_tag(:separator, separator, separator == ',_', class: 'form-check-input')
+                  = radio_button_tag(:separator, separator, separator == ',', class: 'form-check-input')
                   label.form-check-label for="separator_#{index}" = separator
           li
-            = label_tag :splitter,  'Перевод строки после кол-ва байт:'
-            p = select_tag :splitter,  options_for_select(ZilogController::SPLITTER, 8)
+            = 'Дефайн:'
+            p
+              - ZilogController::DEFINE.each_with_index do |define, index|
+                .form-check.form-check-inline
+                  = radio_button_tag(:define, define, define == '', class: 'form-check-input')
+                  label.form-check-label for="separator_#{index}" = define
+          li
+            = label_tag :splitter,  'Перевод строки после:'
+            p = select_tag :splitter,  options_for_select(ZilogController::SPLITTER, 32)
           li
             = label_tag :file, 'ФАЙЛ:'
             p = file_field_tag :file
@@ -33,14 +38,14 @@ section.signup-section
           = render partial: 'yfile'
 
 javascript:
-    $("input:file").change(function() {
+    function reload() {
         let formData = new FormData();
-        formData.append('file',            this.files[0]);
-        formData.append('size',         $('#size').val());
+        formData.append('file', $('#file')[0].files[0]);
+        formData.append('size', $('#size').val());
         formData.append('splitter', $('#splitter').val());
-        formData.append('prefix',       $('input[name=prefix]:checked').val() || '');
+        formData.append('define', $('input[name=define]:checked').val() || '');
+        formData.append('prefix', $('input[name=prefix]:checked').val() || '');
         formData.append('separator', $('input[name=separator]:checked').val() || ', ');
-        $('.signup-section').css('background', '');
         $.ajax({
             url: "#{converter_yfile_path}",
             type: 'POST',
@@ -51,4 +56,7 @@ javascript:
             enctype: 'multipart/form-data',
             processData: false
         })
-    })
+    }
+
+    $('select').change( () => reload() );
+    $('input' ).change( () => reload() );
