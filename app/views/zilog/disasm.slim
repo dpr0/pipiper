@@ -1,14 +1,17 @@
 section.signup-section
   .container
     .row.text-white
-      .col-2.text-right
-        = label_tag :org, 'ORG:'
-        = number_field_tag :org, 32768
-      .col-3.text-left
-        = label_tag :file, 'ФАЙЛ:'
-        = file_field_tag :file
-.xfile
-  = render partial: 'xfile'
+      .col-3
+        ul
+          li
+            = label_tag :org, 'ORG:'
+            p = number_field_tag :org, 25108 || 32768
+          li
+            = label_tag :file, 'ФАЙЛ:'
+            p = file_field_tag :file
+      .col-9
+        .file
+          = render partial: 'file'
 
 javascript:
     $("input:file").change(function() {
@@ -17,7 +20,7 @@ javascript:
         formData.append('org', $('#org').val());
         $('.signup-section').css('background', '');
         $.ajax({
-            url: "#{disasm_xfile_path}",
+            url: "#{disasm_path}",
             type: 'POST',
             data: formData,
             async: false,
@@ -27,3 +30,13 @@ javascript:
             processData: false
         });
     });
+
+    function copy_to_clipboard() {
+        $("#textarea").select();
+        document.execCommand("copy");
+    }
+
+    function download_txt() {
+        var blob = new Blob([$("#textarea").val()], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, 'file_' + Date.now() + ".asm");
+    }

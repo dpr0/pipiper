@@ -95,7 +95,7 @@ GEM
       puma (~> 4.0)
     chronic (0.10.2)
     cocoon (1.2.15)
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     crass (1.0.6)
     devise (4.8.0)
       bcrypt (~> 3.0)

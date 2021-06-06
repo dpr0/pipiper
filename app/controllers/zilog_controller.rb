@@ -2,26 +2,36 @@
 
 class ZilogController < ApplicationController
 
-  SIZE      = 1..8
   PREFIX    = ['', '#', '$', '0x'].freeze
   SEPARATOR = ['_', ',', ',_'].freeze
-  SPLITTER  = 1..32
   DEFINE    = ['', 'db', 'defb'].freeze
 
+  before_action :check_file
+
   def disasm
-    @result = {}
+    return if @error
+
+    res = Z80Disassembler::Disassembler.new(params[:file], params[:org])
+    res.start
+    @result = res.text
+    render layout: false
   end
 
   def converter
-  end
+    return if @error
 
-  def xfile
-    @result = Z80Disassembler::Disassembler.new(params[:file], params[:org]).start
+    @result = Converter.new(params).start
     render layout: false
   end
 
-  def yfile
-    @result = params[:file] != 'undefined' ? Converter.new(params).start : ''
-    render layout: false
+  private
+
+  def check_file
+    @result = if params[:file].nil? || params[:file] == 'undefined'
+                'File not found'
+              elsif params[:file].size > (1024 * 1024)
+                'File size > 1mb'
+              end
+    @error = @result.present?
   end
 end

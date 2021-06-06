@@ -22,7 +22,7 @@ class Converter
         .each_slice(@splitter).to_a
         .map { |str|
           z = str.join(@separator)
-          @define.present? ? ("#{@define} #{z}") : z
+          @define.present? ? ("    #{@define} #{z}") : z
         }
         .join("\n")
   end
