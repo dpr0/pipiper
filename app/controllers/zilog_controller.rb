@@ -11,9 +11,10 @@ class ZilogController < ApplicationController
   def disasm
     return if @error
 
-    res = Z80Disassembler::Disassembler.new(params[:file], params[:org])
-    res.start
-    @result = res.text
+    service = Z80Disassembler::Disassembler.new(params[:file], params[:org])
+    service.start
+    @result = service.text
+    @org = service.org
     render layout: false
   end
 

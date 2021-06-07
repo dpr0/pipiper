@@ -5,7 +5,7 @@ section.signup-section
         ul
           li
             = label_tag :org, 'ORG:'
-            p = number_field_tag :org, 25108 || 32768
+            p = number_field_tag :org, @org || 32768
           li
             = label_tag :file, 'ФАЙЛ:'
             p = file_field_tag :file
@@ -14,10 +14,10 @@ section.signup-section
           = render partial: 'file'
 
 javascript:
-    $("input:file").change(function() {
+    function reload() {
         let formData = new FormData();
-        formData.append('file', this.files[0]);
-        formData.append('org', $('#org').val());
+        formData.append('file', $('#file')[0].files[0]);
+        formData.append('org',  $('#org').val());
         $('.signup-section').css('background', '');
         $.ajax({
             url: "#{disasm_path}",
@@ -29,7 +29,9 @@ javascript:
             enctype: 'multipart/form-data',
             processData: false
         });
-    });
+    }
+
+    $('input').change(() => reload());
 
     function copy_to_clipboard() {
         $("#textarea").select();
