@@ -12,7 +12,7 @@
     "bootstrap": "^5.0.1",
     "chart.js": "^3.3.2",
     "chartkick": "^4.0.4",
-    "core-js": "^3.13.1",
+    "core-js": "^3.14.0",
     "file-saver": "^2.0.5",
     "interact": "^0.0.3",
     "jquery": "^3.6.0",

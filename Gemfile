@@ -21,6 +21,7 @@ gem 'rest-client'
 gem 'doorkeeper'
 gem 'whenever', require: false
 gem 'cocoon'
+gem 'rouge'
 gem 'z80_disassembler'#, path: '../z80_disassembler'
 
 group :development do
