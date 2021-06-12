@@ -2,7 +2,9 @@ section.signup-section
   .container
     .row.text-white
       .col-4
-        = label_tag :size, 'Bytes:'
+        = label_tag :size, "Bytes:"
+        span &nbsp
+        span#byte_size
         p
           .d-flex
             span 1
@@ -21,6 +23,8 @@ section.signup-section
         p = file_field_tag :file
       .col-4
         = label_tag :splitter, 'Row size:'
+        span &nbsp
+        span#row_size
         p
           .d-flex
             span 1
@@ -67,6 +71,11 @@ javascript:
         })
     }
 
+    $('#byte_size').html($('#size').val())
+    $('#row_size').html($('#splitter').val())
+
+    $('#size').change( () => $('#byte_size').html($('#size').val()) );
+    $('#splitter').change( () => $('#row_size').html($('#splitter').val()) );
     $('select').change( () => reload() );
     $('input' ).change( () => reload() );
 
