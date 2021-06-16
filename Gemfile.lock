@@ -236,8 +236,7 @@ GEM
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
     rexml (3.2.5)
-    rouge (3.26.0)
-    rubocop (1.16.1)
+    rubocop (1.17.0)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
@@ -292,12 +291,12 @@ GEM
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
       semantic_range (>= 2.3.0)
-    websocket-driver (0.7.4)
+    websocket-driver (0.7.5)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
-    z80_disassembler (0.2.6)
+    z80_disassembler (0.2.7)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -328,7 +327,6 @@ DEPENDENCIES
   rack-mini-profiler
   rails
   rest-client
-  rouge
   rubocop
   slim-rails
   spring

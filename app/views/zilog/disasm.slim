@@ -3,12 +3,14 @@ section.signup-section
     .row.text-white
       .col-3
         ul
-          li
-            = label_tag :org, 'ORG:'
-            p = number_field_tag :org, @org || 32768
-          li
+          p
+            div = label_tag :org, 'ORG:'
+            = number_field_tag :org, @org
+          p
+            = text_field_tag :org_hex, "##{@org.to_s(16)}"
+          p
             = label_tag :file, 'ФАЙЛ:'
-            p = file_field_tag :file
+            = file_field_tag :file
       .col-9
         .file
           = render partial: 'file'
@@ -31,10 +33,21 @@ javascript:
         });
     }
 
+    $('#org_hex').change(() => {
+        let hex = $('#org_hex').val().split('#')[1];
+        $('#org').val(parseInt('0x' + hex, 16))
+    });
+    $('#org').change(() => {
+        let num = parseInt($('#org').val(),10).toString(16)
+        $('#org_hex').val('#' + num)
+    });
+
     $('input').change(() => reload());
 
     function copy_to_clipboard() {
-        $("#textarea").select();
+        let textarea = $('#textarea');
+        textarea.val(editor.getValue());
+        textarea.select();
         document.execCommand("copy");
     }
 

@@ -9,12 +9,13 @@ class ZilogController < ApplicationController
   before_action :check_file
 
   def disasm
+    @org = 32768
     return if @error
 
-    service = Z80Disassembler::Disassembler.new(params[:file], params[:org])
+    service   = Z80Disassembler::Disassembler.new(params[:file], params[:org])
     service.start
-    @result = service.text
-    @org = service.org
+    @result   = service.text
+    @org      = service.org
     render layout: false
   end
 
