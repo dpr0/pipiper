@@ -127,7 +127,7 @@ GEM
     faraday-excon (1.1.0)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.1.0)
-    ffi (1.15.1)
+    ffi (1.15.3)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     hashie (4.1.0)
@@ -189,8 +189,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
-    rack-mini-profiler (2.3.2)
-      rack (>= 1.2.0)
     rack-proxy (0.7.0)
       rack
     rack-test (1.1.0)
@@ -296,7 +294,6 @@ GEM
     websocket-extensions (0.1.5)
     whenever (1.0.0)
       chronic (>= 0.6.3)
-    z80_disassembler (0.2.7)
     zeitwerk (2.4.2)
 
 PLATFORMS
@@ -324,7 +321,6 @@ DEPENDENCIES
   omniauth-yandex
   pg
   puma
-  rack-mini-profiler
   rails
   rest-client
   rubocop
@@ -334,7 +330,6 @@ DEPENDENCIES
   web-console
   webpacker
   whenever
-  z80_disassembler
 
 RUBY VERSION
    ruby 3.0.1p64
