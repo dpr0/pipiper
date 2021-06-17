@@ -16,8 +16,4 @@ Rails.application.routes.draw do
   end
 
   root 'devices#index'
-  get  '/disasm',    to: 'zilog#disasm'
-  post '/disasm',    to: 'zilog#disasm'
-  get  '/converter', to: 'zilog#converter'
-  post '/converter', to: 'zilog#converter'
 end

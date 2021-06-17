@@ -21,7 +21,6 @@ gem 'rest-client'
 gem 'doorkeeper'
 gem 'whenever', require: false
 gem 'cocoon'
-gem 'z80_disassembler'#, path: '../z80_disassembler'
 
 group :development do
   gem 'byebug'
@@ -36,7 +35,6 @@ group :development do
   gem 'ed25519'
   gem 'bcrypt_pbkdf'
   gem 'web-console'
-  gem 'rack-mini-profiler'
   gem 'listen'
   gem 'spring'
 end

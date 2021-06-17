@@ -11,4 +11,3 @@ require("jquery")
 require("@nathanvda/cocoon")
 import 'bootstrap'
 import './stylesheets/application'
-import { saveAs } from 'file-saver';
