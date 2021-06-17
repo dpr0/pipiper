@@ -1,0 +1,30 @@
+.btn-group-sm
+  = link_to 'Copy to clipboard', '#', class: 'btn btn-xs btn-outline-primary', onclick: 'copy_to_clipboard()'
+  = link_to 'Download', '#', class: 'btn btn-xs btn-outline-success', onclick: 'download_txt()'
+.input-group
+  textarea.form-control#textarea rows="25" = @result
+    / .highlight.autumn = sanitize @html
+  #editor = @result
+
+script src="https://pagecdn.io/lib/ace/1.4.12/ace.js" crossorigin="anonymous" integrity="sha256-Q9hnBpgBFstzZOr+OKFOWZWfcF5nFXO8Qz48Nmndo6U="
+
+javascript:
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.session.setMode("ace/mode/assembly_x86");
+
+    // pass options to ace.edit
+    // ace.edit(element, {
+    //     mode: "ace/mode/c",
+    //     selectionStyle: "text"
+    // })
+    // use setOptions method to set several options at once
+    editor.setOptions({
+        autoScrollEditorIntoView: true,
+        copyWithEmptySelection: true,
+    });
+    // use setOptions method
+    // editor.setOption("mergeUndoDeltas", "always");
+
+    // to get the value of the option use
+    // editor.getOption("optionName");

@@ -4,7 +4,7 @@ lock '3.16.0'
 
 server 'pipiper.ru', port: 2222, roles: %w(app db web), primary: true
 
-set :rbenv_ruby,      '3.0.0'
+set :rbenv_ruby,      '3.0.1'
 set :application,     'pipiper'
 set :repo_url,        'git@github.com:dpr0/pipiper.git'
 set :deploy_user,     'deploy'
@@ -16,6 +16,7 @@ set :use_sudo,        false
 set :stage,           :production
 set :deploy_to,       "/home/#{fetch(:user)}/#{fetch(:application)}"
 set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+set :ruby_string,     '$HOME/.rbenv/bin/rbenv exec bundle exec'
 
 set :ssh_options, {
   user: 'deploy',
@@ -51,7 +52,7 @@ namespace :deploy do
   desc 'Runs rake assets:precompile'
   task :precompile do
     on roles(:app) do
-      execute("cd #{application}/current && RAILS_ENV=production rvm #{ruby_string} do rake assets:precompile") if stage == :production
+      execute("cd #{fetch(:application)}/current && RAILS_ENV=production #{fetch(:ruby_string)} rake assets:precompile") if fetch(:stage) == :production
     end
   end
 

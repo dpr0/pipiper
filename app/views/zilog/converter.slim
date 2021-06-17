@@ -1,0 +1,90 @@
+section.signup-section
+  .container
+    .row.text-white
+      .col-4
+        = label_tag :size, "Bytes:"
+        span &nbsp
+        span#byte_size
+        p
+          .d-flex
+            span 1
+            form.range-field.w-100
+              input.form-range max="8" min="1" type="range" id="size" value="1"
+            span 8
+      .col-4
+        = 'Separator:'
+        p
+          - ZilogController::SEPARATOR.each_with_index do |separator, index|
+            .form-check.form-check-inline
+              = radio_button_tag(:separator, separator, separator == ',', class: 'form-check-input')
+              label.form-check-label for="separator_#{index}" = separator
+      .col-4
+        = label_tag :file, 'File:'
+        p = file_field_tag :file
+      .col-4
+        = label_tag :splitter, 'Row size:'
+        span &nbsp
+        span#row_size
+        p
+          .d-flex
+            span 1
+            form.range-field.w-100
+              input.form-range max="64" min="1" type="range" id="splitter" value="32"
+            span 64
+      .col-4
+        = 'Define:'
+        p
+          - ZilogController::DEFINE.each_with_index do |define, index|
+            .form-check.form-check-inline
+              = radio_button_tag(:define, define, define == '', class: 'form-check-input')
+              label.form-check-label for="define_#{index}" = define
+      .col-4
+        = 'Prefix:'
+        p
+          - ZilogController::PREFIX.each_with_index do |prefix, index|
+            .form-check.form-check-inline
+              = radio_button_tag(:prefix, prefix, prefix == '#', class: 'form-check-input')
+              label.form-check-label for="prefix_#{index}" = prefix
+    .row
+      .col-12
+        .file
+          = render partial: 'file'
+
+javascript:
+    function reload() {
+        let formData = new FormData();
+        formData.append('file', $('#file')[0].files[0]);
+        formData.append('size', $('#size').val());
+        formData.append('splitter', $('#splitter').val());
+        formData.append('define', $('input[name=define]:checked').val() || '');
+        formData.append('prefix', $('input[name=prefix]:checked').val() || '');
+        formData.append('separator', $('input[name=separator]:checked').val() || ', ');
+        $.ajax({
+            url: "#{converter_path}",
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false
+        })
+    }
+
+    $('#byte_size').html($('#size').val())
+    $('#row_size').html($('#splitter').val())
+
+    $('#size').change( () => $('#byte_size').html($('#size').val()) );
+    $('#splitter').change( () => $('#row_size').html($('#splitter').val()) );
+    $('select').change( () => reload() );
+    $('input' ).change( () => reload() );
+
+    function copy_to_clipboard() {
+        $("#textarea").select();
+        document.execCommand("copy");
+    }
+
+    function download_txt(str) {
+        var blob = new Blob([$("#textarea").val()], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, 'file_' + Date.now() + ".asm");
+    }

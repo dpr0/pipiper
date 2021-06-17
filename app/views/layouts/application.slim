@@ -13,6 +13,13 @@ html
     nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
       .container
         = link_to 'Pi-PIPER', root_path, class: 'nav-brand js-scroll-trigger'
+        ul.navbar-nav.ml-auto
+          li.nav-item
+            .nav-link
+          li.nav-item
+            = link_to 'File to Hex Converter', converter_path, class: 'nav-link js-scroll-trigger'
+          li.nav-item
+            = link_to 'Z80 Disassembler', disasm_path, class: 'nav-link js-scroll-trigger'
         button.navbar-toggler.navbar-toggler-right aria-controls="navbarResponsive" aria-expanded="false" aria-label=("Toggle navigation") data-target="#navbarResponsive" data-toggle="collapse" type="button"
           | Menu
           i.fas.fa-bars
