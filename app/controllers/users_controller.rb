@@ -35,7 +35,7 @@ class UsersController < ApplicationController
           code = if ud.host.split('/').first == 'mqtt'
             name = ud.host.split('/').last
             client = MQTT::Client.connect(ENV['MQTT_HOST'], port: ENV['MQTT_PORT'], username: ENV['MQTT_USER'], password: ENV['MQTT_PASS'])
-            client.publish("#{name}/setTargetPosition", cap[:state][:value] ? 0 : 100, true)
+            client.publish("#{name}/setTargetPosition", cap[:state][:value] ? 100 : 0, true)
             client.disconnect
             200
           else
