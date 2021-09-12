@@ -5,6 +5,8 @@ class Device < ApplicationRecord
   accepts_nested_attributes_for :capabilities, reject_if: :all_blank, allow_destroy: true
   belongs_to :user
 
+  MQTT_CLIENT = MQTT::Client.connect(ENV['MQTT_HOST'], port: ENV['MQTT_PORT'], username: ENV['MQTT_USER'], password: ENV['MQTT_PASS'])
+
   TYPES = [
     ['Лампочка, светильник, люстра.',                                'devices.types.light'                ],
     ['Розетка.',                                                     'devices.types.socket'               ],
