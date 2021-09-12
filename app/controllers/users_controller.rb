@@ -37,8 +37,10 @@ class UsersController < ApplicationController
             if mqtt_client
               mqtt_client.publish("#{name}/setTargetPosition", cap[:state][:value] ? 100 : 0, true)
               mqtt_client.disconnect
+              200
+            else
+              500
             end
-            500
           else
             resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
             resp.code
