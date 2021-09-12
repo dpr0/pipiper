@@ -71,7 +71,8 @@ class Device < ApplicationRecord
   end
 
   def self.enabled(user_id)
-    eager_load(:capabilities).where("devices.user_id = ? and devices.enabled = ? and capabilities.enabled = ?", user_id, true, true)
+    # eager_load(:capabilities).where("devices.user_id = ? and devices.enabled = ? and capabilities.enabled = ?", user_id, true, true)
+    eager_load(:capabilities).where(user_id: user_id, enabled: true, capabilities: {enabled: true})
   end
 
   def self.user_devices(user_id)
@@ -90,7 +91,7 @@ class Device < ApplicationRecord
   end
 
   def self.user_query(user_id)
-    eager_load(:capabilities).where(user_id: user_id).map do |d|
+    enabled(user_id).map do |d|
       {
         id: d.id, capabilities: d.capabilities.map do |cap|
           { type: cap.capability_type, state: { instance: cap.state_instance, value: true } }
