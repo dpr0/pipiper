@@ -34,8 +34,11 @@ class UsersController < ApplicationController
           dc.update(status: cap[:state][:value])
           code = if ud.host.split('/').first == 'mqtt'
             name = ud.host.split('/').last
-            Device::MQTT_CLIENT.publish("#{name}/setTargetPosition", cap[:state][:value] ? 100 : 0, true)
-            200
+            if mqtt_client
+              mqtt_client.publish("#{name}/setTargetPosition", cap[:state][:value] ? 100 : 0, true)
+              mqtt_client.disconnect
+            end
+            500
           else
             resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
             resp.code
@@ -49,6 +52,12 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def mqtt_client
+    @mqtt_client ||= MQTT::Client.connect(ENV['MQTT_HOST'], port: ENV['MQTT_PORT'], username: ENV['MQTT_USER'], password: ENV['MQTT_PASS'])
+  rescue
+    nil
+  end
 
   def current_user
     @user ||= User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
