@@ -85,7 +85,11 @@ class Device < ApplicationRecord
         type: d.device_type,
         custom_data: {},
         device_info: { manufacturer: d.manufacturer, model: d.model, hw_version: d.hw_version, sw_version: d.sw_version },
-        capabilities: d.capabilities.map { |cap| { type: cap.capability_type, retrievable: cap.retrievable } }
+        capabilities: d.capabilities.map { |cap| {
+            type: cap.capability_type,
+            retrievable: cap.retrievable,
+            parameters: cap.parameters
+        } }
       }
     end
   end
