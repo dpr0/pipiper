@@ -21,6 +21,7 @@ gem 'rest-client'
 gem 'doorkeeper'
 gem 'whenever', require: false
 gem 'cocoon'
+gem 'mqtt'
 
 group :development do
   gem 'byebug'

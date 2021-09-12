@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    meta name="yandex-verification" content="787ef19d05d4db25"
+    / meta name="yandex-verification" content="787ef19d05d4db25"
     = csrf_meta_tags
     = csp_meta_tag
     link href="/public/favicon.ico" rel=('shortcut icon') type="image/x-icon"
@@ -9,6 +9,20 @@ html
 
     = javascript_packs_with_chunks_tag 'application'
     = stylesheet_packs_with_chunks_tag 'application', media: 'all'
+    = favicon_link_tag asset_path('favicon.png')
+
+    link href="https://pipiper.ru" rel="canonical"
+    meta name="yandex-verification" content="b99dd95dd6cc6f01"
+    meta name="description" content="pipiper.ru"
+    meta name="twitter:card" content="summary_large_image"
+    meta property="og:url" content="https://pipiper.ru/"
+    meta property="og:site_name" content="pipiper.ru"
+    meta property="og:type" content="website"
+    meta property="og:title" content="pipiper.ru"
+    meta property="og:locale" content="ru_RU"
+    meta property="og:description" content="pipiper.ru"
+    meta property="og:image" content="#{asset_path('og-image.png')}"
+
   body style="background-color: rgba(22,22,22,1)"
     nav#mainNav.navbar.navbar-expand-lg.navbar-light.fixed-top
       .container

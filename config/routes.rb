@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :devices do
+    get :drivent, on: :collection
     resources :capabilities
   end
 

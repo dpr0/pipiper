@@ -42,6 +42,13 @@ class DevicesController < ApplicationController
     redirect_to devices_url, notice: 'Устройство удалено!'
   end
 
+  def drivent
+    client = MQTT::Client.connect(ENV['MQTT_HOST'], port: ENV['MQTT_PORT'], username: ENV['MQTT_USER'], password: ENV['MQTT_PASS'])
+    client.publish("#{params[:name]}/setTargetPosition", params[:percent], true)
+    client.disconnect
+    render json: {name: params[:name], percent: params[:percent]}
+  end
+
   private
 
   def set_device
