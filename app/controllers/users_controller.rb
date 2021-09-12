@@ -32,9 +32,18 @@ class UsersController < ApplicationController
         capabilities: d[:capabilities].map do |cap|
           dc = ud.capabilities.find_by(capability_type: cap[:type]) # device_capability
           dc.update(status: cap[:state][:value])
-          resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
+          code = if ud.host.split('/').first == 'mqtt'
+            name = ud.host.split('/').last
+            client = MQTT::Client.connect(ENV['MQTT_HOST'], port: ENV['MQTT_PORT'], username: ENV['MQTT_USER'], password: ENV['MQTT_PASS'])
+            client.publish("#{name}/setTargetPosition", cap[:state][:value] ? 0 : 100, true)
+            client.disconnect
+            200
+          else
+            resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
+            resp.code
+          end
           # response = JSON.parse(resp.body)
-          { type: cap[:type], state: { instance: dc.state_instance, action_result: { status: resp.code == 200 ? 'DONE' : 'ERROR' } } }
+          { type: cap[:type], state: { instance: dc.state_instance, action_result: { status: code == 200 ? 'DONE' : 'ERROR' } } }
         end
       }
     end

@@ -78,7 +78,7 @@ class Device < ApplicationRecord
   def self.user_devices(user_id)
     enabled(user_id).map do |d|
       {
-        id: d.id.to_s,
+        id: d.id,
         name: d.name,
         description: d.description,
         room: d.room,
