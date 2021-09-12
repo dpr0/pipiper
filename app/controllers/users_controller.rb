@@ -34,7 +34,7 @@ class UsersController < ApplicationController
           dc.update(status: cap[:state][:value])
           code = if ud.host.split('/').first == 'mqtt'
             name = ud.host.split('/').last
-            MQTT_CLIENT.publish("#{name}/setTargetPosition", cap[:state][:value] ? 100 : 0, true)
+            Device::MQTT_CLIENT.publish("#{name}/setTargetPosition", cap[:state][:value] ? 100 : 0, true)
             200
           else
             resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
