@@ -22,7 +22,7 @@
                 li = message
         .form-group.row
           = f.label :enabled, 'Активирован?', class: 'col-sm-4 col-form-label text-white-50'
-          .col-sm-8 = f.check_box :enabled, class: 'form-control'
+          .col-sm-8= f.check_box :enabled
         .form-group.row
           = f.label :host, 'Хост', class: 'col-sm-4 col-form-label text-white-50'
           .col-sm-8 = f.text_field :host, class: 'form-control'

@@ -9,15 +9,16 @@
           .col-sm-4
             .form-group.row
               = f.label :enabled, 'Активирован?', class: 'col-form-label'
-              = f.check_box :enabled, class: 'form-control'
+              = f.check_box :enabled
           .col-sm-4
             .form-group.row
-              = f.label :retrievable, 'retrievable', class: 'col-form-label'
-              = f.check_box :retrievable, class: 'form-control'
+              = f.label :retrievable, 'Извлекаемый', class: 'col-form-label'
+              = f.check_box :retrievable
           .col-sm-4
             .form-group.row
-              = f.label :status, 'status', class: 'col-form-label'
-              = f.check_box :status, class: 'form-control'
+              = f.label :status, 'Статус', class: 'col-form-label'
+              = f.check_box :status
+        br
         .form-group.row
           = f.label :state, 'state', class: 'col-sm-4 col-form-label'
           .col-sm-8 = f.text_field :state, class: 'form-control'
