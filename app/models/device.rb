@@ -105,13 +105,14 @@ class Device < ApplicationRecord
     capability = { type: cap.capability_type, retrievable: cap.retrievable }
     if cap.capability_type == 'devices.capabilities.range'
       capability[:parameters] = {
-          instance: :open,
+          instance: 'open',
           unit: 'unit.percent',
           random_access: true,
           range: {
-              min: '0',
-              max: '100',
-              precision: '1'}
+              min: 0,
+              max: 100,
+              precision: 1
+          }
       }
     end
     capability
