@@ -87,7 +87,8 @@ class Device < ApplicationRecord
         capabilities: d.capabilities.map { |cap| {
             type: cap.capability_type,
             retrievable: cap.retrievable,
-            parameters: cap.parameters
+            parameters: { instance: :open, unit: 'unit.percent', random_access: true, range: {min: 0, max: 100, precision: 1}}
+        # cap.parameters
         } }
       }
     end
