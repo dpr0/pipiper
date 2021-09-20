@@ -87,7 +87,12 @@ class Device < ApplicationRecord
         capabilities: d.capabilities.map { |cap| {
             type: cap.capability_type,
             retrievable: cap.retrievable,
-            parameters: { instance: :open, unit: 'unit.percent', random_access: true, range: {min: 0, max: 100, precision: 1}}
+            parameters:
+                if cap.capability_type == 'devices.capabilities.range'
+                  { instance: :open, unit: 'unit.percent', random_access: true, range: {min: 0, max: 100, precision: 1}}
+                else
+                  {}
+                end
         # cap.parameters
         } }
       }
@@ -104,3 +109,85 @@ class Device < ApplicationRecord
     end
   end
 end
+
+{
+    "request_id":"4b839b7a-7763-4946-addf-933ddc76c9f1",
+    "payload":{
+        "user_id":"4",
+        "devices":[
+            {
+                "id":5,
+                "name":"Окно",
+                "description":"проветривание",
+                "room":"Кухня",
+                "type":"devices.types.openable",
+                "custom_data":{
+                },
+                "device_info":{
+                    "manufacturer":"Drivent",
+                    "model":"",
+                    "hw_version":"",
+                    "sw_version":""
+                },
+                "capabilities":[
+                    {
+                        "type":"devices.capabilities.range",
+                        "retrievable":true,
+                        "parameters":{
+                            "instance":"open",
+                            "unit":"unit.percent",
+                            "random_access":true,
+                            "range":{
+                                "min":0,
+                                "max":100,
+                                "precision":1
+                            }
+                        }
+                    },
+                    {
+                        "type":"devices.capabilities.on_off",
+                        "retrievable":true,
+                        "parameters":{
+                            "instance":"open",
+                            "unit":"unit.percent",
+                            "random_access":true,
+                            "range":{
+                                "min":0,
+                                "max":100,
+                                "precision":1
+                            }
+                        }
+                    }]
+            },
+            {
+                "id":1,
+                "name":"Свет",
+                "description":"Свет на кухне",
+                "room":"Кухня",
+                "type":"devices.types.socket",
+                "custom_data":{
+                },
+                "device_info":{
+                    "manufacturer":"dpro",
+                    "model":"test1",
+                    "hw_version":"1",
+                    "sw_version":"1"
+                },
+                "capabilities":[
+                    {
+                        "type":"devices.capabilities.on_off",
+                        "retrievable":true,
+                        "parameters":{
+                            "instance":"open",
+                            "unit":"unit.percent",
+                            "random_access":true,
+                            "range":{
+                                "min":0,
+                                "max":100,
+                                "precision":1
+                            }
+                        }
+                    }]
+            }]
+    }
+}
