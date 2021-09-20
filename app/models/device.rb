@@ -110,8 +110,7 @@ class Device < ApplicationRecord
           random_access: true,
           range: {
               min: 0,
-              max: 100,
-              precision: 1
+              max: 100
           }
       }
     end
