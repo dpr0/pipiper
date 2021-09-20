@@ -77,7 +77,7 @@ class Device < ApplicationRecord
   def self.user_devices(user_id)
     enabled(user_id).map do |d|
       {
-        id: d.id,
+        id: d.id.to_s,
         name: d.name,
         description: d.description,
         room: d.room,
@@ -109,8 +109,9 @@ class Device < ApplicationRecord
           unit: 'unit.percent',
           random_access: true,
           range: {
-              min: 0.0,
-              max: 100.0
+              min: 0,
+              max: 100,
+              precision: 1
           }
       }
     end
