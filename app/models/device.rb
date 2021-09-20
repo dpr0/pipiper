@@ -109,8 +109,8 @@ class Device < ApplicationRecord
           unit: 'unit.percent',
           random_access: true,
           range: {
-              min: 0,
-              max: 100
+              min: 0.0,
+              max: 100.0
           }
       }
     end
