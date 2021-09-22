@@ -35,7 +35,7 @@ class UsersController < ApplicationController
           code = if ud.host.split('/').first == 'mqtt'
             name = ud.host.split('/').last
             if mqtt_client
-              mqtt_client.publish("#{name}/setTargetPosition", cap[:state][:value] ? 100 : 0, true)
+              mqtt_client.publish("#{name}/setTargetPosition", set_state(cap[:state]), true)
               mqtt_client.disconnect
               200
             else
@@ -54,6 +54,14 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def set_state(state)
+    case state[:instance]
+    when 'on'   then state[:value] ? 100 : 0
+    when 'open' then state[:value]
+    else             state[:value] ? 100 : 0
+    end
+  end
 
   def mqtt_client
     @mqtt_client ||= MQTT::Client.connect(ENV['MQTT_HOST'], port: ENV['MQTT_PORT'], username: ENV['MQTT_USER'], password: ENV['MQTT_PASS'])
