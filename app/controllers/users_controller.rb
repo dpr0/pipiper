@@ -37,10 +37,11 @@ class UsersController < ApplicationController
         capabilities: d[:capabilities].map do |cap|
           dc = ud.capabilities.find_by(capability_type: cap[:type]) # device_capability
           dc.update(status: cap[:state][:value])
+          state = set_state(cap[:state])
           code = if ud.host.split('/').first == 'mqtt'
             name = ud.host.split('/').last
             if mqtt_client
-              mqtt_client.publish("#{name}/setTargetPosition", set_state(cap[:state]), true)
+              mqtt_client.publish("#{name}/setTargetPosition", state, true)
               mqtt_client.disconnect
               200
             else
@@ -56,7 +57,11 @@ class UsersController < ApplicationController
               retrievable: cap[:retrievable],
               reportable: cap[:reportable],
               parameters: {},
-              state: { instance: dc.state_instance, action_result: { status: code == 200 ? 'DONE' : 'ERROR' } }
+              state: {
+                  instance: dc.state_instance,
+                  value: state,
+                  action_result: { status: code == 200 ? 'DONE' : 'ERROR' }
+              }
           }
         end
       }
