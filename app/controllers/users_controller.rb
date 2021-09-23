@@ -28,7 +28,12 @@ class UsersController < ApplicationController
       ud = user_devices.find(d[:id]) # user_device
       {
         id: d[:id],
+        name: ud.name,
+        description: ud.description,
+        room: ud.room,
+        type: ud.device_type,
         custom_data: {},
+        device_info: {manufacturer: ud.manufacturer, model: ud.model, hw_version: ud.hw_version, sw_version: ud.sw_version},
         capabilities: d[:capabilities].map do |cap|
           dc = ud.capabilities.find_by(capability_type: cap[:type]) # device_capability
           dc.update(status: cap[:state][:value])
@@ -46,11 +51,17 @@ class UsersController < ApplicationController
             resp.code
           end
           # response = JSON.parse(resp.body)
-          { type: cap[:type], state: { instance: dc.state_instance, action_result: { status: code == 200 ? 'DONE' : 'ERROR' } } }
+          {
+              type: cap[:type],
+              retrievable: cap[:retrievable],
+              reportable: cap[:reportable],
+              parameters: {},
+              state: { instance: dc.state_instance, action_result: { status: code == 200 ? 'DONE' : 'ERROR' } }
+          }
         end
       }
     end
-    render_status(devices: devices_response)
+    render_status(user_id: current_user.id.to_s, devices: devices_response)
   end
 
   private
@@ -58,7 +69,7 @@ class UsersController < ApplicationController
   def set_state(state)
     case state[:instance]
     when 'on'   then state[:value] ? 100 : 0
-    when 'open' then state[:value]
+    when 'open' then state[:value].to_i
     else             state[:value] ? 100 : 0
     end
   end
