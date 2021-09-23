@@ -54,9 +54,11 @@ class UsersController < ApplicationController
           # response = JSON.parse(resp.body)
           {
               type: cap[:type],
-              retrievable: cap[:retrievable],
-              reportable: cap[:reportable],
-              parameters: {},
+              # retrievable: cap[:retrievable],
+              # reportable: cap[:reportable],
+              parameters: {
+                  instance: dc.state_instance
+              },
               state: {
                   instance: dc.state_instance,
                   value: state,
