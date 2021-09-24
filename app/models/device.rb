@@ -58,14 +58,19 @@ class Device < ApplicationRecord
 
   INFO = {
     mac: `ifconfig`.split('ether ')[1][0..16],
-    name: 'Bosch_BME280',
     owner: 'dvitvitskiy.pro@gmail.com'
   }.freeze
 
   def self.narod_mon
-    bme280 = JSON.parse RestClient.get('krsz.ru:3005/bme280')
-    data = Device::METROLOGY.map { |v| { id: v[0], name: v[1], value: bme280[v[0]], unit: v[2] } }
-    RestClient.post('http://narodmon.ru/post', { devices: [INFO.merge(sensors: data)] }.to_json)
+    bme280_1 = JSON.parse RestClient.get('krsz.ru:3005/bme280')
+    bme280_2 = JSON.parse RestClient.get('krsz.ru:3005/bme280_2')
+    data_1 = Device::METROLOGY.map { |v| { id: v[0], name: v[1], value: bme280_1[v[0]], unit: v[2] } }
+    data_2 = Device::METROLOGY.map { |v| { id: v[0], name: v[1], value: bme280_2[v[0]], unit: v[2] } }
+    devices = [
+        INFO.merge(sensors: data_1, name: 'Bosch_BME280'),
+        INFO.merge(sensors: data_2, name: 'Bosch_BME280_2')
+    ]
+    RestClient.post('http://narodmon.ru/post', { devices: devices }.to_json)
   end
 
   def self.enabled(user_id)
