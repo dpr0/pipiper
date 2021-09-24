@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     devices_response = (params.dig(:payload, :devices) || []).map do |d|
       ud = user_devices.find(d[:id]) # user_device
       {
-        id: d[:id],
+        id: d[:id].to_s,
         name: ud.name,
         description: ud.description,
         room: ud.room,

@@ -5,6 +5,8 @@ class Device < ApplicationRecord
   accepts_nested_attributes_for :capabilities, reject_if: :all_blank, allow_destroy: true
   belongs_to :user
 
+  METROLOGY = [['t', 'Температура', 'C'], ['p', 'Давление', 'HPA'], ['h', 'Влажность', 'HUM']].freeze
+
   TYPES = [
     ['Лампочка, светильник, люстра.',                                'devices.types.light'                ],
     ['Розетка.',                                                     'devices.types.socket'               ],
@@ -62,11 +64,7 @@ class Device < ApplicationRecord
 
   def self.narod_mon
     bme280 = JSON.parse RestClient.get('krsz.ru:3005/bme280')
-    data = [
-      { id: 't', name: 'Температура', value: bme280['t'], unit: 'C'   },
-      { id: 'p', name: 'Давление',    value: bme280['p'], unit: 'HPA' },
-      { id: 'h', name: 'Влажность',   value: bme280['h'], unit: 'HUM' }
-    ]
+    data = Device::METROLOGY.map { |v| { id: v[0], name: v[1], value: bme280[v[0]], unit: v[2] } }
     RestClient.post('http://narodmon.ru/post', { devices: [INFO.merge(sensors: data)] }.to_json)
   end
 
@@ -92,7 +90,7 @@ class Device < ApplicationRecord
   def self.user_query(user_id)
     enabled(user_id).map do |d|
       {
-        id: d.id, capabilities: d.capabilities.map do |cap|
+        id: d.id.to_s, capabilities: d.capabilities.map do |cap|
           { type: cap.capability_type, state: { instance: cap.state_instance, value: true } }
         end
       }
