@@ -10,5 +10,5 @@ env :PATH, ENV['PATH']
 # end
 
 every 10.minutes do
-  runner "Devices.narod_mon", environment: 'production'
+  runner "Device.narod_mon", environment: 'production'
 end
