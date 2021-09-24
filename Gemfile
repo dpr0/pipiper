@@ -22,6 +22,7 @@ gem 'doorkeeper'
 gem 'whenever', require: false
 gem 'cocoon'
 gem 'mqtt'
+gem 'spring'
 
 group :development do
   gem 'byebug'
@@ -37,5 +38,4 @@ group :development do
   gem 'bcrypt_pbkdf'
   gem 'web-console'
   gem 'listen'
-  gem 'spring'
 end
