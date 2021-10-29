@@ -40,13 +40,8 @@ class UsersController < ApplicationController
           state = set_state(cap[:state])
           code = if ud.host.split('/').first == 'mqtt'
             name = ud.host.split('/').last
-            if mqtt_client
-              mqtt_client.publish("#{name}/setTargetPosition", state, true)
-              mqtt_client.disconnect
-              200
-            else
-              500
-            end
+            mq("#{name}/setTargetPosition", state) if name.include?('drivent')
+            mq('defafon/v1/in', cap[:state][:instance] == 'on' ? 'O' : 'N') if name.include?('defafon')
           else
             resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
             resp.code
@@ -72,6 +67,16 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def mq(path, state)
+    if mqtt_client
+      mqtt_client.publish(path, state, true)
+      mqtt_client.disconnect
+      200
+    else
+      500
+    end
+  end
 
   def set_state(state)
     case state[:instance]
