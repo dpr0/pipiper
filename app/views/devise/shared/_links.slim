@@ -13,19 +13,15 @@
 / - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
 /   = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name)
 /   br
-
-- if devise_mapping.omniauthable?
-  .row
-    .col-sm-4
-    .col-sm-4
-      ul.firebaseui-idp-list
-        - resource_class.omniauth_providers.each do |provider|
-          - if provider == :firebase
-            #firebaseui-auth-container
-          - else
-            li.firebaseui-list-item
-              - klass = { yandex: 'firebaseui-idp-password', telegram: 'firebaseui-idp-twitter' }[provider]
-              = link_to omniauth_authorize_path(resource_name, provider), class: "firebaseui-idp-button mdl-button mdl-js-button #{klass}" do
-                span.firebaseui-idp-icon-wrapper= image_tag "#{provider}.ico", class: 'firebaseui-idp-icon'
-                span.firebaseui-idp-text.firebaseui-idp-text-long= "Войти через аккаунт #{OmniAuth::Utils.camelize(provider)}"
-    .col-sm-4
+section#parallax-pole.is-large
+  .hero-body
+    .container
+      .columns
+        .div
+          - if devise_mapping.omniauthable?
+            - resource_class.omniauth_providers.each do |provider|
+              = link_to omniauth_authorize_path(resource_name, provider), class: 'button is-info is-large', method: :post do
+                | Войти через&nbsp
+                = image_tag "#{provider}.ico"
+                | &nbsp
+                span = provider.capitalize

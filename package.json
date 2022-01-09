@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "famitree",
   "private": "true",
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",

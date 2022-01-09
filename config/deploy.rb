@@ -68,6 +68,17 @@ namespace :deploy do
   #   end
   # end
 
+
+  desc "Run rake yarn install"
+  task :yarn_install do
+    on roles(:web) do
+      within release_path do
+        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+      end
+    end
+  end
+
+
   desc 'Initial Deploy'
   task :initial do
     on roles(:app) do
@@ -75,5 +86,6 @@ namespace :deploy do
     end
   end
 
+  before "deploy:assets:precompile", "deploy:yarn_install"
   before :starting, :check_revision
 end

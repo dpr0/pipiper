@@ -2,7 +2,7 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :trackable, :recoverable, :rememberable,
-         :validatable, :omniauthable, omniauth_providers: [:firebase, :telegram, :yandex]
+         :validatable, :omniauthable, omniauth_providers: [:telegram, :yandex]
 
   has_many :authorizations, dependent: :destroy
   has_many :family_tree_users
