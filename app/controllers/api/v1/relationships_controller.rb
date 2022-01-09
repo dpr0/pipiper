@@ -60,8 +60,8 @@ module Api::V1
                                    confirmed_deathdate: false)
             person1.update_with_version('update', @current_user, {mother_id: parent.mother_id})
           end
-          person2.update_with_version('update', @current_user, {father_id: person1.father_id}) unless person2.father_id.nil?
-          person2.update_with_version('update', @current_user, {mother_id: person1.mother_id}) unless person2.mother_id.nil?
+          person2.update_with_version('update', @current_user, {father_id: person1.father_id}) if person2.father_id.nil? && !person1.father_id.nil?
+          person2.update_with_version('update', @current_user, {mother_id: person1.mother_id}) if person2.mother_id.nil? && !person1.mother_id.nil?
           true
         when 'father'
           person = Person.find_by_id(relationship_params[:first_person_id])
