@@ -18,7 +18,7 @@ server 'famitree.ru', port: 2222, roles: %w(app db web), primary: true
 # set :puma_init_active_record, true
 
 set :rbenv_ruby,      '3.0.2'
-set :application,     'famitree.ru'
+set :application,     'famitree'
 set :repo_url,        'git@github.com:dpr0/famitree.git'
 set :deploy_user,     'deploy'
 set :linked_files,    fetch(:linked_files, []).push('config/cable.yml', 'config/database.yml', 'config/secrets.yml', 'config/master.key', 'config/credentials.yml.enc', '.env')
@@ -39,16 +39,16 @@ set :ssh_options, {
 }
 
 namespace :deploy do
-  # desc 'Make sure local git is in sync with remote.'
-  # task :check_revision do
-  #   on roles(:app) do
-  #     unless `git rev-parse HEAD` == `git rev-parse origin/master`
-  #       puts 'WARNING: HEAD is not the same as origin/master'
-  #       puts 'Run `git push` to sync changes.'
-  #       exit
-  #     end
-  #   end
-  # end
+  desc 'Make sure local git is in sync with remote.'
+  task :check_revision do
+    on roles(:app) do
+      unless `git rev-parse HEAD` == `git rev-parse origin/development`
+        puts 'WARNING: HEAD is not the same as origin/development'
+        puts 'Run `git push` to sync changes.'
+        exit
+      end
+    end
+  end
 
   desc 'Runs rake db:seed'
   task seed: [:set_rails_env] do
