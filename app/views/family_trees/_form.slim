@@ -1,0 +1,13 @@
+= form_for @family_tree do |f|
+  - if @family_tree.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@family_tree.errors.count, "error")} prohibited this family_tree from being saved:"
+      ul
+        - @family_tree.errors.full_messages.each do |message|
+          li = message
+
+  .input-group.mb-3
+    .input-group-prepend
+      span.input-group-text#family_tree_name Наименование
+    = f.text_field :name, type: 'text', class: 'form-control', placeholder: 'например: фамилия', 'aria-describedby': 'family_tree_name'
+    = f.submit 'Сохранить семейное дерево', class: 'btn btn-primary'

@@ -1,0 +1,28 @@
+- if @family_tree_user&.write?
+  = link_to edit_person_path(person.id) do
+    i.far.fa-edit
+| &nbsp
+= link_to person.full_name, person_path(person.id), class: sex_color(person.sex_id)
+ul
+  - @relations.select { |x| x.person_id == person.id || x.persona_id == person.id }.each do |rel|
+    li
+      = "#{relation_name(rel.relation_type_id)} с "
+      - r1 = @persons.find { |x| x.id == rel.persona_id }
+      - r2 = @persons.find { |x| x.id == rel.person_id }
+      - r = person.sex_id == 1 ? r1 : r2
+      span = link_to r.full_name, person_path(r.id), class: sex_color(r.sex_id)
+      ul
+        - childs = @persons.where(father_id: rel.person_id, mother_id: rel.persona_id)
+        - childs ||= @persons.where(father_id: rel.person_id)
+        - childs ||= @persons.where(mother_id: rel.persona_id)
+        - if childs.present?
+          b Дети:
+          - childs.each do |child|
+            li
+              = render 'person', person: child
+  - childs1 = @persons.find_all { |x| x.father_id == person.id && x.mother_id.nil? || x.mother_id == person.id && x.father_id.nil? }
+  - if childs1.present?
+    b Дети:
+    - childs1.each do |child|
+      li
+        = render 'person', person: child

@@ -1,0 +1,49 @@
+section.text-center
+  .container
+    .row
+      .col-2
+
+      .col-8
+        .row
+          .col-6.text-right
+            | Пользователь
+          .col-6.text-left
+            = current_user.name
+        - if ['google.com', 'yandex'].include? current_user.provider
+          .row
+            .col-6.text-right
+              | Email
+            .col-6.text-left
+              = current_user.email
+        - if current_user.phone
+          .row
+            .col-6.text-right
+              | Телефон
+            .col-6.text-left
+              = current_user.phone
+        .row
+          .col-6.text-right
+            | OAuth провайдер
+          .col-6.text-left
+            = current_user.provider
+        - if current_user.person
+          .row
+            .col-6.text-right
+              | Персона
+            .col-6.text-left
+              = current_user.person.full_name
+        .row
+          .col-6.text-right
+            | IP
+          .col-6.text-left
+            = current_user.current_sign_in_ip
+        .row
+          .col-6.text-right
+            | Деревьев
+          .col-6.text-left
+            = @trees.count
+
+        .row
+          .col-12.text-center
+            = link_to 'Редактировать свой профиль', edit_person_path(current_user.person_id), class: 'btn btn-outline-primary'
+      .col-2

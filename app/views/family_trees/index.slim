@@ -1,0 +1,25 @@
+h3.text-center Список деревьев
+
+table.table
+  thead
+    tr
+      th scope="col"
+      th scope="col"
+      th scope="col"
+      th scope="col"
+  tbody
+    - @family_tree_users.each do |family_tree_user|
+      tr
+        td = family_tree_user.role.name
+        td = link_to family_tree_user.family_tree.name, family_tree_path(family_tree_user.family_tree.id)
+        td
+          - if family_tree_user.owner?
+            = link_to edit_family_tree_path(family_tree_user.family_tree.id) do
+              i.far.fa-edit.text-primary
+        td
+          - if family_tree_user.owner?
+            = link_to family_tree_path(family_tree_user.family_tree.id), data: { confirm: 'Вы уверены?' }, method: :delete do
+              i.fas.fa-times.text-danger
+
+p.text-center
+  = link_to 'Создать новое семейное дерево', new_family_tree_path, class: 'btn btn-primary text-white'

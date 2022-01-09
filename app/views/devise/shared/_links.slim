@@ -1,0 +1,31 @@
+/ - if controller_name != 'sessions'
+/   = link_to "Log in", new_session_path(resource_name)
+/   br
+/ - if devise_mapping.registerable? && controller_name != 'registrations'
+/   = link_to "Sign up", new_registration_path(resource_name)
+/   br
+/ - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+/   = link_to "Forgot your password?", new_password_path(resource_name)
+/   br
+/ - if devise_mapping.confirmable? && controller_name != 'confirmations'
+/   = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
+/   br
+/ - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+/   = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name)
+/   br
+
+- if devise_mapping.omniauthable?
+  .row
+    .col-sm-4
+    .col-sm-4
+      ul.firebaseui-idp-list
+        - resource_class.omniauth_providers.each do |provider|
+          - if provider == :firebase
+            #firebaseui-auth-container
+          - else
+            li.firebaseui-list-item
+              - klass = { yandex: 'firebaseui-idp-password', telegram: 'firebaseui-idp-twitter' }[provider]
+              = link_to omniauth_authorize_path(resource_name, provider), class: "firebaseui-idp-button mdl-button mdl-js-button #{klass}" do
+                span.firebaseui-idp-icon-wrapper= image_tag "#{provider}.ico", class: 'firebaseui-idp-icon'
+                span.firebaseui-idp-text.firebaseui-idp-text-long= "Войти через аккаунт #{OmniAuth::Utils.camelize(provider)}"
+    .col-sm-4

@@ -1,0 +1,43 @@
+doctype html
+html
+  head
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true
+    = favicon_link_tag asset_path('favicon.ico')
+
+    title Megapolis football site
+    link href="https://famitree.ru" rel="canonical"
+    meta name="yandex-verification" content="b8209de9862994b1"
+    meta name="viewport"            content="width=device-width,initial-scale=1"
+    meta name="description"         content="famitree.ru"
+    meta name="twitter:card"        content="summary_large_image"
+    meta property="og:url"          content="https://famitree.ru/"
+    meta property="og:site_name"    content="famitree.ru"
+    meta property="og:type"         content="website"
+    meta property="og:title"        content="famitree.ru"
+    meta property="og:locale"       content="ru_RU"
+    meta property="og:description"  content="famitree.ru"
+    meta property="og:image"        content="#{asset_path('og-image.png')}"
+    meta charset="utf-8"
+    meta content="IE=edge" http-equiv="X-UA-Compatible"
+
+    link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet"
+    script crossorigin="anonymous" src="https://kit.fontawesome.com/15181efa86.js"
+
+  body
+    = render 'layouts/header'
+    = yield
+    = render 'layouts/footer'
+
+javascript:
+    if ("#{Rails.env}" == 'production') {
+        (function (m, e, t, r, i, k, a) {
+            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+            m[i].l = 1 * new Date();
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
+        })
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+        ym(56435119, "init", {clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true});
+    }
