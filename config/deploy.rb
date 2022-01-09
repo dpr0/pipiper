@@ -27,6 +27,7 @@ set :keep_releases,   5
 set :user,            'deploy'
 set :use_sudo,        false
 set :stage,           :production
+set :branch,          :development
 set :deploy_to,       "/home/#{fetch(:user)}/#{fetch(:application)}"
 # set :assets_roles,    []
 set :ruby_string,     '$HOME/.rbenv/bin/rbenv exec bundle exec'
@@ -61,13 +62,12 @@ namespace :deploy do
     end
   end
 
-  # desc 'Runs rake assets:precompile'
-  # task :precompile do
-  #   on roles(:app) do
-  #     execute("cd #{fetch(:application)}/current && RAILS_ENV=production #{fetch(:ruby_string)} rake assets:precompile") if fetch(:stage) == :production
-  #   end
-  # end
-
+  desc 'Runs rake assets:precompile'
+  task :precompile do
+    on roles(:app) do
+      execute("cd #{fetch(:application)}/current && RAILS_ENV=production #{fetch(:ruby_string)} rake assets:precompile") if fetch(:stage) == :production
+    end
+  end
 
   desc "Run rake yarn install"
   task :yarn_install do
