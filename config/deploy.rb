@@ -61,12 +61,12 @@ namespace :deploy do
     end
   end
 
-  desc 'Runs rake assets:precompile'
-  task :precompile do
-    on roles(:app) do
-      execute("cd #{fetch(:application)}/current && RAILS_ENV=production #{fetch(:ruby_string)} rake assets:precompile") if fetch(:stage) == :production
-    end
-  end
+  # desc 'Runs rake assets:precompile'
+  # task :precompile do
+  #   on roles(:app) do
+  #     execute("cd #{fetch(:application)}/current && RAILS_ENV=production #{fetch(:ruby_string)} rake assets:precompile") if fetch(:stage) == :production
+  #   end
+  # end
 
   desc 'Initial Deploy'
   task :initial do

@@ -8,17 +8,17 @@ html
     = favicon_link_tag asset_path('favicon.ico')
 
     title Megapolis football site
-    link href="https://famitree.ru" rel="canonical"
-    meta name="yandex-verification" content="b8209de9862994b1"
+    link href="https://#{ENV['HOST']}" rel="canonical"
+    meta name="yandex-verification" content="#{ENV['YANDEX_VERIFICATION']}"
     meta name="viewport"            content="width=device-width,initial-scale=1"
-    meta name="description"         content="famitree.ru"
+    meta name="description"         content="#{ENV['HOST']}"
     meta name="twitter:card"        content="summary_large_image"
-    meta property="og:url"          content="https://famitree.ru/"
-    meta property="og:site_name"    content="famitree.ru"
+    meta property="og:url"          content="https://#{ENV['HOST']}/"
+    meta property="og:site_name"    content="#{ENV['HOST']}"
     meta property="og:type"         content="website"
-    meta property="og:title"        content="famitree.ru"
+    meta property="og:title"        content="#{ENV['HOST']}"
     meta property="og:locale"       content="ru_RU"
-    meta property="og:description"  content="famitree.ru"
+    meta property="og:description"  content="#{ENV['HOST']}"
     meta property="og:image"        content="#{asset_path('og-image.png')}"
     meta charset="utf-8"
     meta content="IE=edge" http-equiv="X-UA-Compatible"
@@ -39,5 +39,5 @@ javascript:
             k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
         })
         (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-        ym(56435119, "init", {clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true});
+        ym(83790034, "init", {clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true});
     }
