@@ -8,7 +8,7 @@ html
     = favicon_link_tag asset_path('favicon.ico')
 
     title Megapolis football site
-    link href="https://#{ENV['HOST']}" rel="canonical"
+    meta charset="utf-8"
     meta name="yandex-verification" content="#{ENV['YANDEX_VERIFICATION']}"
     meta name="viewport"            content="width=device-width,initial-scale=1"
     meta name="description"         content="#{ENV['HOST']}"
@@ -20,11 +20,10 @@ html
     meta property="og:locale"       content="ru_RU"
     meta property="og:description"  content="#{ENV['HOST']}"
     meta property="og:image"        content="#{asset_path('og-image.png')}"
-    meta charset="utf-8"
-    meta content="IE=edge" http-equiv="X-UA-Compatible"
-
-    link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;800&display=swap" rel="stylesheet"
-    script crossorigin="anonymous" src="https://kit.fontawesome.com/15181efa86.js"
+    meta content="IE=edge"          http-equiv="X-UA-Compatible"
+    link rel="canonical"  href="https://#{ENV['HOST']}"
+    link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;800&display=swap"
 
   body
     = render 'layouts/header'

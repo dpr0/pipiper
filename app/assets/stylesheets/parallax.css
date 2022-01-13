@@ -45,32 +45,6 @@ hr.content-divider {
     height: 5px;
 }
 
-#parallax-pole {
-    background: url(pole.jpg);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-top: 10px solid coral;
-}
-
-#parallax-pole hr {
-    background: coral;
-}
-
-#parallax-football {
-    background: url(https://source.unsplash.com/featured/?football);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-top: 10px solid yellow;
-}
-
-#parallax-football hr {
-    background: yellow;
-}
-
 #parallax-computers {
     background: url(https://source.unsplash.com/featured/?computers);
     background-attachment: fixed;
@@ -84,25 +58,12 @@ hr.content-divider {
     background: hotpink;
 }
 
-#parallax-cars {
-    background: url(https://source.unsplash.com/featured/?cars);
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-top: 10px solid hotpink;
-}
-
-#parallax-cars hr {
-    background: hotpink;
-}
-
 .label {
     color: turquoise;
 }
 
 input {
-    background: transparent !important;
+    /*background: turquoise !important;*/
     border: 1px solid turquoise !important;
     color: white !important;
 }

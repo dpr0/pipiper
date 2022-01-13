@@ -11,72 +11,84 @@ section#parallax-computers.hero.is-large
                 ul
                   - @user.errors.full_messages.each do |message|
                     li = message
-            .field
-              label.label Фамилия
-              .control
-                = f.text_field :last_name, class: 'input is-medium'
-            .field
-              label.label Имя
-              .control
-                = f.text_field :first_name, class: 'input is-medium'
-            .field
-              label.label Отчество
-              .control
-                = f.text_field :middle_name, class: 'input is-medium'
-            .field
-              label.label Дата рождения
-              .control
-                = f.date_field :birthdate, class: 'input is-medium'
-            .field
-              label.label Пол
-              .control
-                .select.is-medium.is-link
-                  = f.collection_select :sex_id, Sex.all_cached, :id, :name, class: 'select is-medium is-link is-fullwidth'
-            .field
-              label.label Телефон
-              .control.has-icons-left.has-icons-right
-                = f.telephone_field :phone, class: 'input is-medium', id: 'phone-number', maxlength: 14, placeholder: '+7 (XXX) XXX-XXXX', required: true
-                span.icon.is-medium.is-left
-                  i.fa.fa-phone.fa-lg
-                span.icon.is-medium.is-right
-                  i.fas.fa-check.fa-lg
-            .field
-              label.label &nbsp
-              .control
-                = f.submit 'Зарегистрировать', class: 'button is-link is-fullwidth'
+            .field.is-horizontal
+              .field-label.is-normal
+                label.label Фамилия
+              .field-body
+                .field
+                  .control
+                    = f.text_field :last_name, class: 'input is-medium is-static'
+            .field.is-horizontal
+              .field-label.is-normal
+                label.label Имя
+              .field-body
+                .field
+                  .control
+                    = f.text_field :first_name, class: 'input is-medium is-static'
+            .field.is-horizontal
+              .field-label.is-normal
+                label.label Отчество
+              .field-body
+                .field
+                  .control
+                    = f.text_field :middle_name, class: 'input is-medium is-static'
+            .field.is-horizontal
+              .field-label.is-normal
+                label.label Дата рождения
+              .field-body
+                .field
+                  .control
+                    = f.date_field :birthdate, class: 'input is-medium'
+            .field.is-horizontal
+              .field-label.is-normal
+                label.label Пол
+              .field-body
+                .field
+                  .control
+                    = f.collection_select :sex_id, Sex.all_cached, :id, :name, class: 'select is-medium is-link is-fullwidth is-static'
+            .field.is-horizontal
+              .field-label.is-normal
+                label.label Телефон
+              .field-body
+                .field
+                  .control.has-icons-left.has-icons-right
+                    = f.telephone_field :phone, class: 'input is-medium', id: 'phone-number', maxlength: 14, placeholder: '+7 (XXX) XXX-XXXX', required: true
+                    span.icon.is-medium.is-left
+                      i.fa.fa-phone.fa-lg
+                    span.icon.is-medium.is-right
+                      i.fas.fa-check.fa-lg
+            .field.is-horizontal
+              .field-label.is-normal
+                label.label &nbsp
+              .field-body
+                .field
+                  .control
+                    = f.submit 'Зарегистрировать', class: 'button is-link is-fullwidth'
 
       .columns.is-mobile
         #diag
         / = render 'persons/graph'
 
 javascript:
-    var inp = document.getElementById('#phone-number')
-
     document.addEventListener('keydown', function(e) {
+        var $phone = document.getElementById('phone-number')
         var key = e.which || e.charCode || e.keyCode || 0;
-        $phone = $(inp);
 
         // Don't let them remove the starting '('
-        if ($phone.val().length === 1 && (key === 8 || key === 46)) {
-            $phone.val('(');
+        if ($phone.value.length === 1 && (key === 8 || key === 46)) {
+            $phone.value = ('(');
             return false;
         }
         // Reset if they highlight and type over first char.
-        else if ($phone.val().charAt(0) !== '(') {
-            $phone.val('(' + String.fromCharCode(e.keyCode) + '');
+        else if ($phone.value.charAt(0) !== '(') {
+            $phone.value = ('(' + String.fromCharCode(e.keyCode) + '');
         }
 
         // Auto-format- do not expose the mask as the user begins to type
         if (key !== 8 && key !== 9) {
-            if ($phone.val().length === 4) {
-                $phone.val($phone.val() + ')');
-            }
-            if ($phone.val().length === 5) {
-                $phone.val($phone.val() + ' ');
-            }
-            if ($phone.val().length === 9) {
-                $phone.val($phone.val() + '-');
-            }
+            if ($phone.value.length === 4) $phone.value = ($phone.value + ')')
+            if ($phone.value.length === 5) $phone.value = ($phone.value + ' ')
+            if ($phone.value.length === 9) $phone.value = ($phone.value + '-')
         }
 
         // Allow numeric (and tab, backspace, delete) keys only
@@ -86,22 +98,3 @@ javascript:
             (key >= 48 && key <= 57) ||
             (key >= 96 && key <= 105));
     })
-
-    // .bind('focus click', function () {
-    //     $phone = $(this);
-    //
-    //     if ($phone.val().length === 0) {
-    //         $phone.val('(');
-    //     } else {
-    //         var val = $phone.val();
-    //         $phone.val('').val(val); // Ensure cursor remains at the end
-    //     }
-    // })
-
-    // .blur(function () {
-    //     $phone = $(this);
-    //
-    //     if ($phone.val() === '(') {
-    //         $phone.val('');
-    //     }
-    // });

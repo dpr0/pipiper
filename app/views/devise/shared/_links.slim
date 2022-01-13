@@ -22,6 +22,6 @@ section#parallax-computers.is-large
             - resource_class.omniauth_providers.each do |provider|
               = link_to omniauth_authorize_path(resource_name, provider), class: 'button is-info is-large', data: {'turbo-method': :post} do
                 | Войти через&nbsp
-                = image_tag "#{provider}.ico"
+                i.fa-brands class="fa-#{provider}"
                 | &nbsp
                 span = provider.capitalize
