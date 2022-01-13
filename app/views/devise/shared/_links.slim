@@ -13,14 +13,14 @@
 / - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
 /   = link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name)
 /   br
-section#parallax-pole.is-large
+section#parallax-computers.is-large
   .hero-body
     .container
       .columns
         .div
           - if devise_mapping.omniauthable?
             - resource_class.omniauth_providers.each do |provider|
-              = link_to omniauth_authorize_path(resource_name, provider), class: 'button is-info is-large', data: { 'turbo-method': :post } do
+              = link_to omniauth_authorize_path(resource_name, provider), class: 'button is-info is-large', data: {'turbo-method': :post} do
                 | Войти через&nbsp
                 = image_tag "#{provider}.ico"
                 | &nbsp
