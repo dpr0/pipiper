@@ -63,7 +63,7 @@ hr.content-divider {
 }
 
 input {
-    /*background: turquoise !important;*/
+    background: rgba(255, 255, 255, 0.1) !important;
     border: 1px solid turquoise !important;
     color: white !important;
 }
