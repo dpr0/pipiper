@@ -175,12 +175,14 @@ module Api::V1
       facts     = facts.where("EXTRACT(MONTH FROM date) = ?", params[:month]) if params[:month]
       facts     = facts.where("EXTRACT(DAY   FROM date) = ?", params[:day])   if params[:day]
       @calendar = facts.order(:date).map do |fact|
+        person = persons.find { |p| p.id == fact.person_id }
         {
             type: FactType.cached_by_id[fact.fact_type_id].name,
             date: fact.date,
             info: fact.info,
             person_id: fact.person_id,
-            person_name: persons.find { |p| p.id == fact.person_id }.full_name
+            person_sex_code: Sex.cached_by_id[person.sex_id].code,
+            person_name: person.full_name
         }
       end
       render json: @calendar, status: :ok
