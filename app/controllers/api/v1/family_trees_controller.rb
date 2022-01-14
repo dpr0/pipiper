@@ -181,7 +181,7 @@ module Api::V1
             date: fact.date,
             info: fact.info,
             person_id: fact.person_id,
-            person_sex_code: Sex.cached_by_id[person.sex_id].code,
+            person_sex_id: person.sex_id,
             person_name: person.full_name
         }
       end
