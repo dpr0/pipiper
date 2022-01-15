@@ -4,7 +4,7 @@ module Api::V1
   class FamilyTreesController < ApplicationController
     protect_from_forgery with: :null_session
     before_action :authenticate_request
-    before_action :find_family_tree, only: %i[show update destroy timeline calendar person_tree rollback]
+    before_action :find_family_tree, only: %i[show update destroy timeline calendar person_tree rollback add_guest change_user_role]
 
     resource_description do
       short 'Семейные деревья'
@@ -206,6 +206,59 @@ module Api::V1
         render json: { status: :success }, status: :ok
       else
         render json: { status: :unprocessable_entity }, status: :unprocessable_entity
+      end
+    end
+
+    api :POST, '/v1/family_trees/:id/add_guest'
+    param :id, String
+    param :person_id, Integer
+    returns code: 200, desc: 'Создатель дерева может для каждой персоны из дерева привязать юзера с ролью Гость'
+    def add_guest
+      if !@family_tree_user.owner?
+        render json: { status: :access_denied, error: 'you are not owner' }, status: :unprocessable_entity
+      else
+        person = Person.where(family_tree_id: @family_tree.id).find_by(id: params[:person_id])
+        if person.nil?
+          render json: { status: :access_denied, error: 'person not found' }, status: :unprocessable_entity
+        elsif person.user.nil?
+          render json: { status: :access_denied, error: 'user not found' }, status: :unprocessable_entity
+        elsif person.user.family_tree_users.find_by(family_tree_id: @family_tree.id).present?
+          render json: { status: :access_denied, error: 'user already exist' }, status: :unprocessable_entity
+        else
+          FamilyTreeUser.create(
+            family_tree_id: @family_tree.id,
+            user_id: person.user.id,
+            role_id: Role[:guest].id,
+            root_person_id: params[:person_id]
+          )
+          render json: { status: :success, message: 'guest added' }, status: :ok
+        end
+      end
+    end
+
+    api :POST, '/v1/family_trees/:id/change_user_role'
+    param :id, String
+    param :person_id, Integer
+    returns code: 200, desc: 'Создатель дерева может у привязаных к персонам юзеров менять роль с Гость на Редактор и обратно'
+    def change_user_role
+      if !@family_tree_user.owner?
+        render json: { status: :access_denied, error: 'you are not owner' }, status: :unprocessable_entity
+      else
+        person = Person.where(family_tree_id: @family_tree.id).find_by(id: params[:person_id])
+        if person.nil?
+          render json: { status: :access_denied, error: 'person not found' }, status: :unprocessable_entity
+        elsif person.user.nil?
+          render json: { status: :access_denied, error: 'user not found' }, status: :unprocessable_entity
+        else
+          ftu = person.user.family_tree_users.find_by(family_tree_id: @family_tree.id)
+          if ftu.role_id == Role[:owner].id
+            render json: { status: :access_denied, error: 'owner not updated' }, status: :unprocessable_entity
+          else
+            role = ftu.role_id == Role[:guest].id ? Role[:editor] : Role[:guest]
+            ftu.update(role_id: role.id)
+            render json: { status: :success, role_id: role.id, role_code: role.code, message: "role changed to #{role.id}: #{role.code}" }, status: :ok
+          end
+        end
       end
     end
 
