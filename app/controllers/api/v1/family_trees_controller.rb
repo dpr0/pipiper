@@ -149,11 +149,11 @@ module Api::V1
     api :GET, '/v1/family_trees/:id/timeline'
     returns array_of: :versions, code: 200, desc: 'Лента новостей'
     def timeline
-      @versions = Version.where(family_tree_id: @family_tree.id, deleted_at: nil)
-                         .limit(params[:limit] || 50)
-                         .offset(params[:offset] || 0)
-                         .order(created_at: :desc)
-                         .group_by do |x|
+      versions = Version.where(family_tree_id: @family_tree.id, deleted_at: nil)
+                        .limit(params[:limit] || 50)
+                        .offset(params[:offset] || 0)
+                        .order(created_at: :desc)
+      @versions = versions.group_by do |x|
         z = x.created_at
         if params[:time_zone]&.to_i != 0
           tz = ActiveSupport::TimeZone.seconds_to_utc_offset(params[:time_zone].to_i)
@@ -161,7 +161,9 @@ module Api::V1
         end
         z.to_date
       end
-      render json: @versions, status: :ok
+      hash = versions.group_by(&:model)
+      hash.each { |k, v| hash[k] = v.map(&:model_id).uniq.sort }
+      render json: { versions: @versions, model_ids: hash }, status: :ok
     end
 
     api :GET, '/v1/family_trees/:id/calendar'
@@ -212,6 +214,8 @@ module Api::V1
     api :POST, '/v1/family_trees/:id/invite'
     param :id, String
     param :person_id, Integer
+    param :email, String
+    param :phone, String
     returns code: 200, desc: 'Создатель дерева может для каждой персоны из дерева привязать юзера с ролью Гость'
     def invite
       phone = params[:phone].gsub(/[^\d]/, '')
