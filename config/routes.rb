@@ -20,7 +20,7 @@ Rails.application.routes.draw do
         get :calendar,    on: :member
         get :person_tree, on: :member
         post :rollback,   on: :member
-        post :add_guest,  on: :member
+        post :invite,     on: :member
         post :change_user_role, on: :member
       end
       resources :persons, only: [:show, :create, :update, :destroy] do

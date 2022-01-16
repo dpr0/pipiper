@@ -4,7 +4,7 @@ module Api::V1
   class FamilyTreesController < ApplicationController
     protect_from_forgery with: :null_session
     before_action :authenticate_request
-    before_action :find_family_tree, only: %i[show update destroy timeline calendar person_tree rollback add_guest change_user_role]
+    before_action :find_family_tree, only: %i[show update destroy timeline calendar person_tree rollback invite change_user_role]
 
     resource_description do
       short 'Семейные деревья'
@@ -209,31 +209,50 @@ module Api::V1
       end
     end
 
-    api :POST, '/v1/family_trees/:id/add_guest'
+    api :POST, '/v1/family_trees/:id/invite'
     param :id, String
     param :person_id, Integer
     returns code: 200, desc: 'Создатель дерева может для каждой персоны из дерева привязать юзера с ролью Гость'
-    def add_guest
-      if !@family_tree_user.owner?
-        render json: { status: :access_denied, error: 'you are not owner' }, status: :unprocessable_entity
+    def invite
+      phone = params[:phone].gsub(/[^\d]/, '')
+      resp = if phone.size < 10
+        'phone must be a minimum 10-digit, ex: 9001234567'
+      elsif (params[:email] =~ URI::MailTo::EMAIL_REGEXP).nil?
+        'email not valid'
+      elsif @family_tree_user && !@family_tree_user.owner?
+        'you are not owner'
       else
         person = Person.where(family_tree_id: @family_tree.id).find_by(id: params[:person_id])
         if person.nil?
-          render json: { status: :access_denied, error: 'person not found' }, status: :unprocessable_entity
-        elsif person.user.nil?
-          render json: { status: :access_denied, error: 'user not found' }, status: :unprocessable_entity
-        elsif person.user.family_tree_users.find_by(family_tree_id: @family_tree.id).present?
-          render json: { status: :access_denied, error: 'user already exist' }, status: :unprocessable_entity
+          'person not found'
+        elsif person.user.present?
+          'user already invited'
         else
+          user = User.new(
+            phone:       "+7#{phone}",
+            provider:    'phone',
+            email:       params[:email],
+            password:    Devise.friendly_token[0, 20],
+            person_id:   person.id,
+            first_name:  person.first_name,
+            last_name:   person.last_name,
+            middle_name: person.middle_name
+          )
+          user.name = user.full_name
+          user.save
           FamilyTreeUser.create(
             family_tree_id: @family_tree.id,
-            user_id: person.user.id,
+            user_id: user.id,
             role_id: Role[:guest].id,
-            root_person_id: params[:person_id]
+            root_person_id: person.id
           )
-          render json: { status: :success, message: 'guest added' }, status: :ok
+          invite_text = "Вам предоставлен доступ в семейное дерево '#{@family_tree.name}'. Ссылка на приложение '_android_ / _ios_'. Вход по номеру тел.: #{params[:phone]}"
+          UserMailer.with(message: invite_text).invite_email.deliver_later
+
+          render(json: { status: :success, message: invite_text }, status: :ok) and return
         end
       end
+      render json: { status: :access_denied, error: resp }, status: :unprocessable_entity
     end
 
     api :POST, '/v1/family_trees/:id/change_user_role'
@@ -251,7 +270,7 @@ module Api::V1
           render json: { status: :access_denied, error: 'user not found' }, status: :unprocessable_entity
         else
           ftu = person.user.family_tree_users.find_by(family_tree_id: @family_tree.id)
-          if ftu.role_id == Role[:owner].id
+          if ftu.owner?
             render json: { status: :access_denied, error: 'owner not updated' }, status: :unprocessable_entity
           else
             role = ftu.role_id == Role[:guest].id ? Role[:editor] : Role[:guest]
