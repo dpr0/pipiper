@@ -52,7 +52,11 @@ module Api::V1
       @photo = @person.photos.new(photo_params)
       saved = @photo.save
       @photo.update(url: @photo.attachment_url)
-      @person.update(avatar_url: @photo.attachment_url) if params[:avatar] == 'true'
+      if params[:avatar] == 'true'
+        hash = { avatar_url: @photo.attachment_url }
+        @person.update(hash)
+        Version.prepare(:update, @photo.person.family_tree.id, current_user, @person, hash).add
+      end
       Version.prepare(method_name(caller(0)), @photo.person.family_tree.id, current_user, @photo, photo_params).add if saved
       render_json(saved, @photo.attributes)
     end
