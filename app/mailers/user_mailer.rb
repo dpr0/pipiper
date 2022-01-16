@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class UserMailer < ApplicationMailer
+  default from: "notifications@#{ENV['HOST']}"
+
   def invite_email
-    mail(to: 'dvitvitskiy.pro@yandex.ru', subject: "You invited #{ENV['HOST']}")
+    mail(to: params[:user].email, subject: "Вы приглашены в семейное дерево на #{ENV['HOST']}")
   end
 end

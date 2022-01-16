@@ -250,9 +250,8 @@ module Api::V1
             role_id: Role[:guest].id,
             root_person_id: person.id
           )
-          invite_text = "Вам предоставлен доступ в семейное дерево '#{@family_tree.name}'. Ссылка на приложение '_android_ / _ios_'. Вход по номеру тел.: #{params[:phone]}"
-          UserMailer.with(message: invite_text).invite_email.deliver_now
-
+          invite_text = "Вам предоставлен доступ в семейное дерево '#{@family_tree.name}' от '#{current_user.name}'. Ссылка на приложение '_android_ / _ios_'. Вход по номеру тел.: #{params[:phone]}"
+          UserMailer.with(message: invite_text, user: user).invite_email.deliver_now
           render(json: { status: :success, message: invite_text }, status: :ok) and return
         end
       end
