@@ -11,7 +11,7 @@ class Version < ApplicationRecord
     old_attrs.each do |k, val|
       new_attrs[k] = new_attrs[k].to_date if val.instance_of? Date
       new_attrs[k] = new_attrs[k].to_i if k[-3..-1] == '_id'
-      result[k] = new_attrs[k] if new_attrs[k] != val
+      result[k] = val if new_attrs[k] != val
     end
     new(family_tree_id: ft_id, person_id: current_user.person.id, model: model.class.name, model_id: model_id, model_changes: result, event_type: event_type)
   end
