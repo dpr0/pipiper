@@ -243,7 +243,9 @@ module Api::V1
             middle_name: person.middle_name
           )
           user.name = user.full_name
-          user.save
+          unless user.save
+            render(json: { status: :access_denied, message: user.errors }, status: :ok) and return
+          end
           FamilyTreeUser.create(
             family_tree_id: @family_tree.id,
             user_id: user.id,

@@ -13,7 +13,7 @@ module Api::V1
 
     api :GET, '/v1/persons/:id'
     def show
-      family_tree_user = current_user.family_tree_users.where(root_person_id: params[:id]).first
+      family_tree_user = FamilyTreeUser.find_by(root_person_id: @person.id)
       role = Role.cached_by_id[family_tree_user.role_id].code if family_tree_user
       render json: {
           person:      @person.attributes.merge('role' => role),

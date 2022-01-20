@@ -14,6 +14,7 @@ class Person < ApplicationRecord
   has_many :photos
   has_many :archives
   has_many :infos
+  has_many :versions
   has_one_attached :avatar
   has_many_attached :images
   has_many_attached :attachments

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Version < ApplicationRecord
+  belongs_to :person
 
   def self.prepare(event_type, ft_id, current_user, model, new_attrs)
     # new_attrs = new_attrs.to_h.symbolize_keys
