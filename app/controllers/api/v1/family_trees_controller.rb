@@ -149,23 +149,24 @@ module Api::V1
     api :GET, '/v1/family_trees/:id/timeline'
     returns array_of: :versions, code: 200, desc: 'Лента новостей'
     def timeline
-      versions = Person
-                   .joins(:versions)
-                   .select("versions.*, CONCAT(persons.first_name, ' ', persons.middle_name, ' ', persons.last_name) as name")
-                   .where(family_tree_id: @family_tree.id, deleted_at: nil)
-                   .limit(params[:limit] || 50)
-                   .offset(params[:offset] || 0)
-                   .order(created_at: :desc)
+      versions = Version.where(family_tree_id: @family_tree.id, deleted_at: nil)
+                        .limit(params[:limit] || 50)
+                        .offset(params[:offset] || 0)
+                        .order(created_at: :desc)
+      persons = Person.where(id: versions.map(&:person_id).uniq)
+      versions = versions.map do |x|
+        x.attributes.merge('name' => persons.find { |z| z.id == x.person_id }.full_name )
+      end
       @versions = versions.group_by do |x|
-        z = x.created_at
+        z = x['created_at']
         if params[:time_zone]&.to_i != 0
           tz = ActiveSupport::TimeZone.seconds_to_utc_offset(params[:time_zone].to_i)
           z = z.change(offset: tz) if tz
         end
         z.to_date
       end
-      hash = versions.group_by(&:model)
-      hash.each { |k, v| hash[k] = v.map(&:model_id).uniq.sort }
+      hash = versions.group_by { |x| x['model'] }
+      hash.each { |k, v| hash[k] = v.map { |x| x['model_id'] }.uniq.sort }
       render json: { versions: @versions, model_ids: hash }, status: :ok
     end
 
