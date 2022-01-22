@@ -155,7 +155,7 @@ module Api::V1
                         .order(created_at: :desc)
       persons = Person.where(id: versions.map(&:person_id).uniq)
       versions = versions.map do |x|
-        x.attributes.merge('name' => persons.find { |z| z.id == x.person_id }.full_name )
+        x.attributes.merge('person_full_name' => persons.find { |z| z.id == x.person_id }.full_name )
       end
       @versions = versions.group_by do |x|
         z = x['created_at']
