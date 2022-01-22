@@ -149,8 +149,9 @@ module Api::V1
     api :GET, '/v1/family_trees/:id/timeline'
     returns array_of: :versions, code: 200, desc: 'Лента новостей'
     def timeline
-      versions = Person.joins(:versions)
-                   .select("versions.*, CONCAT(persons.first_name, ' ', persons.middle_name, ' ', persons.last_name) as full_name")
+      versions = Person
+                   .joins(:versions)
+                   .select("versions.*, CONCAT(persons.first_name, ' ', persons.middle_name, ' ', persons.last_name) as name")
                    .where(family_tree_id: @family_tree.id, deleted_at: nil)
                    .limit(params[:limit] || 50)
                    .offset(params[:offset] || 0)
