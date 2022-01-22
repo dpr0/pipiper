@@ -149,10 +149,12 @@ module Api::V1
     api :GET, '/v1/family_trees/:id/timeline'
     returns array_of: :versions, code: 200, desc: 'Лента новостей'
     def timeline
-      versions = Version.where(family_tree_id: @family_tree.id, deleted_at: nil)
-                        .limit(params[:limit] || 50)
-                        .offset(params[:offset] || 0)
-                        .order(created_at: :desc)
+      versions = Person.joins(:versions)
+                   .select("versions.*, CONCAT(persons.first_name, ' ', persons.middle_name, ' ', persons.last_name) as full_name")
+                   .where(family_tree_id: @family_tree.id, deleted_at: nil)
+                   .limit(params[:limit] || 50)
+                   .offset(params[:offset] || 0)
+                   .order(created_at: :desc)
       @versions = versions.group_by do |x|
         z = x.created_at
         if params[:time_zone]&.to_i != 0
