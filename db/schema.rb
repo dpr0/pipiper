@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_07_135000) do
+ActiveRecord::Schema.define(version: 2022_01_22_190000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -226,6 +226,7 @@ ActiveRecord::Schema.define(version: 2021_09_07_135000) do
     t.integer "family_tree_id"
     t.string "event_type"
     t.datetime "deleted_at"
+    t.integer "modifier_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
