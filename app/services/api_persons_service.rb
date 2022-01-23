@@ -79,7 +79,7 @@ class ApiPersonsService
     person = pp.slice(:id, :last_name, :first_name, :middle_name, :maiden_name, :sex_id, :birthdate, :deathdate, :avatar_url).symbolize_keys
     person[:confirmed_data] = pp.confirmed_last_name && pp.confirmed_first_name && pp.confirmed_middle_name &&
                               pp.confirmed_birthdate && pp.confirmed_deathdate  && pp.confirmed_maiden_name
-    person[:additional_branch] = pp.id != @root_id && additional_branch(pp).present?
+    person[:additional_branch] = pp.id != @root_id && additional_branch(pp)
     person
   end
 
@@ -89,7 +89,7 @@ class ApiPersonsService
       # @persons.count { |x| pp.id != x.id && (check_branch(x, pp, :father_id) || check_branch(x, pp, :mother_id)) } > 0
       @persons.count { |x| pp.id != x.id && [x.father_id, x.mother_id].include?(pp.id) && @top_ids.exclude?(x.id) } > 1
     elsif @bottom_ids.include?(pp.id)
-      (pp.father_id.present? && (@top_ids + @bottom_ids).include?(pp.father_id)) || (pp.mother_id.present? && (@top_ids + @bottom_ids).include?(pp.mother_id))
+      (pp.father_id.present? && !(@top_ids + @bottom_ids).include?(pp.father_id)) || (pp.mother_id.present? && !(@top_ids + @bottom_ids).include?(pp.mother_id))
       # @persons.count { |x| (pp.father_id.present? || pp.mother_id.present?) && @bottom_ids.exclude?(x.id) } > 0
     end
   end
