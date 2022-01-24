@@ -5,6 +5,7 @@ class Version < ApplicationRecord
 
   def self.prepare(event_type, ft_id, current_user, model, new_attrs)
     # new_attrs = new_attrs.to_h.symbolize_keys
+    person_id = model.is_a?(Person) ? model.id : model.person_id
     model_id = model.id
     model = model.class.new if event_type == 'create'
     old_attrs = model.attributes.slice(*new_attrs.keys)
@@ -14,7 +15,6 @@ class Version < ApplicationRecord
       new_attrs[k] = new_attrs[k].to_i if k[-3..-1] == '_id'
       result[k] = val if new_attrs[k] != val
     end
-    person_id = model.is_a?(Person) ? model.id : model.person_id
     new(family_tree_id: ft_id, modifier_id: current_user.person.id, person_id: person_id, model: model.class.name, model_id: model_id, model_changes: result, event_type: event_type)
   end
 
