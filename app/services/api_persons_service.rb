@@ -85,7 +85,6 @@ class ApiPersonsService
 
   def additional_branch(pp)
     if @top_ids.include?(pp.id)
-      # byebug if pp.id == 881
       # @persons.count { |x| pp.id != x.id && (check_branch(x, pp, :father_id) || check_branch(x, pp, :mother_id)) } > 0
       @persons.count { |x| pp.id != x.id && [x.father_id, x.mother_id].include?(pp.id) && @top_ids.exclude?(x.id) } > 1
     elsif @bottom_ids.include?(pp.id)
