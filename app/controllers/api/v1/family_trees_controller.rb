@@ -256,7 +256,7 @@ module Api::V1
             role_id: Role[:guest].id,
             root_person_id: person.id
           )
-          invite_text = "XX #{current_user.name} открыл вам доступ в родословную #{@family_tree.name} в приложении BioGRAPH. Для входа используйте номер телефона #{params[:phone]} \n *ссылка app_store_link \n *google_play_link"
+          invite_text = "#{current_user.name} открыл вам доступ в родословную в приложении BioGRAF. Для входа используйте номер телефона #{params[:phone]}"
           UserMailer.with(message: invite_text, user: user).invite_email.deliver_now
           render(json: { status: :success, message: invite_text }, status: :ok) and return
         end
