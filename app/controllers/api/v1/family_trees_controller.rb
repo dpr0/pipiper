@@ -149,11 +149,11 @@ module Api::V1
     api :GET, '/v1/family_trees/:id/timeline'
     returns array_of: :versions, code: 200, desc: 'Лента новостей'
     def timeline
-      versions = Version.where(family_tree_id: @family_tree.id, deleted_at: nil)
+      persons = @family_tree.persons
+      versions = Version.where(family_tree_id: @family_tree.id, deleted_at: nil, person_id: persons.ids)
                         .limit(params[:limit] || 50)
                         .offset(params[:offset] || 0)
                         .order(created_at: :desc)
-      persons = Person.where(id: versions.map(&:person_id).uniq)
       versions = versions.map do |x|
         x.attributes.merge('person_full_name' => persons.find { |z| z.id == x.person_id }.full_name )
       end
