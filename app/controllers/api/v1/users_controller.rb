@@ -88,6 +88,7 @@ module Api::V1
     param_group :user
     returns code: 200, desc: 'token' do
       property :auth_token, String, desc: 'token with expired date'
+      property :role, String, desc: 'role'
     end
     def login
       phone = to_phone(params[:user][:phone])
@@ -120,7 +121,10 @@ module Api::V1
       render(json: { error: 'Not Authorized' }, status: :unauthorized) and return unless @user&.persisted?
 
       sign_in @user, event: :authentication
-      render json: { auth_token: JsonWebToken.encode(user_id: current_user.id) }
+
+      family_tree_user = FamilyTreeUser.find_by(user_id: @user.id)
+      role = Role.cached_by_id[family_tree_user.role_id].code if family_tree_user
+      render json: { auth_token: JsonWebToken.encode(user_id: current_user.id), role: role }
     end
 
     api :POST, '/v1/users/callcheck', 'колбэк после подтверждения звонка'
