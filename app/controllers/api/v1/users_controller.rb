@@ -24,7 +24,7 @@ module Api::V1
     end
     def check
       phone = to_phone(params[:phone])
-      user = User.where(phone: phone, email: "#{phone}@phone", provider: :phone).first
+      user = User.where(phone: phone, provider: :phone).first
       render json: { user_exist: user.present? }
     end
 
