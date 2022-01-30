@@ -13,6 +13,11 @@ module Api::V1
 
     private
 
+    def to_phone(phone)
+      tel = phone.gsub(/[^\d]/, '').last(10)
+      tel.size == 10 ? "+7#{tel}" : nil
+    end
+
     def method_name(calller)
       calller[0].split("`").pop.gsub("'", '')
     end

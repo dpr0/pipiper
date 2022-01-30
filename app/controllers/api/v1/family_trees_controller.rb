@@ -222,8 +222,8 @@ module Api::V1
     param :phone, String
     returns code: 200, desc: 'Создатель дерева может для каждой персоны из дерева привязать юзера с ролью Гость'
     def invite
-      phone = params[:phone].gsub(/[^\d]/, '').last(10)
-      resp = if phone.size < 10
+      phone = to_phone(params[:phone])
+      resp = if phone.nil?
         'phone must be a minimum 10-digit, ex: 9001234567'
       elsif (params[:email] =~ URI::MailTo::EMAIL_REGEXP).nil?
         'email not valid'
@@ -237,7 +237,7 @@ module Api::V1
           'user already invited'
         else
           user = User.new(
-            phone:       "+7#{phone}",
+            phone:       phone,
             provider:    'phone',
             email:       params[:email],
             password:    Devise.friendly_token[0, 20],

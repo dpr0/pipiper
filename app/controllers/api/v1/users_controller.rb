@@ -139,12 +139,5 @@ module Api::V1
       end
       render json: { text: 100, status: :ok }
     end
-
-    private
-
-    def to_phone(phone)
-      tel = phone.gsub(/[^\d]/, '').last(10)
-      tel.size == 10 ? "+7#{tel}" : nil
-    end
   end
 end
