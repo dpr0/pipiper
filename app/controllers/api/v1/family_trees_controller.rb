@@ -222,7 +222,7 @@ module Api::V1
     param :phone, String
     returns code: 200, desc: 'Создатель дерева может для каждой персоны из дерева привязать юзера с ролью Гость'
     def invite
-      phone = params[:phone].gsub(/[^\d]/, '')
+      phone = params[:phone].gsub(/[^\d]/, '').last(10)
       resp = if phone.size < 10
         'phone must be a minimum 10-digit, ex: 9001234567'
       elsif (params[:email] =~ URI::MailTo::EMAIL_REGEXP).nil?
