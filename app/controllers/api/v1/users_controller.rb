@@ -124,7 +124,7 @@ module Api::V1
 
       family_tree_user = FamilyTreeUser.find_by(user_id: @user.id)
       role = Role.cached_by_id[family_tree_user.role_id].code if family_tree_user
-      render json: { auth_token: JsonWebToken.encode(user_id: current_user.id), role: role }
+      render json: { id: current_user.id, auth_token: JsonWebToken.encode(user_id: current_user.id), role: role }
     end
 
     api :POST, '/v1/users/callcheck', 'колбэк после подтверждения звонка'
