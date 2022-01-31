@@ -78,7 +78,7 @@ class ApiPersonsService
   def person_info(pp)
     person = pp.slice(:id, :last_name, :first_name, :middle_name, :maiden_name, :sex_id, :birthdate, :deathdate, :avatar_url).symbolize_keys
     confirmed_data = pp.confirmed_last_name && pp.confirmed_first_name && pp.confirmed_middle_name && pp.confirmed_birthdate && pp.confirmed_maiden_name
-    confirmed_data = confirmed_data && pp.confirmed_deathdate if person.deathdate.present?
+    confirmed_data = confirmed_data && pp.confirmed_deathdate if person[:deathdate].present?
     person[:confirmed_data] = confirmed_data
     person[:additional_branch] = pp.id != @root_id && additional_branch(pp)
     person
