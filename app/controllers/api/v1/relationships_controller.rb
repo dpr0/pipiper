@@ -61,6 +61,7 @@ module Api::V1
           if person1.father_id.nil? && person1.mother_id.nil?
             parent = Person.create(last_name: 'Неизвестно',
                                    first_name: 'Неизвестно',
+                                   family_tree_id: person1.family_tree_id,
                                    sex_id: Sex[:female].id,
                                    confirmed_last_name: false,
                                    confirmed_first_name: false,
@@ -68,10 +69,10 @@ module Api::V1
                                    confirmed_maiden_name: false,
                                    confirmed_birthdate: false,
                                    confirmed_deathdate: false)
-            person1.update_with_version('update', @current_user, {mother_id: parent.mother_id})
+            person1.update_with_version('update', @current_user, mother_id: parent.id)
           end
-          person2.update_with_version('update', @current_user, {father_id: person1.father_id}) if person2.father_id.nil? && !person1.father_id.nil?
-          person2.update_with_version('update', @current_user, {mother_id: person1.mother_id}) if person2.mother_id.nil? && !person1.mother_id.nil?
+          person2.update_with_version('update', @current_user, father_id: person1.father_id) if person2.father_id.nil? && !person1.father_id.nil?
+          person2.update_with_version('update', @current_user, mother_id: person1.mother_id) if person2.mother_id.nil? && !person1.mother_id.nil?
           true
         when 'father'
           person = Person.find_by_id(relationship_params[:first_person_id])
