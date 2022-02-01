@@ -27,13 +27,25 @@ module Api::V1
           relation_params = { person_id: relationship_params[:second_person_id], persona_id: relationship_params[:first_person_id]}
           relation = Relation.new(relation_params.merge(relation_type_id: 1))
           saved = relation.save
-          Version.prepare(method_name(caller(0)), relation.person.family_tree.id, current_user, relation, relation_params).add if saved
+          if saved
+            Version.prepare(method_name(caller(0)), relation.person.family_tree.id, current_user, relation, relation_params).add
+            persons = Person.where(mother_id: relation.persona_id)
+            model_changes = { father_id: relation.person_id }
+            persons.update_all(model_changes)
+            persons.each { |p| p.update_with_version(:update, current_user, model_changes) if p.father_id.nil? }
+          end
           saved
         when 'wife'
           relation_params = { person_id: relationship_params[:first_person_id], persona_id: relationship_params[:second_person_id]}
           relation = Relation.new(relation_params.merge(relation_type_id: 1))
           saved = relation.save
-          Version.prepare(method_name(caller(0)), relation.person.family_tree.id, current_user, relation, relation_params).add if saved
+          if saved
+            Version.prepare(method_name(caller(0)), relation.person.family_tree.id, current_user, relation, relation_params).add
+            persons = Person.where(father_id: relation.person_id)
+            model_changes = { mother_id: relation.persona_id }
+            persons.update_all(model_changes)
+            persons.each { |p| p.update_with_version(:update, current_user, model_changes) if p.mother_id.nil? }
+          end
           saved
         when 'son', 'daughter'
           parent = Person.find_by_id(relationship_params[:first_person_id])
