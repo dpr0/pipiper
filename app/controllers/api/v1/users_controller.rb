@@ -43,6 +43,7 @@ module Api::V1
       if code != '000000'
         smsru = RestClient.get("https://sms.ru/sms/send?api_id=#{ENV['SMS_API_KEY']}&to=#{phone}&msg=#{code}&json=1")
         render(json: { error: "SMS service status: #{smsru.code}" }, status: :unauthorized) and return if smsru.code != 200
+
         # {"status"=>"OK", "status_code"=>100, "balance"=>120, "sms"=>
         # {"79191087399"=>{"status"=>"OK", "status_code"=>100, "sms_id"=>"202136-1000001", "cost"=>"0.00"}}}
         resp = JSON.parse(smsru.body).with_indifferent_access
@@ -100,7 +101,7 @@ module Api::V1
       render(json: { error: 'Not Authorized' }, status: :unauthorized) and return unless user&.persisted?
 
       code = user.callcheck.split('/') if user.callcheck.present?
-      if code != nil && code.size == 2 && (Time.now.to_i - code.first.to_i) < ENV['CALL_CHECK_TIMEOUT'].to_i && code.last == 'true'
+      if !code.nil? && code.size == 2 && (Time.now.to_i - code.first.to_i) < ENV['CALL_CHECK_TIMEOUT'].to_i && code.last == 'true'
         @user = User.find_for_oauth(params[:user])
       end
 
@@ -109,12 +110,13 @@ module Api::V1
         render(json: { error: 'user not verified via phone or sms' }, status: :unauthorized) and return unless smscode.present? && smscode.size == 2
 
         sms_time_ago = (Time.now.to_i - smscode.first.to_i) - ENV['SMS_CODE_TIMEOUT'].to_i
-        if sms_time_ago > 0
+        if sms_time_ago.positive?
           render(json: { error: "sms code verification time ended #{sms_time_ago} seconds ago" }, status: :unauthorized) and return
         end
         if smscode.last != params[:smscode]
-          render(json: { error: "sms code not valid" }, status: :unauthorized) and return
+          render(json: { error: 'sms code not valid' }, status: :unauthorized) and return
         end
+
         @user = User.find_for_oauth(params[:user])
       end
 
@@ -130,7 +132,7 @@ module Api::V1
     api :POST, '/v1/users/callcheck', 'колбэк после подтверждения звонка'
     returns code: 200
     def callcheck
-      params['data'].values.each do |val|
+      params['data'].each_value do |val|
         resp = val.split("\n")
         if resp[0] == 'callcheck_status'
           user = User.where(callcheck: resp[1], provider: :phone).first

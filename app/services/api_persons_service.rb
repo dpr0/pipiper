@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ApiPersonsService
-
   attr_reader :persons
 
   def initialize(persons)
@@ -61,7 +60,6 @@ class ApiPersonsService
 
     chs = @persons.select { |x| (pp.sex_id == Sex[:male].id ? x.father_id : x.mother_id) == pp.id }
     chs.each do |ch|
-
       if ch.sex_id == Sex[:male].id
         relation = Relation.find_by(person_id: ch.id)
         @bottom_relations << { from: relation.person_id, to: relation.persona_id, horizontal: true } if relation
@@ -78,7 +76,7 @@ class ApiPersonsService
   def person_info(pp)
     person = pp.slice(:id, :last_name, :first_name, :middle_name, :maiden_name, :sex_id, :birthdate, :deathdate, :avatar_url).symbolize_keys
     confirmed_data = pp.confirmed_last_name && pp.confirmed_first_name && pp.confirmed_middle_name && pp.confirmed_birthdate && pp.confirmed_maiden_name
-    confirmed_data = confirmed_data && pp.confirmed_deathdate if person[:deathdate].present?
+    confirmed_data &&= pp.confirmed_deathdate if person[:deathdate].present?
     person[:confirmed_data] = confirmed_data
     person[:additional_branch] = pp.id != @root_id && additional_branch(pp)
     person
@@ -87,7 +85,7 @@ class ApiPersonsService
   def additional_branch(pp)
     if @top_ids.include?(pp.id)
       # @persons.count { |x| pp.id != x.id && (check_branch(x, pp, :father_id) || check_branch(x, pp, :mother_id)) } > 0
-      @persons.count { |x| pp.id != x.id && [x.father_id, x.mother_id].include?(pp.id) && @top_ids.exclude?(x.id) } > 0
+      @persons.count { |x| pp.id != x.id && [x.father_id, x.mother_id].include?(pp.id) && @top_ids.exclude?(x.id) }.positive?
     elsif @bottom_ids.include?(pp.id)
       (pp.father_id.present? && !(@top_ids + @bottom_ids).include?(pp.father_id)) || (pp.mother_id.present? && !(@top_ids + @bottom_ids).include?(pp.mother_id))
       # @persons.count { |x| (pp.father_id.present? || pp.mother_id.present?) && @bottom_ids.exclude?(x.id) } > 0

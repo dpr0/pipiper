@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateJoinTableFamilyTreeUser < ActiveRecord::Migration[6.1]
   def change
     create_table :family_trees_users do |t|

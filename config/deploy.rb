@@ -2,7 +2,7 @@
 
 lock '3.16.0'
 
-server 'famitree.ru', port: 2222, roles: %w(app db web), primary: true
+server 'famitree.ru', port: 2222, roles: %w[app db web], primary: true
 
 # set :puma_threads,    [4, 16]
 # set :puma_workers,    0
@@ -33,9 +33,9 @@ set :deploy_to,       "/home/#{fetch(:user)}/#{fetch(:application)}"
 set :ruby_string,     '$HOME/.rbenv/bin/rbenv exec bundle exec'
 set :ssh_options, {
     user: fetch(:user),
-    keys: %w(~/.ssh/id_rsa),
+    keys: %w[~/.ssh/id_rsa],
     forward_agent: true,
-    auth_methods: %w(publickey password),
+    auth_methods: %w[publickey password],
     port: 2222
 }
 
@@ -68,7 +68,6 @@ namespace :deploy do
       execute("cd #{fetch(:application)}/current && RAILS_ENV=production #{fetch(:ruby_string)} rake assets:precompile") if fetch(:stage) == :production
     end
   end
-
 
   desc 'Initial Deploy'
   task :initial do

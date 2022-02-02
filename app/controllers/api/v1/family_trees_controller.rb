@@ -40,32 +40,32 @@ module Api::V1
       property :family_tree, Hash, desc: '' do
         param_group :family_tree
       end
-      property :persons, array_of: Hash,   desc: '' do
-        property :id,             Integer, desc: ''
-        property :last_name,      String,  desc: ''
-        property :first_name,     String,  desc: ''
-        property :middle_name,    String,  desc: ''
-        property :maiden_name,    String,  desc: ''
-        property :sex_id,         Integer, desc: ''
-        property :father_id,      Integer, desc: ''
-        property :mother_id,      Integer, desc: ''
-        property :family_tree_id, Integer, desc: ''
-        property :birthdate,      Date,    desc: ''
-        property :deathdate,      Date,    desc: ''
-        property :address,        String,  desc: ''
-        property :contact,        String,  desc: ''
-        property :document,       String,  desc: ''
-        property :info,           String,  desc: ''
-        property :created_at,     DateTime,desc: ''
-        property :updated_at,     DateTime,desc: ''
-        property :link_vk,        String,  desc: ''
-        property :link_fb,        String,  desc: ''
-        property :link_ig,        String,  desc: ''
-        property :link_ok,        String,  desc: ''
-        property :link_tg,        String,  desc: ''
-        property :link_tw,        String,  desc: ''
-        property :link_tt,        String,  desc: ''
-        property :link_ch,        String,  desc: ''
+      property :persons, array_of: Hash,    desc: '' do
+        property :id,             Integer,  desc: ''
+        property :last_name,      String,   desc: ''
+        property :first_name,     String,   desc: ''
+        property :middle_name,    String,   desc: ''
+        property :maiden_name,    String,   desc: ''
+        property :sex_id,         Integer,  desc: ''
+        property :father_id,      Integer,  desc: ''
+        property :mother_id,      Integer,  desc: ''
+        property :family_tree_id, Integer,  desc: ''
+        property :birthdate,      Date,     desc: ''
+        property :deathdate,      Date,     desc: ''
+        property :address,        String,   desc: ''
+        property :contact,        String,   desc: ''
+        property :document,       String,   desc: ''
+        property :info,           String,   desc: ''
+        property :created_at,     DateTime, desc: ''
+        property :updated_at,     DateTime, desc: ''
+        property :link_vk,        String,   desc: ''
+        property :link_fb,        String,   desc: ''
+        property :link_ig,        String,   desc: ''
+        property :link_ok,        String,   desc: ''
+        property :link_tg,        String,   desc: ''
+        property :link_tw,        String,   desc: ''
+        property :link_tt,        String,   desc: ''
+        property :link_ch,        String,   desc: ''
         property :confirmed_last_name,   [true, false],  desc: ''
         property :confirmed_first_name,  [true, false],  desc: ''
         property :confirmed_middle_name, [true, false],  desc: ''
@@ -175,11 +175,11 @@ module Api::V1
     param :month, String
     param :day,   String
     def calendar
-      persons   = @family_tree.persons
-      facts     =  Fact.where(person_id: persons.ids)
-                       .where(fact_type_id: [FactType[:birth].id, FactType[:marriage].id, FactType[:death].id])
-      facts     = facts.where("EXTRACT(MONTH FROM date) = ?", params[:month]) if params[:month]
-      facts     = facts.where("EXTRACT(DAY   FROM date) = ?", params[:day])   if params[:day]
+      persons = @family_tree.persons
+      facts = Fact.where(person_id: persons.ids)
+                  .where(fact_type_id: [FactType[:birth].id, FactType[:marriage].id, FactType[:death].id])
+      facts     = facts.where('EXTRACT(MONTH FROM date) = ?', params[:month]) if params[:month]
+      facts     = facts.where('EXTRACT(DAY   FROM date) = ?', params[:day])   if params[:day]
       @calendar = facts.order(:date).map do |fact|
         person = persons.find { |p| p.id == fact.person_id }
         {
@@ -250,6 +250,7 @@ module Api::V1
           unless user.save
             render(json: { status: :access_denied, message: user.errors }, status: :ok) and return
           end
+
           FamilyTreeUser.create(
             family_tree_id: @family_tree.id,
             user_id: user.id,

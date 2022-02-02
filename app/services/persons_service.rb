@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class PersonsService
-
   attr_reader :persons
 
   def initialize(persons, relations)
@@ -27,7 +26,7 @@ class PersonsService
     r_persons = @persons.select { |pp| relations_ids.include? pp.id }
     rel_str = relations_ids.map { |id| "#{relation_name(rel_type_by(p.id, id))} с #{@persons.find { |x| x.id == id }.fio_name}" }
     @predki = []
-    r_persons.present? ? predki(r_persons.map { |r| r.parent_ids }.flatten) : []
+    r_persons.present? ? predki(r_persons.map(&:parent_ids).flatten) : []
     rel_predki = @persons.select { |pp| @predki.include? pp.id }.map { |pp| {last_name: pp.last_name, id: pp.id} }
     {
         sex_id:    p.sex_id,
@@ -57,6 +56,7 @@ class PersonsService
     ids.compact.map do |id|
       person = @persons.find { |p| p.id == id }
       next unless person
+
       father = @persons.find { |p| p.id == person.father_id } if person.father_id
       mother = @persons.find { |p| p.id == person.mother_id } if person.mother_id
       @predki << person.id if person.father_id.nil? && person.mother_id.nil?

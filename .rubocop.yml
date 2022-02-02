@@ -1,0 +1,155 @@
+Layout/ArgumentAlignment:
+  Exclude:
+    - 'app/controllers/api/v1/persons_controller.rb'
+
+Layout/ElseAlignment:
+  Exclude:
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+
+Layout/EndAlignment:
+  Exclude:
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+    - 'app/controllers/api/v1/relationships_controller.rb'
+
+Layout/ExtraSpacing:
+  Exclude:
+    - 'Gemfile'
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+
+Layout/FirstHashElementIndentation:
+  Exclude:
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+    - 'app/controllers/callbacks_controller.rb'
+    - 'app/controllers/persons_controller.rb'
+    - 'app/models/user.rb'
+    - 'app/services/persons_service.rb'
+    - 'config/deploy.rb'
+
+Layout/HashAlignment:
+  Exclude:
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+    - 'app/controllers/callbacks_controller.rb'
+    - 'app/helpers/application_helper.rb'
+    - 'app/models/common.rb'
+    - 'app/services/persons_service.rb'
+    - 'config/environments/development.rb'
+    - 'config/environments/production.rb'
+
+Layout/IndentationWidth:
+  Exclude:
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+
+Layout/SpaceInsideHashLiteralBraces:
+  Exclude:
+    - 'app/controllers/api/v1/archives_controller.rb'
+    - 'app/controllers/api/v1/facts_controller.rb'
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+    - 'app/controllers/api/v1/photos_controller.rb'
+    - 'app/controllers/api/v1/relations_controller.rb'
+    - 'app/controllers/api/v1/relationships_controller.rb'
+    - 'app/controllers/family_trees_controller.rb'
+    - 'app/models/user.rb'
+    - 'app/services/persons_service.rb'
+    - 'config/routes.rb'
+
+Layout/SpaceInsideParens:
+  Exclude:
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+
+# -------------------------------------------------------------------------
+
+Lint/AssignmentInCondition:
+  Exclude:
+    - 'app/controllers/api/v1/persons_controller.rb'
+
+Lint/EmptyFile:
+  Exclude:
+    - 'config/deploy/production.rb'
+
+Lint/IneffectiveAccessModifier:
+  Exclude:
+    - 'app/models/user.rb'
+
+Metrics/AbcSize:
+  Max: 161
+
+Metrics/BlockLength:
+  Max: 198
+
+Metrics/BlockNesting:
+  Max: 4
+
+Metrics/ClassLength:
+  Max: 283
+
+Metrics/CyclomaticComplexity:
+  Max: 31
+
+Metrics/MethodLength:
+  Max: 80
+
+Metrics/PerceivedComplexity:
+  Max: 29
+
+Naming/MethodParameterName:
+  Exclude:
+    - 'app/models/user.rb'
+    - 'app/services/api_persons_service.rb'
+    - 'app/services/persons_service.rb'
+
+# Configuration parameters: EnforcedStyle.
+# SupportedStyles: nested, compact
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'app/controllers/api/v1/application_controller.rb'
+    - 'app/controllers/api/v1/archives_controller.rb'
+    - 'app/controllers/api/v1/dictionary_controller.rb'
+    - 'app/controllers/api/v1/facts_controller.rb'
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/persons_controller.rb'
+    - 'app/controllers/api/v1/photos_controller.rb'
+    - 'app/controllers/api/v1/relations_controller.rb'
+    - 'app/controllers/api/v1/relationships_controller.rb'
+    - 'app/controllers/api/v1/users_controller.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Style/GuardClause:
+  Exclude:
+    - 'app/controllers/persons_controller.rb'
+    - 'app/models/user.rb'
+
+Style/IfUnlessModifier:
+  Exclude:
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/users_controller.rb'
+    - 'app/controllers/users_controller.rb'
+    - 'bin/bundle'
+
+Style/SymbolArray:
+  EnforcedStyle: percent
+  MinSize: 6
+
+Style/WordArray:
+  EnforcedStyle: percent
+  MinSize: 5
+
+Layout/LineLength:
+  Max: 198
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'app/controllers/api/v1/archives_controller.rb'
+    - 'app/controllers/api/v1/dictionary_controller.rb'
+    - 'app/controllers/api/v1/facts_controller.rb'
+    - 'app/controllers/api/v1/family_trees_controller.rb'
+    - 'app/controllers/api/v1/photos_controller.rb'

@@ -2,7 +2,6 @@
 
 module Api::V1
   class ApplicationController < ActionController::Base
-
     def render_json(bool, model)
       if bool
         render json: model, status: :ok
@@ -19,7 +18,7 @@ module Api::V1
     end
 
     def method_name(calller)
-      calller[0].split("`").pop.gsub("'", '')
+      calller[0].split('`').pop.gsub("'", '')
     end
 
     def authenticate_request

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # default_url_options protocol: :https, host: ENV['HOST'] || 'localhost:3000'
   default_url_options only_path: true

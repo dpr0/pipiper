@@ -20,7 +20,7 @@ class User < ApplicationRecord
       user.name = auth[:name] if auth[:name].present?
       user.person ||= Person.create!(person_hash(user, auth[:phone]))
       user.save!
-      if user.family_trees.count == 0
+      if user.family_trees.count.zero?
         tree = user.family_trees.new(name: user.name, user_id: user.id)
         tree.save
         user.family_tree_users.create(role_id: 1, family_tree_id: tree.id, root_person_id: user.person.id)
@@ -62,8 +62,6 @@ class User < ApplicationRecord
   def full_name
     "#{last_name} #{first_name} #{middle_name}"
   end
-
-  private
 
   def self.person_hash(user, phone = nil)
     {

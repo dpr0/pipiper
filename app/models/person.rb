@@ -22,7 +22,7 @@ class Person < ApplicationRecord
   validate :acceptable_avatar
   validate :acceptable_images
 
-  IMAGE_TYPES = %w(image/jpeg image/png)
+  IMAGE_TYPES = %w[image/jpeg image/png].freeze
 
   def acceptable_avatar
     check_errors(avatar) if avatar.attached?
@@ -42,7 +42,7 @@ class Person < ApplicationRecord
   end
 
   def dates
-    birth = birthdate.present? && confirmed_birthdate ? "#{birthdate}" : ''
+    birth = birthdate.present? && confirmed_birthdate ? birthdate.to_s : ''
     death = deathdate.present? && confirmed_deathdate ? " - #{deathdate}" : ''
     "#{birth}#{death}"
   end
@@ -68,7 +68,7 @@ class Person < ApplicationRecord
   end
 
   def update_with_version(event_type, current_user, params)
-    Version.prepare(event_type, self.family_tree.id, current_user, self, params).add
+    Version.prepare(event_type, family_tree.id, current_user, self, params).add
     update(params)
   end
 
