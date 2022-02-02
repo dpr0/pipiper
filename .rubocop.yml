@@ -65,11 +65,6 @@ Style/ClassAndModuleChildren:
 Style/Documentation:
   Enabled: false
 
-Style/GuardClause:
-  Exclude:
-    - 'app/controllers/persons_controller.rb'
-    - 'app/models/user.rb'
-
 Style/IfUnlessModifier:
   Exclude:
     - 'app/controllers/api/v1/family_trees_controller.rb'
@@ -95,3 +90,7 @@ Style/BlockDelimiters:
     - 'app/controllers/api/v1/facts_controller.rb'
     - 'app/controllers/api/v1/family_trees_controller.rb'
     - 'app/controllers/api/v1/photos_controller.rb'
+
+Style/GuardClause:
+  Exclude:
+    - 'app/models/user.rb'
