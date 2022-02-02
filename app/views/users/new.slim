@@ -17,21 +17,21 @@ section#parallax-computers.hero.is-large
               .field-body
                 .field
                   .control
-                    = f.text_field :last_name, class: 'input is-medium is-static'
+                    = f.text_field :last_name, class: 'input is-medium'
             .field.is-horizontal
               .field-label.is-normal
                 label.label Имя
               .field-body
                 .field
                   .control
-                    = f.text_field :first_name, class: 'input is-medium is-static'
+                    = f.text_field :first_name, class: 'input is-medium'
             .field.is-horizontal
               .field-label.is-normal
                 label.label Отчество
               .field-body
                 .field
                   .control
-                    = f.text_field :middle_name, class: 'input is-medium is-static'
+                    = f.text_field :middle_name, class: 'input is-medium'
             .field.is-horizontal
               .field-label.is-normal
                 label.label Дата рождения
@@ -44,8 +44,10 @@ section#parallax-computers.hero.is-large
                 label.label Пол
               .field-body
                 .field
-                  .control
-                    = f.collection_select :sex_id, Sex.all_cached, :id, :name, class: 'select is-medium is-link is-fullwidth is-static'
+                  = f.label :sex_id, 'М', class: 'has-text-primary'
+                  = f.check_box :sex_id, { class: 'switch is-medium is-outlined is-right' }, 2, 1
+                  = f.label :sex_id, 'Ж', class: 'has-text-primary'
+
             .field.is-horizontal
               .field-label.is-normal
                 label.label Телефон
@@ -63,11 +65,12 @@ section#parallax-computers.hero.is-large
               .field-body
                 .field
                   .control
-                    = f.submit 'Зарегистрировать', class: 'button is-link is-fullwidth'
+                    .buttons
+                      = f.button 'Зарегистрировать', type: 'submit', class: 'button is-primary is-fullwidth'
 
       .columns.is-mobile
         #diag
-        / = render 'persons/graph'
+        = render 'persons/graph'
 
 javascript:
     document.addEventListener('keydown', function(e) {

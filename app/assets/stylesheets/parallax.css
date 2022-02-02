@@ -63,13 +63,13 @@ hr.content-divider {
 }
 
 input {
-    background: rgba(255, 255, 255, 0.3) !important;
+    background: rgba(255, 255, 255, 0.6) !important;
     border: 1px solid turquoise !important;
-    color: white !important;
+    color: black !important;
 }
 
 input::placeholder {
-    color: white !important;
+    color: black !important;
 }
 
 table, tbody, tr, th, td{
