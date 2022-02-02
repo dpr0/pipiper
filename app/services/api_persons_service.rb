@@ -84,15 +84,9 @@ class ApiPersonsService
 
   def additional_branch(pp)
     if @top_ids.include?(pp.id)
-      # @persons.count { |x| pp.id != x.id && (check_branch(x, pp, :father_id) || check_branch(x, pp, :mother_id)) } > 0
       @persons.count { |x| pp.id != x.id && [x.father_id, x.mother_id].include?(pp.id) && @top_ids.exclude?(x.id) }.positive?
     elsif @bottom_ids.include?(pp.id)
       (pp.father_id.present? && !(@top_ids + @bottom_ids).include?(pp.father_id)) || (pp.mother_id.present? && !(@top_ids + @bottom_ids).include?(pp.mother_id))
-      # @persons.count { |x| (pp.father_id.present? || pp.mother_id.present?) && @bottom_ids.exclude?(x.id) } > 0
     end
-  end
-
-  def check_branch(x, pp, parent)
-    !x.send(parent).nil? && !pp.send(parent).nil? && x.send(parent) == pp.send(parent)
   end
 end

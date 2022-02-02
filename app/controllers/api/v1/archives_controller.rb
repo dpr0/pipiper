@@ -83,7 +83,7 @@ module Api::V1
 
     def load_archive
       @archive = Archive.find_by(id: params[:id])
-      render(json: { error: "archive: #{params[:id]} - access denied"}, status: :unprocessable_entity) and return unless @archive
+      render(json: { error: "archive: #{params[:id]} - access denied" }, status: :unprocessable_entity) and return unless @archive
     end
 
     def archive_params
@@ -92,7 +92,7 @@ module Api::V1
 
     def load_person
       @person = Person.find_by(family_tree_id: current_user.family_tree_users(&:family_tree_id).map(&:family_tree_id), id: params[:person_id])
-      render(json: { error: "person: #{params[:person_id]} - access denied"}, status: :unprocessable_entity) and return unless @person
+      render(json: { error: "person: #{params[:person_id]} - access denied" }, status: :unprocessable_entity) and return unless @person
     end
   end
 end

@@ -1,18 +1,3 @@
-Layout/ArgumentAlignment:
-  Exclude:
-    - 'app/controllers/api/v1/persons_controller.rb'
-
-Layout/ElseAlignment:
-  Exclude:
-    - 'app/controllers/api/v1/family_trees_controller.rb'
-    - 'app/controllers/api/v1/persons_controller.rb'
-
-Layout/EndAlignment:
-  Exclude:
-    - 'app/controllers/api/v1/family_trees_controller.rb'
-    - 'app/controllers/api/v1/persons_controller.rb'
-    - 'app/controllers/api/v1/relationships_controller.rb'
-
 Layout/ExtraSpacing:
   Exclude:
     - 'Gemfile'
@@ -40,31 +25,10 @@ Layout/HashAlignment:
     - 'config/environments/development.rb'
     - 'config/environments/production.rb'
 
-Layout/IndentationWidth:
-  Exclude:
-    - 'app/controllers/api/v1/family_trees_controller.rb'
-    - 'app/controllers/api/v1/persons_controller.rb'
-
-Layout/SpaceInsideHashLiteralBraces:
-  Exclude:
-    - 'app/controllers/api/v1/archives_controller.rb'
-    - 'app/controllers/api/v1/facts_controller.rb'
-    - 'app/controllers/api/v1/family_trees_controller.rb'
-    - 'app/controllers/api/v1/persons_controller.rb'
-    - 'app/controllers/api/v1/photos_controller.rb'
-    - 'app/controllers/api/v1/relations_controller.rb'
-    - 'app/controllers/api/v1/relationships_controller.rb'
-    - 'app/controllers/family_trees_controller.rb'
-    - 'app/models/user.rb'
-    - 'app/services/persons_service.rb'
-    - 'config/routes.rb'
-
 Layout/SpaceInsideParens:
   Exclude:
     - 'app/controllers/api/v1/family_trees_controller.rb'
     - 'app/controllers/api/v1/persons_controller.rb'
-
-# -------------------------------------------------------------------------
 
 Lint/AssignmentInCondition:
   Exclude:
@@ -73,10 +37,6 @@ Lint/AssignmentInCondition:
 Lint/EmptyFile:
   Exclude:
     - 'config/deploy/production.rb'
-
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'app/models/user.rb'
 
 Metrics/AbcSize:
   Max: 161
@@ -99,26 +59,8 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 29
 
-Naming/MethodParameterName:
-  Exclude:
-    - 'app/models/user.rb'
-    - 'app/services/api_persons_service.rb'
-    - 'app/services/persons_service.rb'
-
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: nested, compact
 Style/ClassAndModuleChildren:
-  Exclude:
-    - 'app/controllers/api/v1/application_controller.rb'
-    - 'app/controllers/api/v1/archives_controller.rb'
-    - 'app/controllers/api/v1/dictionary_controller.rb'
-    - 'app/controllers/api/v1/facts_controller.rb'
-    - 'app/controllers/api/v1/family_trees_controller.rb'
-    - 'app/controllers/api/v1/persons_controller.rb'
-    - 'app/controllers/api/v1/photos_controller.rb'
-    - 'app/controllers/api/v1/relations_controller.rb'
-    - 'app/controllers/api/v1/relationships_controller.rb'
-    - 'app/controllers/api/v1/users_controller.rb'
+  EnforcedStyle: compact
 
 Style/Documentation:
   Enabled: false

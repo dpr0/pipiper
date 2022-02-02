@@ -36,13 +36,13 @@ class User < ApplicationRecord
     user
   end
 
-  def self.create_user(p)
-    p[:birthdate] = p[:birthdate]&.to_date
-    phone = p[:phone].gsub(/[^\d]/, '')
-    p[:phone] = phone.size == 10 ? "+7#{phone}" : nil
-    p[:email] = "+7#{phone}@phone" if phone
-    p[:provider] = 'phone'
-    user = User.new(p)
+  def self.create_user(hash)
+    hash[:birthdate] = hash[:birthdate]&.to_date
+    phone = hash[:phone].gsub(/[^\d]/, '')
+    hash[:phone] = phone.size == 10 ? "+7#{phone}" : nil
+    hash[:email] = "+7#{phone}@phone" if phone
+    hash[:provider] = 'phone'
+    user = User.new(hash)
     user.name = user.full_name
     user.password = Devise.friendly_token[0, 20]
     user
@@ -70,6 +70,6 @@ class User < ApplicationRecord
         first_name: user.first_name,
         middle_name: user.middle_name,
         birthdate: user.birthdate
-    }.merge(phone ? {contact: phone} : {})
+    }.merge(phone ? { contact: phone } : {})
   end
 end

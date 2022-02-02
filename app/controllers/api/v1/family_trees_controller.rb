@@ -97,7 +97,7 @@ module Api::V1
       property :root_person_id, Integer, desc: ''
     end
     def person_tree
-      render json: {error: "family tree ##{params[:id]} not found for current user"} and return unless @family_tree
+      render json: { error: "family tree ##{params[:id]} not found for current user" } and return unless @family_tree
 
       persons = @family_tree.persons.order(:birthdate)
       root_id = params[:root_person_id]&.to_i || @family_tree_user.root_person_id
@@ -125,7 +125,7 @@ module Api::V1
     def update
       version = Version.prepare(method_name(caller(0)), @family_tree.id, @current_user, @family_tree, family_tree_params)
       if !@family_tree_user&.owner?
-        render json: {error: 'you are not owner'}, status: :unprocessable_entity
+        render json: { error: 'you are not owner' }, status: :unprocessable_entity
       elsif @family_tree.update(family_tree_params)
         version.add
         render json: @family_tree, status: :ok
@@ -224,44 +224,44 @@ module Api::V1
     def invite
       phone = to_phone(params[:phone])
       resp = if phone.nil?
-        'phone must be a minimum 10-digit, ex: 9001234567'
-      elsif (params[:email] =~ URI::MailTo::EMAIL_REGEXP).nil?
-        'email not valid'
-      elsif @family_tree_user && !@family_tree_user.owner?
-        'you are not owner'
-      else
-        person = Person.where(family_tree_id: @family_tree.id).find_by(id: params[:person_id])
-        if person.nil?
-          'person not found'
-        elsif person.user.present?
-          'user already invited'
-        else
-          user = User.new(
-            phone:       phone,
-            provider:    'phone',
-            email:       params[:email],
-            password:    Devise.friendly_token[0, 20],
-            person_id:   person.id,
-            first_name:  person.first_name,
-            last_name:   person.last_name,
-            middle_name: person.middle_name
-          )
-          user.name = user.full_name
-          unless user.save
-            render(json: { status: :access_denied, message: user.errors }, status: :ok) and return
-          end
+               'phone must be a minimum 10-digit, ex: 9001234567'
+             elsif (params[:email] =~ URI::MailTo::EMAIL_REGEXP).nil?
+               'email not valid'
+             elsif @family_tree_user && !@family_tree_user.owner?
+               'you are not owner'
+             else
+               person = Person.where(family_tree_id: @family_tree.id).find_by(id: params[:person_id])
+               if person.nil?
+                 'person not found'
+               elsif person.user.present?
+                 'user already invited'
+               else
+                 user = User.new(
+                   phone:       phone,
+                   provider:    'phone',
+                   email:       params[:email],
+                   password:    Devise.friendly_token[0, 20],
+                   person_id:   person.id,
+                   first_name:  person.first_name,
+                   last_name:   person.last_name,
+                   middle_name: person.middle_name
+                 )
+                 user.name = user.full_name
+                 unless user.save
+                   render(json: { status: :access_denied, message: user.errors }, status: :ok) and return
+                 end
 
-          FamilyTreeUser.create(
-            family_tree_id: @family_tree.id,
-            user_id: user.id,
-            role_id: Role[:guest].id,
-            root_person_id: person.id
-          )
-          invite_text = "#{current_user.name} открыл вам доступ в родословную в приложении BioGRAF. Для входа используйте номер телефона #{params[:phone]}"
-          UserMailer.with(message: invite_text, user: user).invite_email.deliver_now
-          render(json: { status: :success, message: invite_text }, status: :ok) and return
-        end
-      end
+                 FamilyTreeUser.create(
+                   family_tree_id: @family_tree.id,
+                   user_id: user.id,
+                   role_id: Role[:guest].id,
+                   root_person_id: person.id
+                 )
+                 invite_text = "#{current_user.name} открыл вам доступ в родословную в приложении BioGRAF. Для входа используйте номер телефона #{params[:phone]}"
+                 UserMailer.with(message: invite_text, user: user).invite_email.deliver_now
+                 render(json: { status: :success, message: invite_text }, status: :ok) and return
+               end
+             end
       render json: { status: :access_denied, error: resp }, status: :unprocessable_entity
     end
 

@@ -24,7 +24,7 @@ module Api::V1
       if load_persons_ids.map { |x| relationship_params.slice(:first_person_id, :second_person_id).values - x }.find(&:empty?)
         resp = case RelationshipType.cached_by_id[relationship_params[:relationship_type_id]]&.code
                when 'husband'
-                 relation_params = { person_id: relationship_params[:second_person_id], persona_id: relationship_params[:first_person_id]}
+                 relation_params = { person_id: relationship_params[:second_person_id], persona_id: relationship_params[:first_person_id] }
                  relation = Relation.new(relation_params.merge(relation_type_id: 1))
                  saved = relation.save
                  if saved
@@ -35,7 +35,7 @@ module Api::V1
                  end
                  saved
                when 'wife'
-                 relation_params = { person_id: relationship_params[:first_person_id], persona_id: relationship_params[:second_person_id]}
+                 relation_params = { person_id: relationship_params[:first_person_id], persona_id: relationship_params[:second_person_id] }
                  relation = Relation.new(relation_params.merge(relation_type_id: 1))
                  saved = relation.save
                  if saved
@@ -76,7 +76,7 @@ module Api::V1
                  true
                when 'father'
                  person = Person.find_by_id(relationship_params[:first_person_id])
-                 person.update_with_version('update', @current_user, {father_id: relationship_params[:second_person_id]})
+                 person.update_with_version('update', @current_user, { father_id: relationship_params[:second_person_id] })
                  if person.mother_id.present?
                    relation_params = { person_id: person.father_id, persona_id: person.mother_id, relation_type_id: 1 }
                    relation = Relation.new(relation_params)
@@ -86,7 +86,7 @@ module Api::V1
                  true
                when 'mother'
                  person = Person.find_by_id(relationship_params[:first_person_id])
-                 person.update_with_version('update', @current_user, {mother_id: relationship_params[:second_person_id]})
+                 person.update_with_version('update', @current_user, { mother_id: relationship_params[:second_person_id] })
                  if person.father_id.present?
                    relation_params = { person_id: person.father_id, persona_id: person.mother_id, relation_type_id: 1 }
                    relation = Relation.new(relation_params)
@@ -94,8 +94,8 @@ module Api::V1
                    Version.prepare(method_name(caller(0)), relation.person.family_tree.id, current_user, relation, relation_params).add if saved
                  end
                  true
-        end
-        render_json(!resp.nil?, {created: RelationshipType.cached_by_id[relationship_params[:relationship_type_id]]&.name})
+               end
+        render_json(!resp.nil?, { created: RelationshipType.cached_by_id[relationship_params[:relationship_type_id]]&.name })
       else
         render json: { error: 'persons_ids not in one family_tree - access denied' }, status: :unprocessable_entity
       end

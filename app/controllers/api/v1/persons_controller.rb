@@ -24,7 +24,7 @@ module Api::V1
           childs:      Person.where(father_id: @person.id).or(Person.where(mother_id: @person.id)),
           versions:    Version.changes(@person)
       },
-      status: @person ? :ok : :not_found
+             status: @person ? :ok : :not_found
     end
 
     api :POST, '/v1/persons'
@@ -69,14 +69,14 @@ module Api::V1
     api :PATCH, '/v1/persons/:id/info'
     def info
       status = if InfoType.cached_by_id[params[:info_type_id]].nil?
-        :error
-      elsif info = @person.infos.find_by(info_type_id: params[:info_type_id])
-        info.update(value: params[:value])
-        :updated
-      else
-        @person.infos.create(info_type_id: params[:info_type_id], value: params[:value])
-        :created
-      end
+                 :error
+               elsif info = @person.infos.find_by(info_type_id: params[:info_type_id])
+                 info.update(value: params[:value])
+                 :updated
+               else
+                 @person.infos.create(info_type_id: params[:info_type_id], value: params[:value])
+                 :created
+               end
       render json: { status: status }, status: :ok
     end
 
@@ -88,7 +88,7 @@ module Api::V1
                 else
                   Person.where(family_tree_id: current_user.family_tree_users.map(&:family_tree_id)).find_by(id: params[:id])
                 end
-      render(json: { error: "person: #{params[:id]} - access denied"}, status: :unprocessable_entity) and return unless @person
+      render(json: { error: "person: #{params[:id]} - access denied" }, status: :unprocessable_entity) and return unless @person
     end
 
     def person_params
@@ -101,7 +101,7 @@ module Api::V1
 
     def load_family_tree
       @family_tree = current_user.family_tree_users.find_by(family_tree_id: person_params[:family_tree_id] || @person.family_tree_id)
-      render(json: { error: "family_tree_id: #{params[:family_tree_id]} - access denied"}, status: :unprocessable_entity) and return unless @family_tree
+      render(json: { error: "family_tree_id: #{params[:family_tree_id]} - access denied" }, status: :unprocessable_entity) and return unless @family_tree
     end
   end
 end

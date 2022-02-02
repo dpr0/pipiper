@@ -63,7 +63,7 @@ class FamilyTreesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { redirect_to family_trees_url, notice: 'Вы не владелец!' }
-        format.json { render json: {error: 'you are not owner'}, status: :unprocessable_entity }
+        format.json { render json: { error: 'you are not owner' }, status: :unprocessable_entity }
       end
     end
   end
