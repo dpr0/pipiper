@@ -93,6 +93,6 @@ Style/GuardClause:
     - 'app/models/user.rb'
 
 Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
+  EnforcedStyle: nested
   Exclude:
     - 'config/application.rb'
