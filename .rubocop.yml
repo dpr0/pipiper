@@ -59,9 +59,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 29
 
-Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
-
 Style/Documentation:
   Enabled: false
 
@@ -94,3 +91,8 @@ Style/BlockDelimiters:
 Style/GuardClause:
   Exclude:
     - 'app/models/user.rb'
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - 'config/application.rb'
