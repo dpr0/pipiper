@@ -36,7 +36,7 @@ module Api
         phone = to_phone(params[:phone])
         render(json: { error: 'The phone number must be a 10 digits (example: 999-111-22-33, 9991112233, 999 111 2233)' }, status: :unauthorized) and return unless phone
 
-        user = User.where(email: "#{phone}@phone", provider: :phone, phone: phone).first
+        user = User.where(provider: :phone, phone: phone).first
         render(json: { error: "User with phone: #{phone} not found" }, status: :unauthorized) and return unless user&.persisted?
 
         code = phone == '+79990000000' ? '000000' : rand(100_000...1_000_000)
@@ -95,7 +95,7 @@ module Api
       def login
         phone = to_phone(params[:user][:phone])
         email = "#{phone}@phone"
-        user = User.where(email: email, provider: :phone, phone: phone).first
+        user = User.where(provider: :phone, phone: phone).first
         params[:user][:provider] ||= 'phone'
         params[:user][:uid]      ||= email
         params[:user][:email]    ||= email
