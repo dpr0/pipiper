@@ -98,7 +98,6 @@ module Api
         user = User.where(provider: :phone, phone: phone).first
         params[:user][:provider] ||= 'phone'
         params[:user][:uid]      ||= email
-        params[:user][:email]    ||= email
         render(json: { error: 'Not Authorized' }, status: :unauthorized) and return unless user&.persisted?
 
         code = user.callcheck.split('/') if user.callcheck.present?

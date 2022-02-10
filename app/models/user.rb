@@ -14,7 +14,7 @@ class User < ApplicationRecord
     authorization = Authorization.where(provider: auth[:provider], uid: auth[:uid]).first
     return authorization.user if authorization
 
-    user = User.where(email: auth[:email], provider: auth[:provider]).first
+    user = User.where(phone: to_phone(auth[:phone]), provider: auth[:provider]).first
     if user
       user.uid ||= auth[:uid]
       user.name = auth[:name] if auth[:name].present?
@@ -71,5 +71,10 @@ class User < ApplicationRecord
         middle_name: user.middle_name,
         birthdate: user.birthdate
     }.merge(phone ? { contact: phone } : {})
+  end
+
+  def self.to_phone(phone)
+    tel = phone.gsub(/[^\d]/, '').last(10)
+    tel.size == 10 ? "+7#{tel}" : nil
   end
 end
