@@ -17,7 +17,7 @@ server 'famitree.ru', port: 2222, roles: %w[app db web], primary: true
 # set :puma_worker_timeout, nil
 # set :puma_init_active_record, true
 
-set :rbenv_ruby,      '3.0.2'
+set :rbenv_ruby,      '3.0.3'
 set :application,     'famitree'
 set :repo_url,        'git@github.com:dpr0/famitree.git'
 set :deploy_user,     'deploy'
