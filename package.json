@@ -7,10 +7,10 @@
     "bulma": "^0.9.3",
     "bulma-extensions": "^6.2.7",
     "d3": "^3.5.17",
-    "esbuild": "^0.14.17",
+    "esbuild": "^0.14.23",
     "esbuild-plugin-import-glob": "^0.1.1",
     "esbuild-rails": "^1.0.3",
-    "sass": "^1.49.7"
+    "sass": "^1.49.8"
   },
   "scripts": {
     "build": "node esbuild.config.js",
