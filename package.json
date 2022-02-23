@@ -1,12 +1,12 @@
 {
-  "name": "famitree",
+  "name": "pipiper",
   "private": "true",
   "dependencies": {
+    "@nathanvda/cocoon": "^1.2.14",
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.1",
     "bulma": "^0.9.3",
     "bulma-extensions": "^6.2.7",
-    "d3": "^3.5.17",
     "esbuild": "^0.14.23",
     "esbuild-plugin-import-glob": "^0.1.1",
     "esbuild-rails": "^1.0.3",

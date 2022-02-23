@@ -46,7 +46,7 @@ Rails.application.configure do
   # config.action_cable.mount_path = nil
   # config.action_cable.url = "wss://example.com/cable"
   # config.action_cable.allowed_request_origins = [ "http://example.com", /http:\/\/example.*/ ]
-  config.action_cable.url = 'wss://famitree.ru/cable'
+  config.action_cable.url = 'wss://pipiper.ru/cable'
   config.action_cable.allowed_request_origins = ['*']
   config.action_cable.disable_request_forgery_protection = true
 
@@ -65,7 +65,7 @@ Rails.application.configure do
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
-  # config.active_job.queue_name_prefix = "famitree.ru_production"
+  # config.active_job.queue_name_prefix = "pipiper.ru_production"
 
   config.action_mailer.perform_caching = false
   config.action_mailer.delivery_method = :smtp
@@ -107,5 +107,5 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  routes.default_url_options = { host: 'famitree.ru', protocol: 'https' }
+  routes.default_url_options = { host: 'pipiper.ru', protocol: 'https' }
 end

@@ -1,46 +1,41 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :authenticate_user!, only: :show
-  invisible_captcha only: [:create_user], honeypot: :subtitle
+  protect_from_forgery with: :null_session
+  before_action :doorkeeper_authorize! # -> { doorkeeper_authorize! :read, :write }
 
-  def new
-    redirect_to user_path(current_user.id) if user_signed_in?
-    @user = User.new
-
-    @persons = FamilyTree.find(0).persons.order(:birthdate)
-    @relations = Relation.where(person_id: @persons.ids).or(Relation.where(persona_id: @persons.ids)).all
-    service = PersonsService.new(@persons, @relations)
-    @hash = service.graph(Person.find(0))
+  def index
+    head(:ok)
   end
 
-  def show
-    @trees = FamilyTreeUser.where(user_id: current_user.id).group_by(&:role_id)
+  def show; end
+
+  def unlink
+    render_status({})
   end
 
-  def create_user
-    @user = User.create_user(create_user_params)
-
-    if @user.phone && User.find_by(phone: @user.phone).present?
-      redirect_to(new_user_path, notice: "Пользователь с номером #{@user.phone} уже зарегистрирован в системе") and return
-    end
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to welcome_users_path }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+  def devices
+    render_status(user_id: current_user.id.to_s, devices: Device.user_devices(current_user.id))
   end
 
-  def welcome; end
+  def query
+    render_status(devices: Device.user_query(current_user.id))
+  end
+
+  def action
+    response = ActionService.new(current_user.id, params.dig(:payload, :devices)).call if params.dig(:payload, :devices).present?
+    render_status(user_id: current_user.id.to_s, devices: response || [])
+  end
 
   private
 
-  def create_user_params
-    params.require(:user).permit(:last_name, :first_name, :middle_name, :birthdate, :sex_id, :phone)
+  def current_user
+    @user ||= User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+  end
+
+  def render_status(payload = {})
+    json = { request_id: request.headers['X-Request-Id'], payload: payload }
+    Rails.logger.info JSON.pretty_generate(json)
+    render status: :ok, json: json
   end
 end

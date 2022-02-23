@@ -1,21 +1,12 @@
-section#section1.signup-section.text-center
+section.signup-section.bg-black.text-center
   .container
-    / h2 Вход в систему
-
-    / = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-    /   .field
-    /     = f.label :email
-    /     br
-    /     = f.email_field :email, autofocus: true, autocomplete: "email"
-    /   .field
-    /     = f.label :password
-    /     br
-    /     = f.password_field :password, autocomplete: "current-password"
-    /   - if devise_mapping.rememberable?
-    /     .field
-    /       = f.check_box :remember_me
-    /       = f.label :remember_me
-    /   .actions
-    /     = f.submit 'Войти'
-
-    = render "devise/shared/links"
+    .row
+      .col-2
+      .col-8
+        h5.text-white-50
+          .notice = notice
+          .alert = alert
+    = link_to omniauth_authorize_path(resource_name, :yandex), class: "btn btn-danger" do
+      = "Войти через "
+      i.fab.fa-yandex-international
+      = "andex"
