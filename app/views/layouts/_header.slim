@@ -1,15 +1,37 @@
 section.hero.is-lower-alpha
-  .hero-body
+  .hero-head
     .container
-      h1.title.is-1
-        | pipiper.ru
-      h2.subtitle
-        | pipiper.ru
-        = link_to 'Pi-PIPER', root_path
-      nav.main-header.navbar.navbar-expand
-        ul.navbar-nav
-          - unless current_user
-            = link_to 'Выйти', destroy_user_session_path, class: 'nav-link', method: :delete
-          - else
-            = current_user.email.present? ? current_user.email : current_user.phone
-        ul.navbar-nav.ml-auto
+      nav.navbar aria-label=("main navigation") role="navigation"
+        #navbarBasicExample.navbar-menu
+          .navbar-start
+            .navbar-item
+              = link_to 'Pi-PIPER', root_path
+            .navbar-item
+              = link_to 'Raspberry Pi', rpi_devices_path
+            .navbar-item
+              = link_to 'Инфо', info_devices_path
+            .navbar-item
+              - unless current_user
+                = link_to omniauth_authorize_path(resource_name, :yandex) do
+                  = "Войти через "
+                  i.fab.fa-yandex-international
+                  = "andex"
+              - else
+                = link_to users_path(current_user) do
+                  = current_user.email.present? ? current_user.email : current_user.phone
+            .navbar-item
+              - if current_user
+                = link_to destroy_user_session_path, data: { 'turbo-method': :delete } do
+                  i.fa-solid.fa-right-from-bracket
+
+          .navbar-end
+            .navbar-item
+              .has-text-primary = notice
+            .navbar-item
+              .has-text-danger = alert
+  .hero-body
+    .container.has-text-centered
+      h1.title
+        i.fa-brands.fa-pied-piper-pp
+        | &nbsp
+        | Сервис управления умным домом

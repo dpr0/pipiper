@@ -12,9 +12,9 @@ footer.footer
       | &nbsp; || &nbsp;
       a href="mailto:dvitvitskiy.pro@gmail.com" Email
     p
-      / - Common.sites.each do |name, str|
-      /   = link_to "https://#{name}", class: 'mx-2' do
-      /     i class="#{str}"
+      - Common.sites.each do |name, str|
+        = link_to "https://#{name}", class: 'mx-2' do
+          i class="#{str}"
     p
       | The source code is licensed
       a href="http://opensource.org/licenses/mit-license.php"  MIT

@@ -1,10 +1,84 @@
-section#devices_new_section.signup-section.bg-black.text-center
-  .container
-    .row
-      .col-2
-      .col-8
-        h1.text-white-50 Новое устройство
-      .col-2
-    .row
-      .col-12
-        == render 'form'
+section.hero.is-lower-alpha
+  .hero-body
+    .container.has-text-centered
+      = form_with model: @device, remote: false do |f|
+        .columns
+          .column.is-2
+            = link_to 'Назад', devices_path, class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
+          .column.is-8
+            h2.subtitle Новое устройство
+          .column.is-2
+            = f.submit 'Сохранить', class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
+        .columns
+          .column.is-7
+            - if @device.errors.any?
+              #error_explanation
+                h2 = "#{pluralize(@device.errors.count, "error")} prohibited this device from being saved:"
+                ul
+                  - @device.errors.full_messages.each do |message|
+                    li = message
+            .field
+              .field-label.is-normal
+              .control
+                = f.label :enabled, 'Выкл', class: 'has-text-primary'
+                = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+                = f.label :enabled, 'Вкл', class: 'has-text-primary'
+            .field
+              = f.label :device_type, 'Тип', class: 'label'
+              .control
+                = f.select :device_type, Device::TYPES, {}, class: 'input is-medium'
+            .field
+              = f.label :host, 'Хост', class: 'label'
+              .control
+                = f.text_field :host, class: 'input is-medium'
+            .field
+              = f.label :port, 'Порт', class: 'label'
+              .control
+                = f.text_field :port, class: 'input is-medium'
+            .field
+              = f.label :name, 'Наименование', class: 'label'
+              .control = f.text_field :name, class: 'input is-medium'
+            .field
+              = f.label :description, 'Описание', class: 'label'
+              .control = f.text_field :description, class: 'input is-medium'
+            .field
+              = f.label :room, 'Помещение', class: 'label'
+              .control = f.text_field :room, class: 'input is-medium'
+            .field
+              = f.label :manufacturer, 'Производитель', class: 'label'
+              .control = f.text_field :manufacturer, class: 'input is-medium'
+            .field
+              = f.label :model, 'Модель', class: 'label'
+              .control = f.text_field :model, class: 'input is-medium'
+            .field
+              = f.label :hw_version, 'HW version', class: 'label'
+              .control = f.text_field :hw_version, class: 'input is-medium'
+            .field
+              = f.label :sw_version, 'SW version', class: 'label'
+              .control = f.text_field :sw_version, class: 'input is-medium'
+            / p
+            / .card.bg-dark.mb-3
+            /   .card-body
+            /     .col-12
+            /       - pins = @device.capabilities.sort.map(&:pin)
+            /       - Device::PINS.each_slice(2) do |left, right|
+            /         .row
+            /           .col-3.text-right class="bg-#{left[:bg]}"
+            /             = left[:comment]
+            /           .col-2.text-white-50
+            /             = left[:num]
+            /           .col-1.text-white-50 class="#{left[:bg] == 'success' ? "bg-#{left[:bg]}" : ''}"
+            /             = check_box_tag "gpio_pins[]", true, pins.include?(left[:num]), disabled: left[:num].nil?
+            /           .col-1.text-white-50 class="#{right[:bg] == 'success' ? "bg-#{right[:bg]}" : ''}"
+            /             = check_box_tag "gpio_pins[]", true, pins.include?(right[:num]), disabled: right[:num].nil?
+            /           .col-2.text-white-50
+            /             = right[:num]
+            /           .col-3.text-left class="bg-#{right[:bg]}"
+            /             = right[:comment]
+          .column.is-5
+            #capabilities
+              = f.fields_for :capabilities do |capability|
+                = render 'capability_fields', f: capability
+              .links
+                = link_to_add_association 'Добавить навык', f, :capabilities, class: 'btn btn-primary'
+              p

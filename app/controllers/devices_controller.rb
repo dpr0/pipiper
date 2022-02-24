@@ -42,6 +42,15 @@ class DevicesController < ApplicationController
     redirect_to devices_url, notice: 'Устройство удалено!'
   end
 
+  def rpi
+  end
+
+  def info
+    @gems = Gem.loaded_specs
+    @libs = JSON.parse(File.read('package.json'))['dependencies']
+    ['esbuild-rails', 'jquery', 'esbuild-plugin-import-glob', 'sass', 'bulma-carousel'].each { |x| @libs.delete x }
+  end
+
   private
 
   def set_device

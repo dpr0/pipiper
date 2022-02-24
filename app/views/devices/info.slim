@@ -1,0 +1,19 @@
+section#parallax-pole.hero.is-large
+  .hero-body
+    .container
+      .columns
+        .column.is-3.is-offset-3
+          h1.title.is-1 .rb
+          hr.content-divider
+          h2.subtitle= "Ruby #{RUBY_VERSION}"
+          h2.subtitle= "Ruby on Rails #{Rails::VERSION::STRING}"
+          h2.subtitle= "Puma #{@gems["puma"].version}"
+          h2.subtitle= "Stimulus #{@gems["stimulus-rails"].version}"
+          h2.subtitle= "Propshaft #{@gems["propshaft"].version}"
+          h2.subtitle= "Turbo #{@gems["turbo-rails"].version}"
+          h2.subtitle= "PostgreSQL #{@gems["pg"].version}"
+        .column.is-6
+          h1.title.is-1 .js
+          hr.content-divider
+          - @libs.each do |key, value|
+            h2.subtitle= "#{key} #{value}"

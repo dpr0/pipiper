@@ -13,6 +13,10 @@ Rails.application.routes.draw do
 
   resources :users
   resources :devices do
+    collection do
+      get :rpi
+      get :info
+    end
     resources :capabilities
   end
 
