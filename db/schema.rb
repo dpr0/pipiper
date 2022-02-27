@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2021_10_30_160002) do
+ActiveRecord::Schema[7.0].define(version: 2022_02_27_173000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "authorizations", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "provider"
     t.string "uid"
     t.datetime "created_at", null: false
@@ -39,6 +39,11 @@ ActiveRecord::Schema[7.0].define(version: 2021_10_30_160002) do
     t.boolean "status"
   end
 
+  create_table "device_types", force: :cascade do |t|
+    t.string "code"
+    t.string "name"
+  end
+
   create_table "devices", force: :cascade do |t|
     t.integer "user_id"
     t.boolean "enabled"
@@ -58,8 +63,8 @@ ActiveRecord::Schema[7.0].define(version: 2021_10_30_160002) do
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
-    t.integer "resource_owner_id", null: false
-    t.integer "application_id", null: false
+    t.bigint "resource_owner_id", null: false
+    t.bigint "application_id", null: false
     t.string "token", null: false
     t.integer "expires_in", null: false
     t.text "redirect_uri", null: false
@@ -72,8 +77,8 @@ ActiveRecord::Schema[7.0].define(version: 2021_10_30_160002) do
   end
 
   create_table "oauth_access_tokens", force: :cascade do |t|
-    t.integer "resource_owner_id"
-    t.integer "application_id", null: false
+    t.bigint "resource_owner_id"
+    t.bigint "application_id", null: false
     t.string "token", null: false
     t.string "refresh_token"
     t.integer "expires_in"

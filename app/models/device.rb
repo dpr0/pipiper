@@ -12,32 +12,6 @@ class Device < ApplicationRecord
 
   METROLOGY = [['t', 'Температура', 'C'], ['p', 'Давление', 'HPA'], ['h', 'Влажность', 'HUM']].freeze
 
-  TYPES = [
-    ['Лампочка, светильник, люстра.',                                'devices.types.light'                ],
-    ['Розетка.',                                                     'devices.types.socket'               ],
-    ['Выключатель, реле.',                                           'devices.types.switch'               ],
-    ['Водонагреватель, теплый пол, обогреватель, электровентилятор.','devices.types.thermostat'           ],
-    ['Кондиционер.',                                                 'devices.types.thermostat.ac'        ],
-    ['Аудио, видео, мультимедиа техника.',                           'devices.types.media_device'         ],
-    ['Телевизор, ИК-пульт от телевизора',                            'devices.types.media_device.tv'      ],
-    ['ИК-пульт от тв-приставки, тв-приставка.',                      'devices.types.media_device.tv_box'  ],
-    ['ИК-пульт от ресивера, ресивер.',                               'devices.types.media_device.receiver'],
-    ['Различная умная кухонная техника.',                            'devices.types.cooking'              ],
-    ['Кофеварка, кофемашина.',                                       'devices.types.cooking.coffee_maker' ],
-    ['Чайник.',                                                      'devices.types.cooking.kettle'       ],
-    ['Мультиварка.',                                                 'devices.types.cooking.multicooker'  ],
-    ['Дверь, ворота, окно, ставни.',                                 'devices.types.openable'             ],
-    ['Шторы, жалюзи.',                                               'devices.types.openable.curtain'     ],
-    ['Увлажнитель воздуха.',                                         'devices.types.humidifier'           ],
-    ['Очиститель воздуха.',                                          'devices.types.purifier'             ],
-    ['Робот-пылесос.',                                               'devices.types.vacuum_cleaner'       ],
-    ['Стиральная машина.',                                           'devices.types.washing_machine'      ],
-    ['Посудомоечная машина.',                                        'devices.types.dishwasher'           ],
-    ['Утюг, парогенератор.',                                         'devices.types.iron'                 ],
-    ['Датчик температуры, влажности, открытия двери, движения.',     'devices.types.sensor'               ],
-    ['Остальные устройства.',                                        'devices.types.other'                ]
-  ].freeze
-
   PINS = [
     { id:  1, bg: 'warning',   num: nil, comment: '3v3'       }, { id:  2, bg: 'danger',    num: nil, comment: '5v0'       },
     { id:  3, bg: 'primary',   num: 2,   comment: 'SDA'       }, { id:  4, bg: 'danger',    num: nil, comment: '5v0'       },

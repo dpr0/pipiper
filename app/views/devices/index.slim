@@ -1,53 +1,41 @@
-section#devices_list_section.signup-section.bg-black.text-center
-  .container
-    .row
-      .col-2
-      .col-8
-        h5.text-white-50
-          .notice = notice
-          .alert = alert
-    .row
-      .col-2
-      .col-8
-        h1.text-white-50 Список устройств
-      .col-2
-        = link_to 'Добавить', new_device_path, class: 'btn btn-xs btn-success'
-    .row
-      p
-    .row
-      .col-12
-        table.table.table-dark.hoverTable
-          thead
-            tr
-              / td ID
-              td Наименование
-              td Подключен?
-              / td Описание
-              td Местоположение
-              td Тип навыка
-              / td Производитель
-              / td Модель
-              / td Версия железа
-              / td Версия софта
-              td Хост
-              td Порт
-          tbody
-            - @devices.each do |device|
-              tr.text-white-50 data-link=edit_device_path(device)
-                / td= device.id
-                td= device.name
-                td= device.enabled
-                / td= device.description
-                td= device.room
-                td= device.device_type
-                / td= device.manufacturer
-                / td= device.model
-                / td= device.hw_version
-                / td= device.sw_version
-                td= device.host
-                td= device.port
-
-javascript:
-    $("tr[data-link]").click(function () {
-        window.location = $(this).data("link")
-    })
+section.hero.is-lower-alpha
+  .hero-body
+    .container.has-text-centered
+      .columns
+        .column.is-2
+        .column.is-8
+          h2.subtitle Список устройств
+        .column.is-2
+          = link_to 'Добавить', new_device_path, class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
+      .columns
+        .column.is-12
+          table.table
+            thead
+              tr
+                / td ID
+                td Наименование
+                td Подключен?
+                / td Описание
+                td Местоположение
+                td Тип навыка
+                / td Производитель
+                / td Модель
+                / td Версия железа
+                / td Версия софта
+                td Хост
+                td Порт
+            tbody
+              - @devices.each do |device|
+                tr data-link=edit_device_path(device)
+                  / td= device.id
+                  td= device.name
+                  td= device.enabled
+                  / td= device.description
+                  td= device.room
+                  td= device.device_type
+                  / td= device.manufacturer
+                  / td= device.model
+                  / td= device.hw_version
+                  / td= device.sw_version
+                  td= device.host
+                  td= device.port

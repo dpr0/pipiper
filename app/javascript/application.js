@@ -6,5 +6,3 @@ import "cocoon-js";
 
 window.jQuery = jquery
 window.$ = jquery
-
-$("tr[data-link]").click(function () { window.location = $(this).data("link") })
