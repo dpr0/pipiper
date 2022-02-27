@@ -22,22 +22,22 @@ class ActionService
 
   private
 
-  def capabilities(capabilities, ud)
+  def capabilities(capabilities, ud) # ud - user_device
     capabilities.map do |cap|
       dc = ud.capabilities.find_by(capability_type: cap[:type]) # device_capability
       dc.update(status: cap[:state][:value])
       state = set_state(cap[:state])
       code = if ud.protocol.code == 'mqtt'
-               name = ud.host
-               if name.include?('drivent')
-                mq("#{name}/setTargetPosition", state)
-               elsif name.include?('defafon')
-                mq('defafon/v1/in', cap[:state][:instance] == 'on' ? 'O' : 'N')
-               end
-             else
-               resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
-               resp.code
-             end
+        name = ud.host
+        if name.include?('drivent')
+          mq("#{name}/setTargetPosition", state)
+        elsif name.include?('defafon')
+          mq('defafon/v1/in', cap[:state][:instance] == 'on' ? 'O' : 'N')
+        end
+      else
+       resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
+       resp.code
+      end
       # response = JSON.parse(resp.body)
       {
         type: cap[:type],
