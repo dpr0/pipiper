@@ -1,72 +1,7 @@
 section.hero.is-lower-alpha
   .hero-body
     .container.has-text-centered
-      = form_with model: @device, remote: false do |f|
-        .columns
-          .column.is-2
-            = link_to 'Назад', devices_path, class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
-          .column.is-8
-            h2.subtitle Новое устройство
-          .column.is-2
-            = f.submit 'Сохранить', class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
-        .columns
-          .column.is-7
-            - if @device.errors.any?
-              #error_explanation
-                h2 = "#{pluralize(@device.errors.count, "error")} prohibited this device from being saved:"
-                ul
-                  - @device.errors.full_messages.each do |message|
-                    li = message
-            .field
-              .field-label.is-normal
-              .control
-                = f.label :enabled, 'Выкл', class: 'has-text-primary'
-                = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 0, 1
-                = f.label :enabled, 'Вкл', class: 'has-text-primary'
-            .field
-              = f.label :device_type, 'Тип', class: 'label'
-              .control
-                = f.select :device_type, DeviceType.all_cached.map { |x| [x.name, x.code] }, {}, class: 'input is-medium'
-            .field
-              = f.label :protocol_id, 'Тип', class: 'label'
-              .control
-                = f.select :protocol_id, Protocol.all_cached.map { |x| [x.name, x.id] }, {}, class: 'input is-medium'
-            .field
-              = f.label :host, 'Хост', class: 'label'
-              .control
-                = f.text_field :host, class: 'input is-medium'
-            .field
-              = f.label :port, 'Порт', class: 'label'
-              .control
-                = f.text_field :port, class: 'input is-medium'
-            .field
-              = f.label :name, 'Наименование', class: 'label'
-              .control = f.text_field :name, class: 'input is-medium'
-            .field
-              = f.label :description, 'Описание', class: 'label'
-              .control = f.text_field :description, class: 'input is-medium'
-            .field
-              = f.label :room, 'Помещение', class: 'label'
-              .control = f.text_field :room, class: 'input is-medium'
-            .field
-              = f.label :manufacturer, 'Производитель', class: 'label'
-              .control = f.text_field :manufacturer, class: 'input is-medium'
-            .field
-              = f.label :model, 'Модель', class: 'label'
-              .control = f.text_field :model, class: 'input is-medium'
-            .field
-              = f.label :hw_version, 'HW version', class: 'label'
-              .control = f.text_field :hw_version, class: 'input is-medium'
-            .field
-              = f.label :sw_version, 'SW version', class: 'label'
-              .control = f.text_field :sw_version, class: 'input is-medium'
-          .column.is-5
-            #capabilities
-              = f.fields_for :capabilities do |capability|
-                = render 'capability_fields', f: capability
-              .links
-                = turbo_frame_tag f
-                = link_to_add_association 'Добавить навык', f, :capabilities, class: 'btn btn-primary'
+      == render 'form'
     .container.has-text-centered
       .columns
         .column.is-7

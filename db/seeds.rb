@@ -1,5 +1,5 @@
-Protocol.create(code: 'mqtt', name: 'MQTT')
-Protocol.create(code: 'http', name: 'HTTP')
+mqtt = Protocol.create(code: 'mqtt', name: 'MQTT')
+http = Protocol.create(code: 'http', name: 'HTTP')
 
 DeviceType.create(name: 'Лампочка, светильник, люстра.',                                 code: 'devices.types.light')
 DeviceType.create(name: 'Розетка.',                                                      code: 'devices.types.socket')
@@ -24,3 +24,54 @@ DeviceType.create(name: 'Посудомоечная машина.',             
 DeviceType.create(name: 'Утюг, парогенератор.',                                          code: 'devices.types.iron')
 DeviceType.create(name: 'Датчик температуры, влажности, открытия двери, движения.',      code: 'devices.types.sensor')
 DeviceType.create(name: 'Остальные устройства.',                                         code: 'devices.types.other')
+
+device1 = Device.create(
+  user_id: 1,
+  enabled: true,
+  name: 'Окно',
+  description: 'проветривание',
+  room: 'Кухня',
+  device_type: 'devices.types.openable',
+  manufacturer: 'Drivent',
+  host: 'drivent_dpro',
+  port: nil,
+  protocol_id: mqtt.id)
+
+device2 = Device.create(
+  user_id: 1,
+  enabled: true,
+  name: 'Домофон',
+  description: 'Входная дверь',
+  room: 'Прихожая',
+  device_type: 'devices.types.openable',
+  manufacturer: 'Defafon',
+  host: 'defafon_dpro',
+  port: nil,
+  protocol_id: mqtt.id)
+
+capability1 = Capability.create(
+  device_id: device1.id,
+  status: true,
+  enabled: true,
+  retrievable: true,
+  capability_type: 'devices.capabilities.on_off',
+  state_instance: 'on',
+  state_value: 1)
+
+capability2 = Capability.create(
+  device_id: device1.id,
+  status: true,
+  enabled: true,
+  retrievable: true,
+  capability_type: 'devices.capabilities.range',
+  state_instance: 'on',
+  state_value: 1)
+
+capability3 = Capability.create(
+  device_id: device2.id,
+  status: false,
+  enabled: true,
+  retrievable: true,
+  capability_type: 'devices.capabilities.on_off',
+  state_instance: 'on',
+  state_value: 1)

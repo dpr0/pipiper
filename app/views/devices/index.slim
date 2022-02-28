@@ -8,34 +8,24 @@ section.hero.is-lower-alpha
         .column.is-2
           = link_to 'Добавить', new_device_path, class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
       .columns
-        .column.is-12
-          table.table
-            thead
-              tr
-                / td ID
-                td Наименование
-                td Подключен?
-                / td Описание
-                td Местоположение
-                td Тип навыка
-                / td Производитель
-                / td Модель
-                / td Версия железа
-                / td Версия софта
-                td Хост
-                td Порт
-            tbody
-              - @devices.each do |device|
-                tr data-link=edit_device_path(device)
-                  / td= device.id
-                  td= device.name
-                  td= device.enabled
-                  / td= device.description
-                  td= device.room
-                  td= device.device_type
-                  / td= device.manufacturer
-                  / td= device.model
-                  / td= device.hw_version
-                  / td= device.sw_version
-                  td= device.host
-                  td= device.port
+        .column.is-3
+
+          - @devices.group_by(&:room).each do |room, devices|
+            br
+            .card.events-card
+              header.card-header
+                p.card-header-title.has-background-primary
+                  = "Помещение: #{room}"
+                / a.card-header-icon aria-label=("more options") href="#"
+                /   span.icon
+                /     i.fa.fa-angle-down aria-hidden="true"
+              .card-table
+                .content
+                  table.table.is-fullwidth.is-striped
+                    tbody
+                      - devices.each do |device|
+                        tr class="has-background-#{device.enabled ? 'info' : 'grey-light'}"
+                          td = device.id
+                          td = device.name
+                          td.level-right
+                            = link_to 'Изменить', edit_device_path(device), class: 'button is-small is-primary'
