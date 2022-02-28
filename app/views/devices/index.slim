@@ -1,31 +1,31 @@
-section.hero.is-lower-alpha
-  .hero-body
-    .container.has-text-centered
-      .columns
-        .column.is-2
-        .column.is-8
-          h2.subtitle Список устройств
-        .column.is-2
-          = link_to 'Добавить', new_device_path, class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
-      .columns
-        .column.is-3
-
-          - @devices.group_by(&:room).each do |room, devices|
-            br
-            .card.events-card
-              header.card-header
-                p.card-header-title.has-background-primary
-                  = "Помещение: #{room}"
-                / a.card-header-icon aria-label=("more options") href="#"
-                /   span.icon
-                /     i.fa.fa-angle-down aria-hidden="true"
-              .card-table
-                .content
-                  table.table.is-fullwidth.is-striped
-                    tbody
-                      - devices.each do |device|
-                        tr class="has-background-#{device.enabled ? 'info' : 'grey-light'}"
-                          td = device.id
-                          td = device.name
-                          td.level-right
-                            = link_to 'Изменить', edit_device_path(device), class: 'button is-small is-primary'
+.hero-body
+  .container.has-text-centered
+    .columns
+      .column.is-2
+      .column.is-8
+        h2.subtitle Список устройств
+      .column.is-2
+        = link_to 'Добавить', new_device_path, class: 'button is-link is-fullwidth has-text-weight-medium is-medium'
+    .columns
+      .column.is-3
+        - @devices.group_by(&:room).each do |room, devices|
+          br
+          .card.events-card
+            header.card-header
+              p.card-header-title.has-background-primary
+                = room
+              / a.card-header-icon aria-label=("more options") href="#"
+              /   span.icon
+              /     i.fa.fa-angle-down aria-hidden="true"
+            .card-table
+              .content
+                table.table.is-fullwidth.is-striped
+                  tbody
+                    - devices.each do |device|
+                      tr
+                        td = device.id
+                        td
+                          i.fa-solid class="fa-square-#{ device.enabled ? 'check has-text-primary' : 'xmark has-text-danger'}"
+                        td = device.name
+                        td.level-right
+                          = link_to 'Изменить', edit_device_path(device), class: 'button is-small is-link'

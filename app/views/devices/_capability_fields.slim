@@ -1,8 +1,13 @@
 = f.hidden_field :id
 .field
-  .control
-    = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 0, 1
-    = f.label :enabled, 'Включен?', class: 'has-text-primary'
+  .columns
+    .column.is-8
+      .control.has-text-left
+        = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+        = f.label :enabled, 'Включен?', class: 'has-text-primary'
+    .column.is-4
+      .control.has-text-right
+        = link_to_remove_association "X", f, class: 'button is-small is-danger'
 / .field
 /   .control
 /     = f.check_box :status, { class: 'switch is-medium is-outlined is-right' }, 0, 1
@@ -29,4 +34,3 @@
 .field
   = f.label :pin, 'pin', class: 'label'
   .col-sm-8 = f.number_field :pin, class: 'input is-medium', min: 1, max: 40
-= link_to_remove_association "Удалить", f

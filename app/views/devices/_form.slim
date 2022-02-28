@@ -15,7 +15,7 @@
   .columns
     .column.is-3
       .field
-        .control
+        .control.has-text-left
           = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 0, 1
           = f.label :enabled, 'Включен?', class: 'has-text-primary'
       .field
@@ -61,4 +61,4 @@
           = render 'capability_fields', f: capability
         .links
           = turbo_frame_tag f
-          = link_to_add_association 'Добавить навык', f, :capabilities, class: 'btn btn-primary'
+          = link_to_add_association 'Добавить навык', f, :capabilities, class: 'button is-small is-link'
