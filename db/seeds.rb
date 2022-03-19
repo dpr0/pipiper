@@ -49,6 +49,18 @@ device2 = Device.create(
   port: nil,
   protocol_id: mqtt.id)
 
+device3 = Device.create(
+  user_id: 1,
+  enabled: true,
+  name: 'Свет',
+  description: 'освещение',
+  room: 'Кухня',
+  device_type: 'devices.types.light',
+  manufacturer: 'Shelly',
+  host: 'shelly25_dpro',
+  port: 1,
+  protocol_id: mqtt.id)
+
 capability1 = Capability.create(
   device_id: device1.id,
   status: true,
@@ -69,6 +81,15 @@ capability2 = Capability.create(
 
 capability3 = Capability.create(
   device_id: device2.id,
+  status: false,
+  enabled: true,
+  retrievable: true,
+  capability_type: 'devices.capabilities.on_off',
+  state_instance: 'on',
+  state_value: 1)
+
+capability3 = Capability.create(
+  device_id: device3.id,
   status: false,
   enabled: true,
   retrievable: true,
