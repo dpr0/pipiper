@@ -32,7 +32,9 @@ class ActionService
         if name.include?('drivent')
           mq("#{name}/setTargetPosition", state)
         elsif name.include?('shelly')
-          mq("shellies/#{name}/relay/#{ud.port}/command", cap[:state][:instance] == 'on' ? 'on' : 'off')
+          if cap[:state][:instance] == 'on'
+            mq("shellies/#{name}/relay/#{ud.port}/command", cap[:state][:value] ? 'on' : 'off')
+          end
         elsif name.include?('defafon')
           mq('defafon/v1/in', cap[:state][:instance] == 'on' ? 'O' : 'N')
         end
