@@ -58,7 +58,7 @@ device3 = Device.create(
   device_type: 'devices.types.light',
   manufacturer: 'Shelly',
   host: 'shelly25_dpro',
-  port: 1,
+  port: 0,
   protocol_id: mqtt.id)
 
 capability1 = Capability.create(
