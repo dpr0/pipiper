@@ -11,4 +11,20 @@ class Capability < ApplicationRecord
     ['Вкл/выкл доп. функций.',                  'devices.capabilities.toggle'        ]
   ].freeze
 
+  def to_capability
+    capability = { type: capability_type, retrievable: retrievable }
+    if capability_type == 'devices.capabilities.range'
+      capability[:parameters] = {
+        instance: 'open',
+        unit: 'unit.percent',
+        random_access: true,
+        range: {
+          min: 0,
+          max: 100,
+          precision: 1
+        }
+      }
+    end
+    capability
+  end
 end

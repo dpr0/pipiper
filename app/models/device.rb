@@ -65,8 +65,8 @@ class Device < ApplicationRecord
         type: d.device_type,
         custom_data: {},
         device_info: d.device_info,
-        capabilities: d.capabilities.map { |cap| d.capability(cap) },
-        properties: d.properties.map { |cap| d.property(cap) }
+        capabilities: d.capabilities.map(&:to_capability),
+        properties: d.properties.map(&:to_property)
       }
     end
   end
@@ -86,7 +86,7 @@ class Device < ApplicationRecord
           room: d.room,
           type: d.device_type,
           custom_data: {},
-          properties: d.properties.map { |cap| d.property(cap) },
+          properties: d.properties.map(&:to_property),
           device_info: d.device_info
         )
       end
@@ -101,41 +101,5 @@ class Device < ApplicationRecord
       hw_version: hw_version,
       sw_version: sw_version
     }
-  end
-
-  private
-
-  def self.capability(cap)
-    capability = { type: cap.capability_type, retrievable: cap.retrievable }
-    if cap.capability_type == 'devices.capabilities.range'
-      capability[:parameters] = {
-        instance: 'open',
-        unit: 'unit.percent',
-        random_access: true,
-        range: {
-            min: 0,
-            max: 100,
-            precision: 1
-        }
-      }
-    end
-    capability
-  end
-
-  def self.property(prop)
-    property = { type: prop.property_type, retrievable: prop.retrievable, reportable: prop.reportable,
-                 state: { instance: prop.parameters_instance, value: prop.parameters_value } }
-    property[:parameters] = case prop.property_type
-    when 'devices.properties.event'
-      { instance: prop.parameters_instance, unit: prop.parameters_unit }
-    when 'devices.properties.float'
-      {
-        instance: prop.parameters_instance,
-        events: prop.parameters_events.split(",").map { |e| { value: e } }
-      }
-    else
-      {}
-    end
-    property
   end
 end
