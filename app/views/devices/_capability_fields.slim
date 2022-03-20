@@ -9,11 +9,11 @@
       .control.has-text-right
         = link_to_remove_association "X", f, class: 'button is-small is-danger'
 .field
-  .control
+  .control.has-text-left
     = f.check_box :status, { class: 'switch is-medium is-outlined is-right' }, 0, 1
     = f.label :status, 'Статус', class: 'has-text-primary'
 .field
-  .control
+  .control.has-text-left
     = f.check_box :retrievable, { class: 'switch is-medium is-outlined is-right' }, 0, 1
     = f.label :retrievable, 'Запрос состояния', class: 'has-text-primary'
 .field
