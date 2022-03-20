@@ -62,3 +62,10 @@
         .links
           = turbo_frame_tag f
           = link_to_add_association 'Добавить навык', f, :capabilities, class: 'button is-small is-link'
+    .column.is-3
+      #properties
+        = f.fields_for :properties do |property|
+          = render 'property_fields', f: property
+        .links
+          = turbo_frame_tag f
+          = link_to_add_association 'Добавить свойство', f, :properties, class: 'button is-small is-link'

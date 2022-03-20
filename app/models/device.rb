@@ -2,12 +2,15 @@
 
 class Device < ApplicationRecord
   has_many :capabilities, inverse_of: :device
+  has_many :properties,   inverse_of: :device
   belongs_to :protocol
   accepts_nested_attributes_for :capabilities, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :properties,   reject_if: :all_blank, allow_destroy: true
   belongs_to :user
 
   scope :enabled, ->(user_id) {
-    eager_load(:capabilities).where(user_id: user_id, enabled: true, capabilities: { enabled: true })
+    eager_load(:capabilities, :properties)
+      .where(user_id: user_id, enabled: true, capabilities: { enabled: true } )
   }
 
   METROLOGY = [['t', 'Температура', 'C'], ['p', 'Давление', 'HPA'], ['h', 'Влажность', 'HUM']].freeze
@@ -61,8 +64,9 @@ class Device < ApplicationRecord
         room: d.room,
         type: d.device_type,
         custom_data: {},
-        device_info: { manufacturer: d.manufacturer, model: d.model, hw_version: d.hw_version, sw_version: d.sw_version },
-        capabilities: d.capabilities.map { |cap| self.capability(cap) }
+        device_info: device_info,
+        capabilities: d.capabilities.map { |cap| self.capability(cap) },
+        properties: d.properties.map { |cap| self.property(cap) }
       }
     end
   end
@@ -71,32 +75,22 @@ class Device < ApplicationRecord
     scope = enabled(user_id)
     scope = scope.where(id: devices_ids.sort) if devices_ids.present?
     scope.map do |d|
+      hash = {
+        id: d.id.to_s,
+        capabilities: d.capabilities.map { |cap| { type: cap.capability_type, state: { instance: cap.state_instance, value: true } } }
+      }
       if devices_ids.blank?
-        {
-          id: d.id.to_s, capabilities: d.capabilities.map do |cap|
-            { type: cap.capability_type, state: { instance: cap.state_instance, value: true } }
-          end
-        }
-      else
-        {
-          id: d.id.to_s,
-          name: d.name.to_s,
-          description: d.description.to_s,
-          room: d.room.to_s,
-          type: d.device_type.to_s,
+        hash.merge(
+          name: d.name,
+          description: d.description,
+          room: d.room,
+          type: d.device_type,
           custom_data: {},
-          capabilities: d.capabilities.map do |cap|
-            { type: cap.capability_type, state: { instance: cap.state_instance, value: true } }
-          end,
-          properties: [],
-          device_info: {
-            manufacturer: d.manufacturer.to_s,
-            model: d.model.to_s,
-            hw_version: d.hw_version.to_s,
-            sw_version: d.sw_version.to_s
-          }
-        }
+          properties: d.properties.map { |cap| self.property(cap) },
+          device_info: device_info
+        )
       end
+      hash
     end
   end
 
@@ -126,5 +120,21 @@ class Device < ApplicationRecord
       }
     end
     capability
+  end
+
+  def self.property(prop)
+    property = { type: prop.property_type, retrievable: prop.retrievable, reportable: prop.reportable }
+    property[:parameters] = case prop.property_type
+    when 'devices.properties.event'
+      { instance: prop.parameters_instance, unit: prop.parameters_unit }
+    when 'devices.properties.float'
+      {
+        instance: prop.parameters_instance,
+        events: prop.parameters_events.split(",").map { |e| { value: e } }
+      }
+    else {}
+    end
+    property[:state] = { instance: prop.parameters_instance, value: prop.parameters_value }
+    property
   end
 end

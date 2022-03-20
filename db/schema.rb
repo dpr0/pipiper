@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_27_173000) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_20_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -102,6 +102,20 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_27_173000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
+  end
+
+  create_table "properties", force: :cascade do |t|
+    t.integer "device_id"
+    t.boolean "enabled"
+    t.boolean "retrievable"
+    t.boolean "reportable"
+    t.string "property_type"
+    t.string "parameters_instance"
+    t.string "parameters_value"
+    t.string "parameters_unit"
+    t.string "parameters_events"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "props", force: :cascade do |t|

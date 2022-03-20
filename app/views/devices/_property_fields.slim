@@ -1,0 +1,33 @@
+= f.hidden_field :id
+.field
+  .columns
+    .column.is-8
+      .control.has-text-left
+        = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+        = f.label :enabled, 'Включен?', class: 'has-text-primary'
+    .column.is-4
+      .control.has-text-right
+        = link_to_remove_association "X", f, class: 'button is-small is-danger'
+.field
+  .control
+    = f.check_box :retrievable, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+    = f.label :retrievable, 'Запрос состояния', class: 'has-text-primary'
+.field
+  .control
+    = f.check_box :reportable, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+    = f.label :reportable, 'Отчитываемый', class: 'has-text-primary'
+.field
+  = f.label :property_type, 'property_type', class: 'label'
+  .col-sm-8 = f.select :property_type, Property::TYPES, {}, class: 'input is-medium'
+.field
+  = f.label :parameters_instance, 'parameters_instance', class: 'label'
+  .col-sm-8 = f.text_field :parameters_instance, class: 'input is-medium'
+.field
+  = f.label :parameters_value, 'parameters_value', class: 'label'
+  .col-sm-8 = f.number_field :parameters_value, class: 'input is-medium'
+.field
+  = f.label :parameters_unit, 'parameters_unit', class: 'label'
+  .col-sm-8 = f.number_field :parameters_unit, class: 'input is-medium'
+.field
+  = f.label :parameters_events, 'parameters_events', class: 'label'
+  .col-sm-8 = f.number_field :parameters_events, class: 'input is-medium'
