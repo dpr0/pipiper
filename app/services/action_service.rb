@@ -45,7 +45,7 @@ class ActionService
       # response = JSON.parse(resp.body)
       {
         type: cap[:type],
-        # retrievable: cap[:retrievable],
+        # retrievable: cap[:v],
         # reportable: cap[:reportable],
         parameters: {
           instance: dc.state_instance

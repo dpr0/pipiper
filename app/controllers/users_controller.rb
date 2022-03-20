@@ -19,7 +19,10 @@ class UsersController < ApplicationController
   end
 
   def query
-    render_status(devices: Device.user_query(current_user.id))
+    devices_ids = params['devices']&.map { |d| d['id'].to_i }
+    response = Device.user_query(current_user.id, devices_ids)
+    response.merge!(user_id: current_user.id) if devices_ids.blank?
+    render_status(devices: response)
   end
 
   def action

@@ -67,13 +67,36 @@ class Device < ApplicationRecord
     end
   end
 
-  def self.user_query(user_id)
-    enabled(user_id).map do |d|
-      {
-        id: d.id.to_s, capabilities: d.capabilities.map do |cap|
-          { type: cap.capability_type, state: { instance: cap.state_instance, value: true } }
-        end
-      }
+  def self.user_query(user_id, devices_ids)
+    scope = enabled(user_id)
+    scope = scope.where(id: devices_ids.sort) if devices_ids.present?
+    scope.map do |d|
+      if devices_ids.blank?
+        {
+          id: d.id.to_s, capabilities: d.capabilities.map do |cap|
+            { type: cap.capability_type, state: { instance: cap.state_instance, value: true } }
+          end
+        }
+      else
+        {
+          id: d.id.to_s,
+          name: d.name.to_s,
+          description: d.description.to_s,
+          room: d.room.to_s,
+          type: d.device_type.to_s,
+          custom_data: {},
+          capabilities: d.capabilities.map do |cap|
+            { type: cap.capability_type, state: { instance: cap.state_instance, value: true } }
+          end,
+          properties: [],
+          device_info: {
+            manufacturer: d.manufacturer.to_s,
+            model: d.model.to_s,
+            hw_version: d.hw_version.to_s,
+            sw_version: d.sw_version.to_s
+          }
+        }
+      end
     end
   end
 
