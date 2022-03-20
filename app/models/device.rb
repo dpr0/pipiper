@@ -64,7 +64,7 @@ class Device < ApplicationRecord
         room: d.room,
         type: d.device_type,
         custom_data: {},
-        device_info: device_info,
+        device_info: d.device_info,
         capabilities: d.capabilities.map { |cap| d.capability(cap) },
         properties: d.properties.map { |cap| d.property(cap) }
       }
