@@ -65,8 +65,8 @@ class Device < ApplicationRecord
         type: d.device_type,
         custom_data: {},
         device_info: device_info,
-        capabilities: d.capabilities.map { |cap| self.capability(cap) },
-        properties: d.properties.map { |cap| self.property(cap) }
+        capabilities: d.capabilities.map { |cap| d.capability(cap) },
+        properties: d.properties.map { |cap| d.property(cap) }
       }
     end
   end
@@ -86,8 +86,8 @@ class Device < ApplicationRecord
           room: d.room,
           type: d.device_type,
           custom_data: {},
-          properties: d.properties.map { |cap| self.property(cap) },
-          device_info: device_info
+          properties: d.properties.map { |cap| d.property(cap) },
+          device_info: d.device_info
         )
       end
       hash
@@ -109,21 +109,22 @@ class Device < ApplicationRecord
     capability = { type: cap.capability_type, retrievable: cap.retrievable }
     if cap.capability_type == 'devices.capabilities.range'
       capability[:parameters] = {
-          instance: 'open',
-          unit: 'unit.percent',
-          random_access: true,
-          range: {
-              min: 0,
-              max: 100,
-              precision: 1
-          }
+        instance: 'open',
+        unit: 'unit.percent',
+        random_access: true,
+        range: {
+            min: 0,
+            max: 100,
+            precision: 1
+        }
       }
     end
     capability
   end
 
   def self.property(prop)
-    property = { type: prop.property_type, retrievable: prop.retrievable, reportable: prop.reportable }
+    property = { type: prop.property_type, retrievable: prop.retrievable, reportable: prop.reportable,
+                 state: { instance: prop.parameters_instance, value: prop.parameters_value } }
     property[:parameters] = case prop.property_type
     when 'devices.properties.event'
       { instance: prop.parameters_instance, unit: prop.parameters_unit }
@@ -132,9 +133,9 @@ class Device < ApplicationRecord
         instance: prop.parameters_instance,
         events: prop.parameters_events.split(",").map { |e| { value: e } }
       }
-    else {}
+    else
+      {}
     end
-    property[:state] = { instance: prop.parameters_instance, value: prop.parameters_value }
     property
   end
 end
