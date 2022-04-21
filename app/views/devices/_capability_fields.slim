@@ -17,6 +17,9 @@
     = f.check_box :retrievable, { class: 'switch is-medium is-outlined is-right' }, 0, 1
     = f.label :retrievable, 'Запрос состояния', class: 'has-text-primary'
 .field
+  = f.label :capability_type, 'capability_type', class: 'label'
+  .col-sm-8 = f.select :capability_type, Capability::TYPES, {}, class: 'input is-medium'
+.field
   = f.label :state, 'state', class: 'label'
   .control = f.text_field :state, class: 'input is-medium'
 .field
@@ -25,9 +28,6 @@
 .field
   = f.label :state_value, 'state_value', class: 'label'
   .col-sm-8 = f.number_field :state_value, class: 'input is-medium'
-.field
-  = f.label :capability_type, 'capability_type', class: 'label'
-  .col-sm-8 = f.select :capability_type, Capability::TYPES, {}, class: 'input is-medium'
 .field
   = f.label :path, 'path', class: 'label'
   .col-sm-8 = f.text_field :path, class: 'input is-medium'
