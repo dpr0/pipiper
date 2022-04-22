@@ -43,14 +43,13 @@ class ActionService
         resp.code
       end
       # response = JSON.parse(resp.body)
-      z = cap[:type] == 'devices.capabilities.range' ? { unit: 'unit.percent', range: { max: 100, min: 0, precision: 10 } } : {}
       {
         type: cap[:type],
-        retrievable: cap[:v],
+        # retrievable: cap[:v],
         # reportable: cap[:reportable],
         parameters: {
           instance: dc.state_instance
-        }.merge(z),
+        },
         state: {
           instance: dc.state_instance,
           value: state,
