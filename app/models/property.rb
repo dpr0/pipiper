@@ -12,9 +12,9 @@ class Property < ApplicationRecord
     property = { type: property_type, retrievable: retrievable, reportable: reportable,
                  state: { instance: parameters_instance, value: parameters_value } }
     property[:parameters] = case property_type
-                            when 'devices.properties.event'
-                              { instance: parameters_instance, unit: parameters_unit }
                             when 'devices.properties.float'
+                              { instance: parameters_instance, unit: parameters_unit }
+                            when 'devices.properties.event'
                               {
                                 instance: parameters_instance,
                                 events: parameters_events&.split(",")&.map { |e| { value: e } }
