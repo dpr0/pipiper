@@ -42,10 +42,8 @@ class ActionService
         path = cap[:state][:value] == 100 ? 'set_' : 'reset_'
         url = "http://#{ud.host}:#{ud.port}/#{path}#{dc.path}/#{dc.pin}"
         puts url
-        logger.info(url)
         resp = RestClient.get(url)
         puts resp.code
-        logger.info(resp.code)
         # resp = RestClient.get("http://#{ud.host}:#{ud.port}/#{dc.path}/#{dc.pin}")
         # resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
         resp.code
