@@ -4,15 +4,15 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/turbo-rails": "^7.1.1",
-    "bulma": "^0.9.3",
+    "bulma": "^0.9.4",
     "bulma-extensions": "^6.2.7",
     "cocoon-js": "^0.0.5",
-    "esbuild": "^0.14.37",
+    "esbuild": "^0.14.39",
     "esbuild-plugin-import-glob": "^0.1.1",
     "esbuild-rails": "^1.0.3",
     "jquery": "^3.6.0",
     "jquery-ui": "^1.13.1",
-    "sass": "^1.50.1"
+    "sass": "^1.51.0"
   },
   "scripts": {
     "build": "node esbuild.config.js",

@@ -17,7 +17,7 @@ class Property < ApplicationRecord
                             when 'devices.properties.float'
                               {
                                 instance: parameters_instance,
-                                events: parameters_events.split(",").map { |e| { value: e } }
+                                events: parameters_events&.split(",")&.map { |e| { value: e } }
                               }
                             else
                               {}

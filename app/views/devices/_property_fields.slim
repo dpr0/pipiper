@@ -3,18 +3,18 @@
   .columns
     .column.is-8
       .control.has-text-left
-        = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+        = f.check_box :enabled, { class: 'switch is-medium is-outlined is-right' }, 1, 0
         = f.label :enabled, 'Включен?', class: 'has-text-primary'
     .column.is-4
       .control.has-text-right
         = link_to_remove_association "X", f, class: 'button is-small is-danger'
 .field
   .control.has-text-left
-    = f.check_box :retrievable, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+    = f.check_box :retrievable, { class: 'switch is-medium is-outlined is-right' }, 1, 0
     = f.label :retrievable, 'Запрос состояния', class: 'has-text-primary'
 .field
   .control.has-text-left
-    = f.check_box :reportable, { class: 'switch is-medium is-outlined is-right' }, 0, 1
+    = f.check_box :reportable, { class: 'switch is-medium is-outlined is-right' }, 1, 0
     = f.label :reportable, 'Отчитываемый', class: 'has-text-primary'
 .field
   = f.label :property_type, 'property_type', class: 'label'

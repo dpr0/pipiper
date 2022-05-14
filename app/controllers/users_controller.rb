@@ -2,7 +2,7 @@
 
 class UsersController < ApplicationController
   protect_from_forgery with: :null_session
-  before_action :doorkeeper_authorize! # -> { doorkeeper_authorize! :read, :write }
+  # before_action :doorkeeper_authorize! # -> { doorkeeper_authorize! :read, :write }
 
   def index
     head(:ok)
@@ -15,6 +15,7 @@ class UsersController < ApplicationController
   end
 
   def devices
+    current_user = User.find 4
     render_status(user_id: current_user.id.to_s, devices: Device.user_devices(current_user.id))
   end
 
