@@ -39,7 +39,8 @@ class ActionService
           mq('defafon/v1/in', cap[:state][:instance] == 'on' ? 'O' : 'N')
         end
       else
-        resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
+        resp = RestClient.get("http://#{ud.host}:#{ud.port}/#{dc.path}/toggle_pin/#{dc.pin}")
+        # resp = RestClient.post("http://#{ud.host}:#{ud.port}/#{dc.path}", { pin: dc.pin, status: cap[:state][:value] }.to_json)
         resp.code
       end
       # response = JSON.parse(resp.body)
