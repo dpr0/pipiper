@@ -39,7 +39,7 @@ class ActionService
           mq('defafon/v1/in', cap[:state][:instance] == 'on' ? 'O' : 'N')
         end
       else
-        path = cap[:state][:value] == 100 ? 'set_' : 'reset_'
+        path = cap[:state][:value] ? 'set_' : 'reset_'
         url = "http://#{ud.host}:#{ud.port}/#{path}#{dc.path}/#{dc.pin}"
         puts url
         resp = RestClient.get(url)
