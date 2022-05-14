@@ -57,7 +57,7 @@ class Device < ApplicationRecord
 
   def self.user_devices(user_id)
     enabled(user_id).map do |d|
-      hash = {
+      {
         id: d.id.to_s,
         name: d.name,
         description: d.description,
@@ -65,10 +65,9 @@ class Device < ApplicationRecord
         type: d.device_type,
         custom_data: {},
         device_info: d.device_info,
-        capabilities: d.capabilities.map(&:to_capability)
+        capabilities: d.capabilities.map(&:to_capability),
+        properties: d.properties.map(&:to_property)
       }
-      hash[:properties] = d.properties.map(&:to_property) if d.properties.present?
-      hash
     end
   end
 
@@ -87,9 +86,9 @@ class Device < ApplicationRecord
           room: d.room,
           type: d.device_type,
           custom_data: {},
+          properties: d.properties.map(&:to_property),
           device_info: d.device_info
         )
-        hash[:properties] = d.properties.map(&:to_property) if d.properties.present?
       end
       hash
     end
