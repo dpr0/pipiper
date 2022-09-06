@@ -23,13 +23,13 @@
         .control
           = f.select :device_type, DeviceType.all_cached.map { |x| [x.name, x.code] }, {}, class: 'input is-medium'
       .field
-        = f.label :protocol_id, 'Тип', class: 'label'
+        = f.label :protocol_id, 'Протокол', class: 'label'
         .control
-          = f.select :protocol_id, Protocol.all_cached.map { |x| [x.name, x.id] }, {}, class: 'input is-medium'
+          = f.select :protocol_id, Protocol.all_cached.map { |x| [x.name, x.id] }, {}, id: :protocol_select, class: 'input is-medium'
       .field
-        = f.label :host, 'Хост', class: 'label'
+        = f.label :host, 'Хост', class: 'label required'
         .control
-          = f.text_field :host, class: 'input is-medium'
+          = f.text_field :host, class: 'input is-medium', required: true
       .field
         = f.label :port, 'Порт', class: 'label'
         .control
@@ -50,10 +50,10 @@
         = f.label :model, 'Модель', class: 'label'
         .control = f.text_field :model, class: 'input is-medium'
       .field
-        = f.label :hw_version, 'HW version', class: 'label'
-        .control = f.text_field :hw_version, class: 'input is-medium'
+        = f.label :hw_version, 'Hardware version', class: 'label', required: true
+        .control = f.text_field :hw_version, class: 'input is-medium', required: true
       .field
-        = f.label :sw_version, 'SW version', class: 'label'
+        = f.label :sw_version, 'Software version', class: 'label'
         .control = f.text_field :sw_version, class: 'input is-medium'
     .column.is-3
       #capabilities
@@ -69,3 +69,11 @@
         .links
           = turbo_frame_tag f
           = link_to_add_association 'Добавить свойство', f, :properties, class: 'button is-small is-link'
+
+javascript:
+    $(document).on("change", "#protocol_select", function () {
+        var zz = "#{Protocol.all_cached}"
+        var z = $('option:selected', this).val()
+        debugger
+        console.log(z)
+    })

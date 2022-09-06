@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post '/v1.0/user/devices/action', to: 'users#action'
 
   resources :users
+  resources :inn, only: :show
   resources :devices do
     collection do
       get :rpi
