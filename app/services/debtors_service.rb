@@ -3,11 +3,11 @@ require 'csv'
 class DebtorsService
   def initialize
     @data = []
-    @codes = [74] # [(1..78).to_a, 86, 89, 82, 92].flatten.map { |x| x.to_s.rjust(2, '0') }
+    @codes = [(1..78).to_a, 86, 89, 82, 92].flatten.map { |x| x.to_s.rjust(2, '0') }
   end
 
   def call
-    (1..7).each { |x| process(x) }
+    (1..3).each { |x| process(x) }
 
     CSV.generate do |csv|
       csv << ['ФИО', 'Дата рождения', 'Код региона']
