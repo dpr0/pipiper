@@ -31,8 +31,8 @@ class DebtorsService
         title = tag.css('.b-personnel__card-title')[0].text.split(',')[0]
         text = tag.css('.b-personnel__card-text')[0].text
         date = DatesFromString.new.find_date(text)[0] || DatesFromString.new.find_date(title)[0]
-        begin
-          dt = date&.to_date ? date.to_date.strftime('%d.%m.%Y') : ''
+        dt = begin
+          date&.to_date ? date.to_date.strftime('%d.%m.%Y') : ''
         rescue
           ''
         end
