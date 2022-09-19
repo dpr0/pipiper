@@ -1,14 +1,15 @@
 require 'csv'
 
 class DebtorsService
-  def initialize
+  def initialize(page = 1)
+    @page = page
     @data = []
     @codes = [(1..78).to_a, 86, 89, 82, 92].flatten.map { |x| x.to_s.rjust(2, '0') }
   end
 
   def call
     # (1..3).each { |x| process(x) }
-    process(1)
+    process(@page)
     CSV.generate do |csv|
       csv << ['ФИО', 'Дата рождения', 'Код региона']
       @data.each do |data|

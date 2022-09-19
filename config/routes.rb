@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :inn, only: :show
-  resources :debtors, only: :index
+  resources :debtors, only: :show
   resources :devices do
     collection do
       get :rpi
