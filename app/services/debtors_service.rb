@@ -28,7 +28,7 @@ class DebtorsService
       parsed_data = Nokogiri::HTML.parse(json['html']) if json && json['html']
 
       parsed_data.css('.b-personnel__card').each do |tag|
-        title = tag.css('.b-personnel__card-title')[0].text.split(',')[0]
+        title = tag.css('.b-personnel__card-title')[0].text
         text = tag.css('.b-personnel__card-text')[0].text
         date = DatesFromString.new.find_date(text)[0] || DatesFromString.new.find_date(title)[0]
         dt = begin
@@ -36,7 +36,7 @@ class DebtorsService
         rescue
           ''
         end
-        @data << [title, dt, code]
+        @data << [title.split(',')[0], dt, code]
       end
     end
     # page = parsed_data.xpath('//a').last.attributes['href'].text.split('page=').last.split('&').first.to_i
