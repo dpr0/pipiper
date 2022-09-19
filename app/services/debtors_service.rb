@@ -7,8 +7,8 @@ class DebtorsService
   end
 
   def call
-    (1..3).each { |x| process(x) }
-
+    # (1..3).each { |x| process(x) }
+    process(1)
     CSV.generate do |csv|
       csv << ['ФИО', 'Дата рождения', 'Код региона']
       @data.each do |data|
