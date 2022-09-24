@@ -55,3 +55,4 @@ dump.rdb
 /yarn-error.log
 /config/cred.byebug_history
 entials.yml.enc
+.byebug_history
