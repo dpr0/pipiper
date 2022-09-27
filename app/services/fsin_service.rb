@@ -9,12 +9,7 @@ class FsinService
 
   def call
     process
-    CSV.generate do |csv|
-      csv << ['ФИО', 'Дата рождения']
-      @data.uniq.each do |data|
-        csv << data
-      end
-    end
+    @data
   end
 
   private
@@ -47,7 +42,7 @@ class FsinService
 
       fio = fio.delete("\r\n\t")
       fio = fio.split(' ').compact.join(' ')
-      @data << [fio, dt]
+      @data << { fio: fio, dt: dt }
     end
   end
 
