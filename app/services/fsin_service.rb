@@ -40,7 +40,7 @@ class FsinService
       fio = text.split(dt).first
       return unless fio
 
-      fio = fio.delete("\r\n\t")
+      fio = fio.delete("\r\n\t,.;:")
       fio = fio.split(' ').compact.join(' ')
       @data << { fio: fio, dt: dt }
     end
