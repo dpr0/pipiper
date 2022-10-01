@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.3'
+ruby '3.0.4'
 gem 'apipie-rails'
 gem 'bootsnap', require: false
 gem 'cocoon'
@@ -21,7 +21,7 @@ gem 'nokogiri'
 gem 'omniauth'
 gem 'omniauth-yandex'
 gem 'pg'
-gem 'propshaft'
+# gem 'propshaft'
 gem 'puma', '4.3.10'
 gem 'rails'
 gem 'redis'
