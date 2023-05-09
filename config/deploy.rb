@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-lock '3.17.1'
+lock '3.17.2'
 
 server 'pipiper.ru', port: 2222, roles: %w(app db web), primary: true
 
-set :rbenv_ruby,      '3.0.3'
+set :rbenv_ruby,      '3.2.1'
 set :application,     'pipiper'
 set :repo_url,        'git@github.com:dpr0/pipiper.git'
 set :linked_files,    fetch(:linked_files, []).push('config/cable.yml', 'config/database.yml', 'config/secrets.yml', 'config/master.key', 'config/credentials.yml.enc', '.env')
