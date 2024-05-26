@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-lock '3.17.3'
+lock '3.18.1'
 
 server 'pipiper.ru', port: 2222, roles: %w(app db web), primary: true
 
