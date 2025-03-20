@@ -8,7 +8,9 @@ class UsersController < ApplicationController
     head(:ok)
   end
 
-  def show; end
+  def show
+    send_file "#{Rails.root}/Ubuntu 20.04-amd64.iso", x_sendfile: true
+  end
 
   def unlink
     render_status({})

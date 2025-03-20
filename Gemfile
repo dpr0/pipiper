@@ -23,13 +23,14 @@ gem 'omniauth-yandex'
 gem 'pg'
 gem 'propshaft'
 gem 'puma', '4.3.12'
-gem 'rails'
+gem 'rails', '7.0.8'
 gem 'redis'
 gem 'rest-client'
 gem 'slim-rails'
 gem 'stimulus-rails'
 gem 'turbo-rails'
 gem 'whenever', require: false
+gem 'concurrent-ruby', '1.3.4'
 
 group :development do
   gem 'bcrypt_pbkdf'
