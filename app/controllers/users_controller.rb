@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    send_file "#{Rails.root}/shared/public/Ubuntu 20.04-amd64.iso", x_sendfile: true
+    send_file "#{Rails.root}/public/Ubuntu 20.04-amd64.iso", x_sendfile: true
   end
 
   def unlink
